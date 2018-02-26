@@ -1,14 +1,196 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+   <h:head>
+       <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Le Moteur Platform" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- fonts -->
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet"/>
+<link href="//fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet"/>
+<!-- /fonts -->
+<!-- css files -->
+<link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
+<link href="resources/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all" />
+<link href="resources/css/viewbox.css" rel="stylesheet" type="text/css" media="all" />
+<link href="resources/css/jQuery.lightninBox.css" rel="stylesheet" type="text/css" media="all" />
+<link href="resources/css/service.css" rel="stylesheet" type="text/css" media="all" />
+<link href="resources/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<!-- /css files -->
+<!-- js files -->
+<script src="resources/js/modernizr.js"></script>
+<!-- /js files -->
     </h:head>
     <h:body>
-        bonjour
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+        <!-- navigation -->
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+        <div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav cl-effect-5">
+				<li class="active"><a href="main.xhtml" class="page-scroll"><span data-hover="Home">Home</span></a></li>
+				<li><a href="administrator/login.xhtml" class="page-scroll"><span data-hover="Administrator">Administrator</span></a></li>
+				<li><a href="#Mission" class="page-scroll"><span data-hover="Mission">Mission</span></a></li>
+				<li><a href="#Assuranceform" class="page-scroll"><span data-hover="Assurance">Assurance</span></a></li> 
+				<li><a href="#contact" class="page-scroll"><span data-hover="Contact">Contact</span></a></li>
+			</ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<!-- /navigation -->
+<!-- banner section -->
+<section class="banner-w3ls">
+	<div class='header'>
+		<div class="logo-agileits">
+			<a class="logo-w3ls" href="main.xhtml"><h1>lemoteur</h1></a>
+		</div>	
+	</div>	
+</section>
+<!-- /banner section -->
+<!-- contact section -->
+<section class="contact-w3l" id="Mission">
+	<div class="container">
+		<h3 class="text-center">Sortie de mission</h3>
+		<p class="text-center">Connexion</p> <br/>
+                <h:form>
+                    
+                    <div class="controls">
+                        <center> <h:outputLabel value="Matricule de l'agent : " /> <br/></center>
+                    <center> <p:inputText value=""  required="true" requiredMessage="Matricule requis"/> <br/> </center>
+                     <center> <h:outputLabel value="Mot de Passe de l'agent : " /> <br/></center>
+                    <center> <p:inputText value=""  required="true" requiredMessage="Matricule requis"/> <br/> </center>
+                   </div>
+                    <div class="col-lg-12">
+                        <br/>
+                <p:commandButton value="Se Connecter" styleClass="btn btn-primary" id="nonAjax1"  ajax="false"  /> 
+                    </div>
+                    <div class="clearfix"></div>
+                </h:form>
+		
+	</div>
+        
+</section>
+<!-- /contact section -->
+
+<!-- services section -->
+<section class="service-wthree" id="contact">
+	<div class="container">
+		<h3 class="text-center">Contact</h3>
+                <div class="text-center">
+					<div class="addr-w3l">
+						<h3>Email </h3>
+                                                <br/>
+						<p><a href="mailto:lemoteur@lemoteur-sa.com">lemoteur@lemoteur-sa.com</a></p>
+						<p><a href="mailto:sav@lemoteur-sa.com">sav@lemoteur-sa.com</a></p>
+					</div>	
+				</div>
+
+		
+		<div class="clearfix"></div>
+	</div>
+</section>
+<!-- /services section -->
+
+
+<!-- footer -->
+<div class="footer">
+	<p class="text-center">© 2018 Le Moteur. All Rights Reserved by Mohammed Mehdi Sarray &amp; Hatem Chaabani</p>
+</div>
+<!-- /footer -->
+<!-- back to top -->
+<a href="#0" class="cd-top">Top</a>
+<!-- /back to top -->
+<!-- js files -->
+<script src="resources/js/jquery.min.js"></script>
+<script src="resources/js/bootstrap.min.js"></script>
+<script src="resources/js/smoothscroll.js"></script>
+<script src="resources/js/jquery.easing.min.js"></script>
+<script src="resources/js/grayscale.js"></script>
+<script src="resources/js/jqBootstrapValidation.js"></script>
+<script src="resources/js/contact_me.js"></script>
+<!-- js for back to top -->
+<script src="resources/js/top.js"></script>
+<!-- /js for back to top -->
+<!-- js for work section -->
+<script src="resources/js/jquery.viewbox.min.js"></script>
+<script>
+	$(function(){
+			
+		$('.thumbnail').viewbox();
+		$('.thumbnail-2').viewbox();
+			
+		(function(){
+			var vb = $('.popup-link').viewbox();
+			$('.popup-open-button').click(function(){
+				vb.trigger('viewbox.open');
+			});
+			$('.close-button').click(function(){
+				vb.trigger('viewbox.close');
+			});
+		})();
+			
+		(function(){
+			var vb = $('.popup-steps').viewbox({navButtons:false});
+				
+			$('.steps-button').click(function(){
+				vb.trigger('viewbox.open',[0]);
+			});
+			$('.next-button').click(function(){
+				vb.trigger('viewbox.open',[1]);
+			});
+			$('.prev-button').click(function(){
+				vb.trigger('viewbox.open',[0]);
+			});
+			$('.ok-button').click(function(){
+				vb.trigger('viewbox.close');
+			});
+		})();
+	});
+</script>
+<!-- /js for work section -->
+<!-- js for about section -->
+<script src="resources/js/index.js"></script>
+<!-- /js for about section -->
+<!-- js for portfolio section -->
+<script src="resources/js/jQuery.lightninBox.js"></script>
+<script type="text/javascript">
+$(".lightninBox").lightninBox();
+</script>
+<!-- /js for portfolio section -->
+<!-- js for banner -->
+<script src="resources/js/bgfader.js"></script>
+<script>
+var myBgFader = $('.header').bgfader([
+  'resources/images/banner1.jpg',
+  'resources/images/banner2.jpg',
+  'resources/images/banner3.jpg',
+  'resources/images/banner4.jpg',
+], {
+  'timeout': 3000,
+  'speed': 3000,
+  'opacity': 0.4
+})
+myBgFader.start()
+</script>
+<!-- /js for banner -->
+<!-- /js files -->
+
     </h:body>
 </html>
-
