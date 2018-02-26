@@ -23,7 +23,7 @@ public class test {
  try {
 Admin p= new Admin("c",2,"q","q","q");
 modele_Admin s= new modele_Admin();
-s.ajouter(p);
+//s.ajouter(p);
 }catch(HibernateException ex){
 //log.error("building sessionFactory failed.",ex);
 throw new ExceptionInInitializerError(ex);}

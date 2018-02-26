@@ -47,9 +47,9 @@ public class modele_Personnel {
 
    
     
-    public void ajouter(Personnel p)
+    public void ajouter()
     {
-        this.service.ajouter(p);
+        this.service.ajouter(this.a);
         
         FacesContext f=FacesContext.getCurrentInstance();
         f.addMessage(null,new FacesMessage("le personnel a bien ete ajouter"));

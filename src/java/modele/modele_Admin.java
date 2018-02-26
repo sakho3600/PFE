@@ -45,9 +45,9 @@ public class modele_Admin {
 
    
     
-    public void ajouter(Admin d)
+    public void ajouter()
     {
-        this.service.ajouter(d);
+        this.service.ajouter(this.a);
         
         FacesContext f=FacesContext.getCurrentInstance();
         f.addMessage(null,new FacesMessage("l'admin a bien ete ajouter"));
