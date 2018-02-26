@@ -12,6 +12,7 @@ import dao.dao_Personnel;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -20,7 +21,7 @@ import javax.faces.context.FacesContext;
  */
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 
 public class modele_Personnel {
       Personnel a= new Personnel();
