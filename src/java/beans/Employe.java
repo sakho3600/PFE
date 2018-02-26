@@ -28,6 +28,11 @@ public class Employe extends Personnel implements Serializable{
         this.Departement = Departement;
     }
 
+    public Employe(int Matricule, String MotDePasse) {
+        super(Matricule, MotDePasse);
+    }
+    
+
     public int getMatriculeChef() {
         return MatriculeChef;
     }

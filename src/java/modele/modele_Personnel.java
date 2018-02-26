@@ -9,10 +9,12 @@ import beans.Personnel;
 import beans.Personnel;
 import dao.dao_Personnel;
 import dao.dao_Personnel;
+import java.io.IOException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 /**
@@ -55,5 +57,33 @@ public class modele_Personnel {
         f.addMessage(null,new FacesMessage("le personnel a bien ete ajouter"));
     }
           
+    
+    public void loginAdmin() throws IOException{
+    Personnel p=this.service.lister(this.a.getMatricule());
+     FacesContext f=FacesContext.getCurrentInstance();
+     if (p.getMotDePasse().equals(a.getMotDePasse())){
+        switch (this.service.verifGrade(this.a.getMatricule())) {
+            case "SuperAdmin":
+                {
+                    ExternalContext extContext = f.getExternalContext();
+                    extContext.redirect(extContext.getRequestContextPath() + "/faces/index.xhtml");
+                    break;
+                }
+            case "Admin":
+                {
+                    ExternalContext extContext = f.getExternalContext();
+                    extContext.redirect(extContext.getRequestContextPath() + "/faces/inde.xhtml");
+                    break;
+                }
+            default:
+                f.addMessage(null,new FacesMessage("vous n'êtes pas autorisé à utiliser ce service "));
+                break;
+        }
+         
+       }else
+     {        f.addMessage(null,new FacesMessage("Mot de Passe incorrect"));
+
+     }
+    }
 }
 

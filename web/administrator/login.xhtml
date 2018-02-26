@@ -27,13 +27,13 @@
     <p:dialog header="Login" widgetVar="dlg" resizable="false">
         <h:panelGrid columns="2" cellpadding="5">
             <h:outputLabel for="username" value="Username:" />
-            <p:inputText  id="username" value="" required="true" label="username" />
+            <p:inputText  id="username" value="#{modele_Personnel.a.matricule}" required="true" label="username" />
  
             <h:outputLabel for="password" value="Password:" />
-            <p:password id="password" value="" required="true" label="password" />
+            <p:password id="password" value="#{modele_Personnel.a.motDePasse}" required="true" label="password" />
  
             <f:facet name="footer">
-                <p:commandButton value="Login" update="growl" 
+                <p:commandButton value="Login" update="growl"  actionListener="#{modele_Personnel.loginAdmin()}" 
                                  oncomplete="handleLoginRequest(xhr, status, args)" />
             </f:facet>  
         </h:panelGrid>
@@ -57,8 +57,7 @@
 </script>
              
              
-     </p:layout>
+       </p:layout>
         
 </h:body>
-a
 </html>

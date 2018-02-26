@@ -26,6 +26,10 @@ public class SuperAdmin extends Personnel implements Serializable{
 
     public SuperAdmin() {
     }
+
+    public SuperAdmin(int Matricule, String MotDePasse) {
+        super(Matricule, MotDePasse);
+    }
     
     
 }

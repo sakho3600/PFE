@@ -30,6 +30,11 @@ private String Privileges;
      
     }
 
+    public Admin(int Matricule, String MotDePasse) {
+        super(Matricule, MotDePasse);
+    }
+    
+
   
 
     public String getPrivileges() {
