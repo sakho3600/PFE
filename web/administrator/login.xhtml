@@ -16,7 +16,7 @@
          <p:layout fullPage="true">
 
                 <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                    <img src="../../resources/images/logo.jpg" alt="logo" width="150" height="100" />
+                 <a href="../index.xhtml">   <img src="../../resources/images/logo.jpg" alt="logo" width="150" height="100" /> </a>
                 </p:layoutUnit>
              
              <p:layoutUnit position="center">
@@ -36,8 +36,10 @@
             <p:password id="password" value="#{modele_Personnel.a.motDePasse}" required="true" label="password" />
  
             <f:facet name="footer">
+
                 <p:commandButton value="Login" update="growl"  actionListener="#{modele_Personnel.loginAdmin()}" 
                                  oncomplete="handleLoginRequest(xhr, status, args)" />
+
             </f:facet>  
         </h:panelGrid>
     </p:dialog>
