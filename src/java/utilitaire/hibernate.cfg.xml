@@ -57,8 +57,9 @@ Contributor(s):
    <property name="hibernate.connection.provider_class">org.hibernate.service.
 jdbc.connections.internal.C3P0ConnectionProvider</property>
 --> <mapping class="beans.Admin"/>
-    <mapping class="beans.Employe"/>
+    <mapping class="beans.Agent"/>
     <mapping class="beans.Personnel"/>
     <mapping class="beans.SuperAdmin"/>
+    <mapping class="beans.user_privs"/>
   </session-factory>
 </hibernate-configuration>

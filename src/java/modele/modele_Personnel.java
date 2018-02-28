@@ -5,6 +5,7 @@
  */
 package modele;
 
+
 import beans.Personnel;
 import beans.Personnel;
 import dao.dao_Personnel;
@@ -26,17 +27,17 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 
 public class modele_Personnel {
-      Personnel a= new Personnel();
+      Personnel personnel= new Personnel();
      dao_Personnel service=new dao_Personnel();
  public modele_Personnel() {
     }
 
     public Personnel getA() {
-        return a;
+        return personnel;
     }
 
     public void setA(Personnel a) {
-        this.a = a;
+        this.personnel = personnel;
     }
 
     public dao_Personnel getService() {
@@ -48,10 +49,10 @@ public class modele_Personnel {
     }
 
    
-    
+    /** Add Personnel **/
     public void ajouter()
     {
-        this.service.ajouter(this.a);
+        this.service.ajouter(this.personnel);
         
         FacesContext f=FacesContext.getCurrentInstance();
         f.addMessage(null,new FacesMessage("le personnel a bien ete ajouter"));
@@ -59,31 +60,14 @@ public class modele_Personnel {
           
     
     public void loginAdmin() throws IOException{
-    Personnel p=this.service.lister(this.a.getMatricule());
+        
+    Personnel personne=this.service.lister(this.personnel.getMatricule());
+    
+    
+    
      FacesContext f=FacesContext.getCurrentInstance();
-     if (p.getMotDePasse().equals(a.getMotDePasse())){
-        switch (this.service.verifGrade(this.a.getMatricule())) {
-            case "SuperAdmin":
-                {
-                    ExternalContext extContext = f.getExternalContext();
-                    extContext.redirect(extContext.getRequestContextPath() + "/faces/index.xhtml");
-                    break;
-                }
-            case "Admin":
-                {
-                    ExternalContext extContext = f.getExternalContext();
-                    extContext.redirect(extContext.getRequestContextPath() + "/faces/inde.xhtml");
-                    break;
-                }
-            default:
-                f.addMessage(null,new FacesMessage("vous n'êtes pas autorisé à utiliser ce service "));
-                break;
-        }
-         
-       }else
-     {        f.addMessage(null,new FacesMessage("Mot de Passe incorrect"));
-
-     }
+     
+    
     }
 }
 

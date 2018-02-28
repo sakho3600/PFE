@@ -41,11 +41,6 @@ public class Personnel implements Serializable{
         this.MotDePasse = MotDePasse;
     }
 
-    public Personnel(int Matricule, String MotDePasse) {
-        this.Matricule = Matricule;
-        this.MotDePasse = MotDePasse;
-    }
-
     public int getMatricule() {
         return Matricule;
     }

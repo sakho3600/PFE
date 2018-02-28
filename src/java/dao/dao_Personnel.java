@@ -7,7 +7,6 @@ package dao;
 
 import beans.Admin;
 import beans.Personnel;
-import beans.SuperAdmin;
 import java.util.ArrayList;
 import java.util.List;
 import utilitaire.HibernateUtil;
@@ -25,6 +24,15 @@ public class dao_Personnel {
      s.getTransaction().commit();
      s.close();
      }
+       
+       public boolean veriflogin(String Username,String Password)
+       {
+           
+           return true; 
+       }
+       
+       
+       
    public Personnel lister(int Matricule)
     {
    org.hibernate.Session s=HibernateUtil.getSessionFactory().openSession();
@@ -34,24 +42,8 @@ public class dao_Personnel {
         s.close();
         return p;
     } 
-   public String verifGrade(int Matricule){
-   String gr=null;
    
-   org.hibernate.Session s=HibernateUtil.getSessionFactory().openSession();
-        s.beginTransaction();
-          SuperAdmin a=(SuperAdmin)s.get(SuperAdmin.class,Matricule);
-           if (a!=null){
-               gr="SuperAdmin";}
-           else {
-               Admin ad=(Admin)s.get(Admin.class,Matricule);
-           if (ad!=null)
-               gr="Admin";
-        
-           }
-           
-        s.getTransaction().commit();
-        s.close();
-
-           return gr;
-   }
 }
+
+  
+
