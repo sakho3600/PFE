@@ -9,10 +9,14 @@ import java.util.HashSet;
 import java.util.Set;
 import modele.modele_Admin;
 import modele.modele_Personnel;
+import beans.Personnel ;
 import dao.dao_Admin ;
+import dao.dao_Personnel ;
+import beans.Agent ; 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import beans.Admin ;
+import dao.dao_Agent;
 
 import dao.privs ; 
 import java.util.ArrayList;
@@ -27,30 +31,24 @@ public class test {
      Admin ad = new Admin() ;
      user_privs rl = new user_privs() ;
      dao_Admin s = new dao_Admin() ;
-
+     privs privileges  ;
+     dao_Personnel perso= new dao_Personnel() ;
+     dao_Agent ajent = new dao_Agent() ;
+     Agent aj = new Agent() ; 
+     List<privs> p =new ArrayList<>() ;
  try {
      
-     List <privs> roles = new ArrayList<privs>() ;
+     
+     
+    boolean a = ajent.ifcanbelogged(10, "md") ;
     
-     roles.add(privs.DELuser) ;
-     roles.add(privs.GA) ;
-     roles.add(privs.GMA) ;
+    if ( a)
+    System.out.print("true") ;
+    else {
+       System.out.print("no") ; 
+    }
      
-     
-     
-     ad.setAdmin_privs(roles);
-     
-     ad.setAdmin_ID(1337);
-     ad.setMatricule(1337);
-     ad.setMotDePasse("aaa");
-     ad.setNom("aaaa");
-     ad.setPernom("aaa");
-     ad.setUsername("aaaa");
-    
-     
-     
-     s.ajouter(ad);
-  
+   
 }catch(HibernateException ex){
 //log.error("building sessionFactory failed.",ex);
 throw new ExceptionInInitializerError(ex);}

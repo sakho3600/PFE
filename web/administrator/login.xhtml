@@ -6,23 +6,24 @@
       >
     <h:head>
         <title>ADMINISTRATION</title>
-        <!-- favicon -->
-<link rel="shortcut icon"
+         <!-- favicon -->
+ <link rel="shortcut icon"
  href="../../resources/images/favicon.ico" />
-
+        
     </h:head>
     <h:body >
+        
        
          <p:layout fullPage="true">
 
                 <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                 <a href="../index.xhtml">   <img src="../../resources/images/logo.jpg" alt="logo" width="150" height="100" /> </a>
+                    <img src="../../resources/image/logo.jpg" alt="logo" width="150" height="100" />
                 </p:layoutUnit>
              
              <p:layoutUnit position="center">
 <h:form>            
     <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
-        <center> <img src="../../resources/images/login.png" alt="login" height="70" width="70" /></center>
+        <center> <img src="../../resources/image/login.png" alt="login" height="70" width="70" /></center>
     </h:outputLink>
  
     <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
@@ -30,16 +31,14 @@
     <p:dialog header="Login" widgetVar="dlg" resizable="false">
         <h:panelGrid columns="2" cellpadding="5">
             <h:outputLabel for="username" value="Username:" />
-            <p:inputText  id="username" value="#{modele_Personnel.a.matricule}" required="true" label="u"  />
+            <p:inputText  id="username" value="#{modele_Admin.a.username}" required="true" label="username" />
  
             <h:outputLabel for="password" value="Password:" />
-            <p:password id="password" value="#{modele_Personnel.a.motDePasse}" required="true" label="pas" />
+            <p:password id="password" value="#{modele_Admin.a.motDePasse}" required="true" label="password" />
  
             <f:facet name="footer">
-
-                <p:commandButton value="Login" update="growl"  actionListener="#{modele_Personnel.loginAdmin()}" 
+                <p:commandButton value="Login" update="growl" action="#{modele_Admin.logmein()}"
                                  oncomplete="handleLoginRequest(xhr, status, args)" />
-
             </f:facet>  
         </h:panelGrid>
     </p:dialog>
@@ -62,7 +61,8 @@
 </script>
              
              
-       </p:layout>
+     </p:layout>
         
 </h:body>
+
 </html>

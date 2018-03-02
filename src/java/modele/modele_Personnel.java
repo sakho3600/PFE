@@ -61,7 +61,7 @@ public class modele_Personnel {
     
     public void loginAdmin() throws IOException{
         
-    Personnel personne=this.service.lister(this.personnel.getMatricule());
+   // Personnel personne=this.service.lister(this.personnel.getMatricule());
     
     
     

@@ -43,20 +43,24 @@ public class Admin extends Personnel implements Serializable{
     private int admin_ID ; // for the privileges 
       // privileges d'acces
    
-   @Column(name = "username")
+   @Column(name = "username", unique = true) //unique dans la BD
    @NotNull
     private String username ; //login
 
+   
+   
+   /* le Mapping du Type Enum */ 
 @ElementCollection(targetClass=privs.class, fetch=FetchType.EAGER)
 @Enumerated(EnumType.STRING)
-@CollectionTable(name="user_privs", joinColumns={@JoinColumn(name="user_id")})
+@CollectionTable(name="user_privs", joinColumns={@JoinColumn(name="id")})
 @Column(name="admin_privs")
    private List<privs> admin_privs ;  // privileges d'acces
    
     public Admin( int Matricule, String Pernom, String Nom, String MotDePasse , String username , List<privs> roles) {
-        super(Matricule, Pernom, Nom, MotDePasse);
+        super(Matricule, Pernom, Nom , MotDePasse);
         this.admin_privs = roles ;
         this.username = username ;
+        
     }
 
     public Admin() {
@@ -88,6 +92,8 @@ public class Admin extends Personnel implements Serializable{
     public void setAdmin_privs(List<privs> admin_privs) {
         this.admin_privs = admin_privs;
     }
+
+  
 
     
    

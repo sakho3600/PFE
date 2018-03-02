@@ -19,17 +19,26 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Personnel")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED) // Heritage
 
 public class Personnel implements Serializable{
+    
+    
+    private static final long serialVersionUID = 2L; 
+    
    @Id
+   @Column(name ="Matricule" , unique = true) // valeur unique dans la BD 
     private int Matricule;
     @Column(name ="Prenom")
    private String Pernom;
-     @Column(name ="Nom")
+    @Column(name ="Nom")
     private String Nom;
-      @Column(name ="MotDePasse")
+    @Column(name ="MotDePasse" , unique = true)
     private String MotDePasse;
+    
+      
+      
+      
 
     public Personnel() {
     }
@@ -40,6 +49,15 @@ public class Personnel implements Serializable{
         this.Nom = Nom;
         this.MotDePasse = MotDePasse;
     }
+
+    public String getMotDePasse() {
+        return MotDePasse;
+    }
+
+    public void setMotDePasse(String MotDePasse) {
+        this.MotDePasse = MotDePasse;
+    }
+
 
     public int getMatricule() {
         return Matricule;
@@ -65,13 +83,7 @@ public class Personnel implements Serializable{
         this.Nom = Nom;
     }
 
-    public String getMotDePasse() {
-        return MotDePasse;
-    }
-
-    public void setMotDePasse(String MotDePasse) {
-        this.MotDePasse = MotDePasse;
-    }
+   
     
     
 }

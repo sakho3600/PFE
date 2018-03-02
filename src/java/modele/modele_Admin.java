@@ -7,6 +7,7 @@ package modele;
 
 import beans.Admin;
 import dao.dao_Admin;
+import java.io.IOException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -27,6 +28,8 @@ public class modele_Admin  {
         private String pwd;
 	private String msg;
 	private String user;
+        private static final String userKey="myd" ; /* TODO KEY (randomize)*/
+        
         
     
     Admin a= new Admin();
@@ -75,12 +78,36 @@ public class modele_Admin  {
         this.user = user;
     }
 
+  public void logmein() throws IOException
+  {
+      if (service.ifcanbelogged(a.getUsername(), a.getMotDePasse()))
+      {
+          a= service.ifAdmin(a.getUsername());
+          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userkey", userKey);
+          FacesContext.getCurrentInstance().getExternalContext().redirect("welcome.xhtml");
+         
+          
+      }else{
+	FacesContext context=FacesContext.getCurrentInstance();
+	context.addMessage(null, new FacesMessage("Username or Password is invalid"));
+	context.addMessage(null, new FacesMessage("+ Check Capslock in keyboard :)"));
+         }
+      
   
+  }
+  
+  public void logout() throws IOException
+  {
+      FacesContext context = FacesContext.getCurrentInstance(); 
+       context.getExternalContext().getSessionMap().remove("userkey") ;
+       FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+       
+  }
 
     
     public void ajouter()
     {
-        this.service.ajouter(this.a);
+       // this.service.ajouter(this.a);
         
         FacesContext f=FacesContext.getCurrentInstance();
         f.addMessage(null,new FacesMessage("l'admin a bien ete ajouter"));

@@ -8,6 +8,8 @@ package beans;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -23,9 +25,14 @@ import javax.persistence.Table;
 
 public class user_privs implements Serializable {
   
-    @Id
-   private int user_id;
-    
+  
+  @Id
+  private int user_id;
+  
+  @Id
+  @GeneratedValue (strategy=GenerationType.AUTO)
+  private int id ;
+
    
 
     public user_privs() {
@@ -39,6 +46,14 @@ public class user_privs implements Serializable {
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
   

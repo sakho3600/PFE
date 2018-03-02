@@ -29,19 +29,24 @@ public class Agent extends Personnel implements Serializable{
     
    private static final long serialVersionUID = 1L; 
    
-   @Column(name = "MatriculeChef")
+   @Column(name = "MatriculeChef" , unique = true)
    private int MatriculeChef; //matricule Chef hierarchique
    @NotNull
    @Column(name = "Departement")
    private String Departement; //departement de l'agent
+   
 
-    public Agent(int MatriculeChef, String Departement, int Matricule, String Pernom, String Nom, String MotDePasse ) {
-        super(Matricule, Pernom, Nom, MotDePasse);
+    public Agent(int MatriculeChef, String Departement, int Matricule, String Pernom, String Nom , String mdp) {
+        super(Matricule, Pernom, Nom , mdp);
         this.MatriculeChef = MatriculeChef;
         this.Departement = Departement;
-        
+       
         
     }
+
+    public Agent() {
+    }
+    
 
     public int getMatriculeChef() {
         return MatriculeChef;
@@ -58,6 +63,8 @@ public class Agent extends Personnel implements Serializable{
     public void setDepartement(String Departement) {
         this.Departement = Departement;
     }
+
+  
 
 
    

@@ -5,21 +5,21 @@
  */
 package dao;
 
-import beans.Admin;
+import beans.Agent;
+import beans.Personnel;
 import beans.Personnel;
 import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.Query;
+import org.hibernate.Query ;
 import org.hibernate.Session;
 import utilitaire.HibernateUtil;
-
 /**
  *
- * @author HTOUM
+ * @author Mohammed Mehdi Sarray#
  */
-public class dao_Personnel {
+public class dao_Agent {
     
-     private Session s ; // Hibernate Session 
+      private Session s ; // Hibernate Session 
   
     /* ouvrire une session Hibernate */
     private void openSession(){
@@ -32,7 +32,8 @@ public class dao_Personnel {
         s.close();
     }
     
-     /**
+    
+    /**
      * 
      * Verifier si un Employer Existe dans la base 
      * avant de l'ajouter
@@ -40,37 +41,38 @@ public class dao_Personnel {
      * @param employ
      * @return 
      */
-    public boolean ifExists(int matricule)
+    public Agent ifExistsAgent(int matricule)
     {  
-       Personnel result = new Personnel();
+       Agent result = new Agent();
        
         try{
         openSession();
-         result = (Personnel) s.get(Personnel.class,matricule) ;   
+         result = (Agent) s.get(Agent.class,matricule) ;   
         closeSession();
            }catch(Exception e){
 	e.printStackTrace();
         }
-         return result != null;
+         return result ;
                 
     }
     
-   
-     /* Ajouter un Personnel */
-   public void ajouter(Object Employ)
-   {
-        try { 
-    openSession() ;
-             s.save(Employ);
-    closeSession() ;
-    }catch(Exception e){
-	e.printStackTrace();
+    
+    public boolean ifcanbelogged(int matricule,String mdp)
+    {
+         
+        Agent agent = ifExistsAgent(matricule) ;
+        
+       if ( agent == null)
+       {
+        return false ;   
+       }
+       else  if(agent.getMotDePasse().equals(mdp)) {
+           return true;
+           
+       }else {
+           return false ;
+       }
+
     }
-    }
-   
-   
-   
+    
 }
-
-  
-
