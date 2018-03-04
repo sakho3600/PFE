@@ -17,7 +17,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import beans.Admin ;
 import dao.dao_Agent;
-
+import utilitaire.SessionKeyGen ;
 import dao.privs ; 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,17 +36,13 @@ public class test {
      dao_Agent ajent = new dao_Agent() ;
      Agent aj = new Agent() ; 
      List<privs> p =new ArrayList<>() ;
+     SessionKeyGen sessionkey = new SessionKeyGen() ;
+     SessionKeyGen sessionkey2 = new SessionKeyGen() ;
  try {
      
-     
-     
-    boolean a = ajent.ifcanbelogged(10, "md") ;
+     System.out.println(sessionkey.getUuid()) ;
+     System.out.println(sessionkey2.getUuid()) ;
     
-    if ( a)
-    System.out.print("true") ;
-    else {
-       System.out.print("no") ; 
-    }
      
    
 }catch(HibernateException ex){

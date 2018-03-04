@@ -7,6 +7,7 @@ package modele;
 
 import beans.Admin;
 import dao.dao_Admin;
+import utilitaire.SessionKeyGen;
 import java.io.IOException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -24,26 +25,27 @@ import java.io.Serializable;
 
 public class modele_Admin  {
   
-    
-        private String pwd;
-	private String msg;
-	private String user;
-        private static final String userKey="myd" ; /* TODO KEY (randomize)*/
+    /** variables **/
+        private String pwd; // Password
+	private String msg; // Message
+	private String user; // Username
+        private String userKey ; /* unique key pour la session */
         
         
-    
-    Admin a= new Admin();
-    dao_Admin service=new dao_Admin();
+    /** Objects **/
+    Admin admin= new Admin(); // Admin Object
+    dao_Admin service=new dao_Admin(); // dao_Admin to acces the dao
+    SessionKeyGen sessionId= new SessionKeyGen() ; // generateur d'id de session (UUID)
 
     public modele_Admin() {
     }
 
     public Admin getA() {
-        return a;
+        return admin;
     }
 
-    public void setA(Admin a) {
-        this.a = a;
+    public void setA(Admin admin) {
+        this.admin = admin;
     }
 
     public dao_Admin getService() {
@@ -80,23 +82,25 @@ public class modele_Admin  {
 
   public void logmein() throws IOException
   {
-      if (service.ifcanbelogged(a.getUsername(), a.getMotDePasse()))
+      if (service.ifcanbelogged(admin.getUsername(), admin.getMotDePasse())) // verification de l'authentification
       {
-          a= service.ifAdmin(a.getUsername());
-          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userkey", userKey);
-          FacesContext.getCurrentInstance().getExternalContext().redirect("welcome.xhtml");
+          admin = service.ifAdmin(admin.getUsername()); // verification si c'est un Administrateur
+          
+          this.userKey = this.sessionId.getRandomUUIDString() ; // affectation de valeur uuid 
+          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userkey", userKey); // Ajout de id de session
+          FacesContext.getCurrentInstance().getExternalContext().redirect("welcome.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
          
           
-      }else{
+      }else{ // retour a la page de Connexion
 	FacesContext context=FacesContext.getCurrentInstance();
-	context.addMessage(null, new FacesMessage("Username or Password is invalid"));
+	context.addMessage(null, new FacesMessage("Username or Password is invalid")); // Message d'erreur
 	context.addMessage(null, new FacesMessage("+ Check Capslock in keyboard :)"));
          }
       
   
   }
   
-  public void logout() throws IOException
+  public void logout() throws IOException // deconnexion
   {
       FacesContext context = FacesContext.getCurrentInstance(); 
        context.getExternalContext().getSessionMap().remove("userkey") ;
