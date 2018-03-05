@@ -31,10 +31,10 @@
     <p:dialog header="Login" widgetVar="dlg" resizable="false">
         <h:panelGrid columns="2" cellpadding="5">
             <h:outputLabel for="username" value="Username:" />
-            <p:inputText  id="username" value="#{modele_Admin.a.username}" required="true" label="username" />
+            <p:inputText  id="username" value="#{modele_Admin.a.username}" required="true" label="Pseudo" />
  
             <h:outputLabel for="password" value="Password:" />
-            <p:password id="password" value="#{modele_Admin.a.motDePasse}" required="true" label="password" />
+            <p:password id="password" value="#{modele_Admin.a.motDePasse}" required="true" label="Mot de passe" />
  
             <f:facet name="footer">
                 <p:commandButton value="Login" update="growl" action="#{modele_Admin.logmein()}"
