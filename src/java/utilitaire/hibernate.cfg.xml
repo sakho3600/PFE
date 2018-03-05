@@ -45,9 +45,9 @@ Contributor(s):
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/pfe?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
     <property name="hibernate.show_sql">true</property>
- <!--<property name="hibernate.16connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+    <!--<property name="hibernate.16connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
     <property name="hibernate.c3p0.min_size">7</property>
     <property name="hibernate.c3p0.max_size">53</property>
     <property name="hibernate.c3p0.timeout">100</property>
@@ -56,9 +56,11 @@ Contributor(s):
     <property name="hibernate.c3p0.validate">true</property>
    <property name="hibernate.connection.provider_class">org.hibernate.service.
 jdbc.connections.internal.C3P0ConnectionProvider</property>
---> <mapping class="beans.Admin"/>
+-->
+    <mapping class="beans.Admin"/>
     <mapping class="beans.Agent"/>
     <mapping class="beans.Personnel"/>
     <mapping class="beans.user_privs"/>
+    <mapping class="beans.Mission"/>
   </session-factory>
 </hibernate-configuration>

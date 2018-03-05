@@ -14,6 +14,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import dao.privs;
+import java.util.Set;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
@@ -35,6 +37,10 @@ public class Agent extends Personnel implements Serializable{
    @Column(name = "Departement")
    private String Departement; //departement de l'agent
    
+       @OneToMany(mappedBy = "CodeMission")
+           private Set<Mission> Missions;
+
+
 
     public Agent(int MatriculeChef, String Departement, int Matricule, String Pernom, String Nom , String mdp) {
         super(Matricule, Pernom, Nom , mdp);
@@ -42,6 +48,27 @@ public class Agent extends Personnel implements Serializable{
         this.Departement = Departement;
        
         
+    }
+
+    public Set<Mission> getMissions() {
+        return Missions;
+    }
+
+    public void setMissions(Set<Mission> Missions) {
+        this.Missions = Missions;
+    }
+
+    public Agent(int MatriculeChef, String Departement, Set<Mission> Missions) {
+        this.MatriculeChef = MatriculeChef;
+        this.Departement = Departement;
+        this.Missions = Missions;
+    }
+
+    public Agent(int MatriculeChef, String Departement, Set<Mission> Missions, int Matricule, String Pernom, String Nom, String MotDePasse) {
+        super(Matricule, Pernom, Nom, MotDePasse);
+        this.MatriculeChef = MatriculeChef;
+        this.Departement = Departement;
+        this.Missions = Missions;
     }
 
     public Agent() {
