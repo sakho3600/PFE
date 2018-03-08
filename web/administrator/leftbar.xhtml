@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<div class="main-content">
+	<div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+		<!--left-fixed -navigation-->
+		<aside class="sidebar-left">
+      <nav class="navbar navbar-inverse">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".collapse" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <h1><a class="navbar-brand" href="index.html"><span class="fa fa-area-chart"></span> Le Moteur<span class="dashboard_text">Mercedes</span></a></h1>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="sidebar-menu">
+              <li class="header">Gestion des utilisateurs</li>
+              <li class="treeview">
+                <a href="index.html">
+                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                </a>
+              </li>
+			  <li class="treeview">
+                <a href="#">
+                <i class="fa fa-laptop"></i>
+                <span>Controle</span>
+                <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                  <li><a href="adduser.xhtml"><i class="fa fa-angle-right"></i> Ajouter un Administrateur</a></li>
+                  <li><a href="addagent.xhtml"><i class="fa fa-angle-right"></i> Ajouter un Agent </a></li>
+                  <li><a href="users.xhtml"><i class="fa fa-angle-right"></i> Utilisateurs </a></li>
+                </ul>
+              </li>
+              <li class="treeview">
+                <a href="charts.html">
+                <i class="fa fa-pie-chart"></i>
+                <span>Statistique</span>
+                <span class="label label-primary pull-right">charts</span>
+                </a>
+              </li>
+              		  
+              <li class="header">Gestion Assurance</li>
+              <li class="treeview">
+                <a href="#">
+                <i class="fa fa-laptop"></i>
+                <span>Controle</span>
+                <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                  <li><a href="adduser_as.xhtml"><i class="fa fa-angle-right"></i> Ajouter un Assurer</a></li>
+                  <li><a href="tableau_assurance.xhtml"><i class="fa fa-angle-right"></i> Utilisateurs </a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <!-- /.navbar-collapse -->
+      </nav>
+    </aside>
+	</div>
+</div>
+
+		<!--left-fixed -navigation-->		
+</ui:composition>
