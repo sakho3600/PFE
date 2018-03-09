@@ -63,5 +63,6 @@ jdbc.connections.internal.C3P0ConnectionProvider</property>
     <mapping class="beans.user_privs"/>
     <mapping class="beans.Mission"/>
     <mapping class="beans.ville"/>
+    <mapping class="beans.Hebergement"/>
   </session-factory>
 </hibernate-configuration>

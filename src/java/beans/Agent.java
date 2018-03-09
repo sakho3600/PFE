@@ -37,8 +37,8 @@ public class Agent extends Personnel implements Serializable{
    @Column(name = "Departement")
    private String Departement; //departement de l'agent
    
-       @OneToMany(mappedBy = "CodeMission")
-           private Set<Mission> Missions;
+        @OneToMany(mappedBy = "CodeMission")
+            private Set<Mission> Missions;
 
 
 

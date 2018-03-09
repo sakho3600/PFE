@@ -6,11 +6,16 @@
 package beans;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -45,42 +50,62 @@ public class Mission {
     @Temporal(javax.persistence.TemporalType.DATE)
       private Date DateFin;
       
-   @Column (name="NombrePersAcc")
-   private int NombrePersAcc;
-   
-      @Column( name="Destination")
-      private String Destination;
-   
          @Column( name="NbrJours")
       private int NbrJours;
+    @Column (name="Kilometrage")
+     public float Kilometrage;
+ 
+       
+   /* @OneToMany(mappedBy="id")
+    private Set<VilleHeb> VilleHeber;
+  */
+    @OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "LesVilleMission", joinColumns = { @JoinColumn(name = "CodeMission") }, inverseJoinColumns = { @JoinColumn(name = "Code_Postal") })
+	public Set<ville> Les_villes;
 
-    public Mission() {
-    }
+      @OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "LesHebergementMission", joinColumns = { @JoinColumn(name = "CodeMission") }, inverseJoinColumns = { @JoinColumn(name = "CodeHeb") })
+	public Set<Hebergement> Les_Hebergement;
 
-    public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NombrePersAcc, String Destination, int NbrJours) {
+    public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, Set<ville> Les_villes, Set<Hebergement> Les_Hebergement) {
         this.CodeMission = CodeMission;
         this.agent = agent;
         this.Intitule_Mission = Intitule_Mission;
         this.Objectif = Objectif;
         this.DateDeb = DateDeb;
         this.DateFin = DateFin;
-        this.NombrePersAcc = NombrePersAcc;
-        this.Destination = Destination;
         this.NbrJours = NbrJours;
-    }
-
-    public Mission(int CodeMission, Agent agent, String Intitule_Mission) {
-        this.CodeMission = CodeMission;
-        this.agent = agent;
-        this.Intitule_Mission = Intitule_Mission;
-    }
-
-    public Mission(int CodeMission, String Intitule_Mission) {
-        this.CodeMission = CodeMission;
-        this.Intitule_Mission = Intitule_Mission;
+        this.Kilometrage = Kilometrage;
+        this.Les_villes = Les_villes;
+        this.Les_Hebergement = Les_Hebergement;
     }
 
     
+    public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, Set<ville> Les_villes) {
+        this.CodeMission = CodeMission;
+        this.agent = agent;
+        this.Intitule_Mission = Intitule_Mission;
+        this.Objectif = Objectif;
+        this.DateDeb = DateDeb;
+        this.DateFin = DateFin;
+        this.NbrJours = NbrJours;
+        this.Kilometrage = Kilometrage;
+        this.Les_villes = Les_villes;
+    }
+    public Mission() {
+    }
+
+    public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage) {
+        this.CodeMission = CodeMission;
+        this.agent = agent;
+        this.Intitule_Mission = Intitule_Mission;
+        this.Objectif = Objectif;
+        this.DateDeb = DateDeb;
+        this.DateFin = DateFin;
+        this.NbrJours = NbrJours;
+        this.Kilometrage = Kilometrage;
+    }
+
     public int getCodeMission() {
         return CodeMission;
     }
@@ -129,22 +154,6 @@ public class Mission {
         this.DateFin = DateFin;
     }
 
-    public int getNombrePersAcc() {
-        return NombrePersAcc;
-    }
-
-    public void setNombrePersAcc(int NombrePersAcc) {
-        this.NombrePersAcc = NombrePersAcc;
-    }
-
-    public String getDestination() {
-        return Destination;
-    }
-
-    public void setDestination(String Destination) {
-        this.Destination = Destination;
-    }
-
     public int getNbrJours() {
         return NbrJours;
     }
@@ -153,11 +162,29 @@ public class Mission {
         this.NbrJours = NbrJours;
     }
 
-    @Override
-    public String toString() {
-        return "Mission{" + "CodeMission=" + CodeMission + ", Intitule_Mission=" + Intitule_Mission + ", Objectif=" + Objectif + ", DateDeb=" + DateDeb + ", DateFin=" + DateFin + ", NombrePersAcc=" + NombrePersAcc + ", Destination=" + Destination + ", NbrJours=" + NbrJours + '}';
+    public float getKilometrage() {
+        return Kilometrage;
     }
-         
-         
-   
+
+    public void setKilometrage(float Kilometrage) {
+        this.Kilometrage = Kilometrage;
+    }
+
+    public Set<ville> getLes_villes() {
+        return Les_villes;
+    }
+
+    public void setLes_villes(Set<ville> Les_villes) {
+        this.Les_villes = Les_villes;
+    }
+
+    public Set<Hebergement> getLes_Hebergement() {
+        return Les_Hebergement;
+    }
+
+    public void setLes_Hebergement(Set<Hebergement> Les_Hebergement) {
+        this.Les_Hebergement = Les_Hebergement;
+    }
+    
+    
     }

@@ -6,9 +6,15 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -25,7 +31,19 @@ public class ville implements Serializable {
     private int Code_Postal;
     @Column(name ="Nom")
    private String Nom;
-
+  @OneToMany(mappedBy = "CodeHeb")
+         	private Set<Hebergement> Hebergement;
+  
+  
+    public ville(int Code_Postal, String Nom, Set<Hebergement> Hebergement) {
+        this.Code_Postal = Code_Postal;
+        this.Nom = Nom;
+        this.Hebergement = Hebergement;
+    }
+    
+  
+  
+  
     public ville(int Code_Postal, String Nom) {
         this.Code_Postal = Code_Postal;
         this.Nom = Nom;
@@ -53,6 +71,14 @@ public class ville implements Serializable {
     @Override
     public String toString() {
         return Nom+" Code_Postal: " + Code_Postal  ;
+    }
+
+    public Set<Hebergement> getHebergement() {
+        return Hebergement;
+    }
+
+    public void setHebergement(Set<Hebergement> Hebergement) {
+        this.Hebergement = Hebergement;
     }
     
     
