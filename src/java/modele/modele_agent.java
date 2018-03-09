@@ -88,11 +88,19 @@ public class modele_agent {
           
       }else{ // retour a la page INDEX
 	FacesContext context=FacesContext.getCurrentInstance();
-	context.addMessage(null, new FacesMessage("Matricule ou Mot de passe incorrect")); // Message d'erreur
+        context.addMessage(null, new FacesMessage("Matricule ou Mot de passe incorrect")); // Message d'erreur
          }
      
       
   
+  }
+    
+     public void logout() throws IOException // deconnexion
+  {
+      FacesContext context = FacesContext.getCurrentInstance(); 
+       context.getExternalContext().getSessionMap().remove("userkey") ;
+       FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+       
   }
     
     

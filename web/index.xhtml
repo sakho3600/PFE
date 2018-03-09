@@ -52,7 +52,7 @@ and open the template in the editor.
         <div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav cl-effect-5">
 				<li class="active"><a href="index.xhtml" class="page-scroll"><span data-hover="Home">Home</span></a></li>
-				<li><a href="administrator/login.xhtml" class="page-scroll"><span data-hover="Administrator">Administrator</span></a></li>
+				<li><a href="administrator/oldlogin.xhtml" class="page-scroll"><span data-hover="Administrator">Administrator</span></a></li>
 				<li><a href="#Mission" class="page-scroll"><span data-hover="Mission">Mission</span></a></li>
 				<li><a href="#Assuranceform" class="page-scroll"><span data-hover="Assurance">Assurance</span></a></li> 
 				<li><a href="#contact" class="page-scroll"><span data-hover="Contact">Contact</span></a></li>
@@ -76,7 +76,7 @@ and open the template in the editor.
 		<h3 class="text-center">Sortie de mission</h3>
 		<p class="text-center">Connexion</p> <br/>
                 <h:form>
-                    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+                    <p:growl id="growl" sticky="false" showDetail="true" life="3000" />
                     <div class="controls">
                         <center> <h:outputLabel value="Matricule de l'agent : " /> <br/></center>
                         <center> <p:inputText value="#{modele_agent.agent.matricule}"  required="true" requiredMessage="Matricule requis"/> <br/> </center>

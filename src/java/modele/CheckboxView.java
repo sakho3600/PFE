@@ -1,4 +1,4 @@
-package org.primefaces.showcase.view.input;
+package modele;
  
 import beans.ville;
 import dao.dao_ville;
