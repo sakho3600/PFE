@@ -13,7 +13,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import dao.privs;
+import modele.privs;
 import java.util.Set;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;

@@ -5,6 +5,7 @@ package dao;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import modele.privs;
 import beans.Admin;
 import beans.Personnel;
 import java.util.ArrayList;
@@ -114,6 +115,17 @@ public class dao_Admin {
         return privileges;
     }
     
+     /* Ajouter un Personnel */
+   public void ajouter(Object Employ)
+   {
+        try { 
+    openSession() ;
+             s.save(Employ);
+    closeSession() ;
+    }catch(Exception e){
+	e.printStackTrace();
+    }
+    }
     
    
        

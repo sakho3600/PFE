@@ -39,35 +39,43 @@
 <link href="../../resources/adminresource/css/custom.css" rel="stylesheet"> </link>
 <!--//Metis Menu -->
     </h:head>
-    <h:body>
+    <h:body class="cbp-spmenu-push">
       
-            <section>
+          <div class="main-content">
+          
                  <ui:include src="topbar.xhtml" />
-            </section>
-        
+            
+           
+                 <ui:include src="leftbar.xhtml" />
+            
         <div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
 					<h2 class="title1">Ajouter un Administrateur </h2>
 					<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
 						<div class="form-title">
-							<h4>creation de compte admin :</h4>
+							<h4>Creation de compte admin :</h4>
 						</div>
 						<div class="form-body">
-							<h:form> <div class="form-group"> <label for="exampleInputEmail1">Email address</label> <input type="email" class="form-control"  placeholder="Email"> </div>
-                                                           <div class="form-group"> <label for="exampleInputPassword1">Password</label> <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"> </div> 
-                                                           <div class="form-group"> <label for="exampleInputFile">File input</label> <input type="file" id="exampleInputFile"> <p class="help-block">Example block-level help text here.</p> </div> 
-                                                           <div class="checkbox"> <label> <input type="checkbox"> Check me out </label> </div> <button type="submit" class="btn btn-default">Submit</button> </h:form> 
+                                                    <h:form> 
+                                                        <p:growl id="growl" life="2000" />
+                                                        <div class="form-group"> <p:outputLabel  value="Matricule  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.matricule}" placeholder="Matricule"> </p:inputText> </div>
+                                                        <div class="form-group"> <p:outputLabel  value="Nom  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.nom}" placeholder="Nom"> </p:inputText> </div>
+                                                        <div class="form-group"> <p:outputLabel  value="Prenom :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.pernom}" placeholder="Prenom"></p:inputText> </div> 
+                                                        <div class="form-group"> <p:outputLabel  value="Pseudo :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.username}" placeholder="Pseudo"></p:inputText> </div> 
+                                                        <div class="form-group"> <p:outputLabel  value="Mot de passe :">  </p:outputLabel> <p:password class="form-control" value="#{modele_Admin.nouvelleadmin.motDePasse}" placeholder="Mot de Passe"></p:password> </div> 
+                                                        <div class="checkbox"> <p:outputLabel  value="Privileges :">  </p:outputLabel> <h:selectManyCheckbox value="#{privs}" > <f:selectItems value="#{modele_Admin.nouvelleadmin.admin_privs}" /></h:selectManyCheckbox> </div> 
+                                                        <div class="checkbox"> <p:outputLabel  value="Crée">    </p:outputLabel> </div>  
+                                                        <p:commandButton value="Ajouter" id="ajax" update="growl" actionListener="#{modele_Admin.ajouter()}" class="btn btn-default" />
+                                                        </h:form> 
 						</div>
 					</div>
 					</div>
                             </div>
             </div>
+        </div>
         
-        
-            <section>
-                 <ui:include src="leftbar.xhtml" />
-            </section>
+            
             
     
         
@@ -84,7 +92,8 @@
 			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 				showLeftPush = document.getElementById( 'showLeftPush' ),
 				body = document.body;
-				
+                        
+                        
 			showLeftPush.onclick = function() {
 				classie.toggle( this, 'active' );
 				classie.toggle( body, 'cbp-spmenu-push-toright' );

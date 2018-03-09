@@ -10,7 +10,7 @@ package beans;
  * @author Mohammed Mehdi Sarray#
  */
 import com.sun.istack.internal.NotNull;
-import dao.privs;
+import modele.privs;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CollectionTable;

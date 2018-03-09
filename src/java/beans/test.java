@@ -20,7 +20,7 @@ import dao.dao_Agent;
 import dao.dao_Hebergement;
 import dao.dao_ville;
 import utilitaire.SessionKeyGen ;
-import dao.privs ; 
+import modele.privs ; 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

@@ -15,6 +15,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -30,23 +31,70 @@ public class modele_Admin  {
 	private String msg; // Message
 	private String user; // Username
         private String userKey ; /* unique key pour la session */
+        private int matricule ;
+    /** Tables **/
+        private List<privs> privilege ; 
         
         
     /** Objects **/
-    Admin admin= new Admin(); // Admin Object
+    Admin admin= new Admin(); // Admin Object connexion admin
+    Admin nouvelleadmin=new Admin(); // pour la création des administrateurs
     dao_Admin service=new dao_Admin(); // dao_Admin to acces the dao
     SessionKeyGen sessionId= new SessionKeyGen() ; // generateur d'id de session (UUID)
 
     public modele_Admin() {
     }
 
-    public Admin getA() {
+    public String getUserKey() {
+        return userKey;
+    }
+
+    public void setUserKey(String userKey) {
+        this.userKey = userKey;
+    }
+
+    public int getMatricule() {
+        return matricule;
+    }
+
+    public void setMatricule(int matricule) {
+        this.matricule = matricule;
+    }
+
+    public Admin getNouvelleadmin() {
+        return nouvelleadmin;
+    }
+
+    public void setNouvelleadmin(Admin nouvelleadmin) {
+        this.nouvelleadmin = nouvelleadmin;
+    }
+
+    
+    
+    public List<privs> getPrivilege() {
+        return privilege;
+    }
+
+    public void setPrivilege(List<privs> privilege) {
+        this.privilege = privilege;
+    }
+
+    public Admin getAdmin() {
         return admin;
     }
 
-    public void setA(Admin admin) {
+    public void setAdmin(Admin admin) {
         this.admin = admin;
     }
+
+    public SessionKeyGen getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(SessionKeyGen sessionId) {
+        this.sessionId = sessionId;
+    }
+
 
     public dao_Admin getService() {
         return service;
@@ -111,8 +159,8 @@ public class modele_Admin  {
     
     public void ajouter()
     {
-       // this.service.ajouter(this.a);
-        
+     
+        this.service.ajouter(this.nouvelleadmin);
         FacesContext f=FacesContext.getCurrentInstance();
         f.addMessage(null,new FacesMessage("l'admin a bien ete ajouter"));
     }
