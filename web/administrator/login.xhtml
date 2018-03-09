@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f = "http://java.sun.com/jsf/core"
+      >
+    <h:head>
+        <title>Administrator</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- Bootstrap Core CSS -->
+<link href="../../resources/adminresource/css/bootstrap.css" rel='stylesheet' type='text/css' />
+
+<!-- Custom CSS -->
+<link href="../../resources/adminresource/css/style.css" rel='stylesheet' type='text/css' />
+
+<!-- font-awesome icons CSS-->
+<link href="../../resources/adminresource/css/font-awesome.css" rel="stylesheet"> </link>
+<!-- //font-awesome icons CSS-->
+
+ <!-- side nav css file -->
+ <link href='../../resources/adminresource/css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css'/>
+ <!-- side nav css file -->
+ 
+ <!-- js-->
+<script src="../../resources/adminresource/js/jquery-1.11.1.min.js"></script>
+<script src="../../resources/adminresource/js/modernizr.custom.js"></script>
+
+<!--webfonts-->
+<link href="//fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet"></link>
+<!--//webfonts-->
+ 
+<!-- Metis Menu -->
+<script src="../../resources/adminresource/js/metisMenu.min.js"></script>
+<script src="../../resources/adminresource/js/custom.js"></script>
+<link href="../../resources/adminresource/css/custom.css" rel="stylesheet"> </link>
+<!--//Metis Menu -->
+<style>
+    
+    .ui-button {
+        border: none;
+    outline: none;
+    cursor: pointer;
+    color: #fff;
+    background: #F2B33F;
+    width: 40%;
+    padding: .6em 1em;
+    font-size: 1em;
+    margin: 0.5em auto 0;
+    display: block;
+	transition: 0.5s all;
+	-webkit-transition: 0.5s all;
+	-moz-transition: 0.5s all;
+	-ms-transition: 0.5s all;
+	-o-transition: 0.5s all;
+    }
+    .ui-button:hover{
+     background: #337ab7;
+    }
+    .login-page input.user,.login-page input.lock {
+        font-size: 1em;
+    padding: 14px 15px 14px 37px;
+    width: 100%;
+    color: #A8A8A8;
+    outline: none;
+    border: 1px solid #D3D3D3;
+    background: #FFFFFF;
+    margin: 0em 0em 1.5em 0em;
+    }
+    
+       
+    .login-page input.user {
+    background: url(../../resources/adminresource/images/user.png)no-repeat 8px 16px #fff;
+    }
+    .login-page input.lock {
+    background: url(../../resources/adminresource/images/lock.png)no-repeat 8px 16px #fff;
+    }
+</style>
+    
+    </h:head>
+    <h:body>
+        	<!-- main content start-->
+                <div class="main-content">
+		<div id="page-wrapper">
+			<div class="main-page login-page ">
+				<h2 class="title1">Login</h2>
+				<div class="widget-shadow">
+					<div class="login-body">
+                                            <h:form>
+                     <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+                     <p:inputText  value="#{modele_Admin.a.username}" required="true" styleClass="user" placeholder="Enter your username"/>
+                     <p:password value="#{modele_Admin.a.motDePasse}" required="true"  styleClass="lock" placeholder="Enter your password"/>
+							<div class="forgot-grid">
+                                                          
+								<div class="clearfix"> </div>
+							</div>
+							<p:commandButton value="Login" update="growl" action="#{modele_Admin.logmein()}"
+                                                                oncomplete="handleLoginRequest(xhr, status, args)" />
+							
+						</h:form>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<!--footer-->
+		<div class="footer">
+		   <p>  Administration |  <a href="#" target="_blank">Le Moteur-sa</a></p>		</div>
+                 <!--//footer-->
+	</div>
+                <!--scrolling js-->
+	<script src="../../resources/adminresource/../resources/adminresource/js/jquery.nicescroll.js"></script>
+	<script src="../../resources/adminresource/adminresource/js/scripts.js"></script>
+	<!--//scrolling js-->
+	
+	<!-- Bootstrap Core JavaScript -->
+   <script src="../../resources/adminresource/js/bootstrap.js"> </script>
+	<!-- //Bootstrap Core JavaScript -->
+    </h:body>
+    
+</html>
