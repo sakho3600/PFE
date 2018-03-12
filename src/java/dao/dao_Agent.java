@@ -59,6 +59,25 @@ public class dao_Agent {
          return result ;
                 
     }
+    public boolean ifExists(int matricule)
+    {  
+       Agent result = new Agent();
+       boolean resultat = false  ;
+       
+        try{
+        openSession();
+         result = (Agent) s.get(Agent.class,matricule) ;
+         if(result !=  null)
+         {
+             resultat = true;
+         }
+        closeSession();
+           }catch(Exception e){
+	e.printStackTrace();
+        }
+         return resultat ;
+                
+    }
     
     
     public boolean ifcanbelogged(int matricule,String mdp)
@@ -113,5 +132,17 @@ public class dao_Agent {
         l=null;}*/
     closeSession();
     return l;}
+    
+    /* Ajouter un Personnel */
+   public void ajouter(Object Employ)
+   {
+        try { 
+    openSession() ;
+             s.save(Employ);
+    closeSession() ;
+    }catch(Exception e){
+	e.printStackTrace();
+    }
+    }
     
 }

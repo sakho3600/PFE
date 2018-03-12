@@ -8,6 +8,9 @@ package modele;
 import beans.Agent;
 import dao.dao_Agent;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import utilitaire.SessionKeyGen;
@@ -27,12 +30,28 @@ public class modele_agent {
      private String password;
      private String SessionKey ;
    
+     /** Tables **/ 
+     List<String> Departement  ;
+     List<String> selectedDepartements ;
     /** Objects **/
     dao_Agent service = new dao_Agent();
-    Agent agent = new Agent();
+    Agent agent = new Agent(); // connected 
+    Agent nouvelleagent = new Agent(); // the new one 
+    
+    
     SessionKeyGen sessionId= new SessionKeyGen() ; // generateur d'id de session (UUID)
     
     public modele_agent() {
+    }
+    
+    @PostConstruct
+    public void modele_agent() {
+        
+        this.Departement = new ArrayList<String>() ;
+        this.selectedDepartements = new ArrayList<String>() ;
+        this.Departement.add("Resource Humaine") ; 
+       
+                
     }
 
     public int getMatricule() {
@@ -74,6 +93,22 @@ public class modele_agent {
     public void setAgent(Agent agent) {
         this.agent = agent;
     }
+
+    public Agent getNouvelleagent() {
+        return nouvelleagent;
+    }
+
+    public void setNouvelleagent(Agent nouvelleagent) {
+        this.nouvelleagent = nouvelleagent;
+    }
+
+    public SessionKeyGen getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(SessionKeyGen sessionId) {
+        this.sessionId = sessionId;
+    }
     
     
     public void logmein() throws IOException
@@ -102,6 +137,22 @@ public class modele_agent {
        FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
        
   }
+     
+     public void ajouter() {
+         
+         if(!service.ifExists(this.nouvelleagent.getMatricule()))
+         {
+             service.ajouter(this.nouvelleagent);
+             this.nouvelleagent = new Agent();
+             FacesContext f=FacesContext.getCurrentInstance();
+             f.addMessage(null,new FacesMessage("Ajout effectuer"));
+             
+         }else{
+              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Matricule Existant."));
+              this.nouvelleagent = new Agent();
+              
+         }
+     }
     
     
     

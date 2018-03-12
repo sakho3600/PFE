@@ -10,7 +10,7 @@ package modele;
  * @author Mohammed Mehdi Sarray#
  */
 public enum privs {
-    ALL,GMA,GA,GM,ADDuser,UPuser,DELuser,N ;
+    ALL,GMA,GA,GM,ADDuser,UPuser,DELuser;
     /**
      * ALL = everything
      * GMA = Gestion Mission Assurance 
@@ -19,6 +19,5 @@ public enum privs {
      * ADDuser = Ajout d'employer
      * UPuser = Modification d'employer
      * DELuser = Suppression d'employer
-     * N = Nothing 
      */
 }

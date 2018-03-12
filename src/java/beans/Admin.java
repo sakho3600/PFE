@@ -20,6 +20,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -37,11 +39,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Admin extends Personnel implements Serializable{
     
    private static final long serialVersionUID = 1L; 
-    
-   @Column(name = "privs_id")
-   @NotNull
-    private int admin_ID ; // for the privileges 
-      // privileges d'acces
+   
+   
    
    @Column(name = "username", unique = true) //unique dans la BD
    @NotNull
@@ -67,22 +66,12 @@ public class Admin extends Personnel implements Serializable{
      
     }
 
-    
-
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public int getAdmin_ID() {
-        return admin_ID;
-    }
-
-    public void setAdmin_ID(int admin_ID) {
-        this.admin_ID = admin_ID;
     }
 
     public List<privs> getAdmin_privs() {

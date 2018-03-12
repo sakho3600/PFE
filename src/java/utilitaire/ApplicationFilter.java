@@ -61,7 +61,7 @@ public class ApplicationFilter implements Filter{
          */
          
          if (loggedIn || loginRequest || resourceRequest) {
-            if (!resourceRequest) { // Prevent browser from caching restricted resources. See also https://stackoverflow.com/q/4194207/157882
+            if (!resourceRequest) { // Prevent browser from caching restricted resources. 
                 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
                 response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
                 response.setDateHeader("Expires", 0); // Proxies.

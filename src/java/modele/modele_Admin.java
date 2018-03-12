@@ -15,7 +15,9 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 
 /**
  *
@@ -33,8 +35,9 @@ public class modele_Admin  {
         private String userKey ; /* unique key pour la session */
         private int matricule ;
     /** Tables **/
-        private List<privs> privilege ; 
-        
+        private List<privs> privilege ; // les privileges
+        private List<privs> selectedPrivs; // les privileges qui seront choisit seront affecter dans se tableau
+           
         
     /** Objects **/
     Admin admin= new Admin(); // Admin Object connexion admin
@@ -42,7 +45,28 @@ public class modele_Admin  {
     dao_Admin service=new dao_Admin(); // dao_Admin to acces the dao
     SessionKeyGen sessionId= new SessionKeyGen() ; // generateur d'id de session (UUID)
 
-    public modele_Admin() {
+    public modele_Admin() {  
+    }
+    @PostConstruct // implementation des privileges a afficher
+    public void init()
+    {   
+        selectedPrivs = new ArrayList<privs>() ;
+        privilege = new ArrayList<privs>() ;
+        privilege.add(privs.GA) ;
+        privilege.add(privs.ADDuser) ; 
+        privilege.add(privs.ALL);
+        privilege.add(privs.GM) ;
+        privilege.add(privs.DELuser);
+        privilege.add(privs.GMA);
+        privilege.add(privs.UPuser) ;
+    }
+
+    public List<privs> getSelectedPrivs() {
+        return selectedPrivs;
+    }
+
+    public void setSelectedPrivs(List<privs> selectedPrivs) {
+        this.selectedPrivs = selectedPrivs;
     }
 
     public String getUserKey() {
@@ -128,6 +152,7 @@ public class modele_Admin  {
         this.user = user;
     }
 
+    /** verification de l'authentification **/
   public void logmein() throws IOException
   {
       if (service.ifcanbelogged(admin.getUsername(), admin.getMotDePasse())) // verification de l'authentification
@@ -157,12 +182,44 @@ public class modele_Admin  {
   }
 
     
-    public void ajouter()
+    public void ajouter() // ajout d'un nouvelle administrateur
     {
-     
-        this.service.ajouter(this.nouvelleadmin);
+       
+        
+        
+       if (service.ifExistsAdmin(this.nouvelleadmin.getMatricule()) && service.ifAdminvalid(this.nouvelleadmin.getUsername() ) )
+            { 
+             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Matricule et Username Existant."));
+             this.selectedPrivs = new ArrayList<privs>() ; 
+             this.nouvelleadmin = new Admin();
+             } 
+       else if (service.ifExistsAdmin(this.nouvelleadmin.getMatricule()) == true && service.ifAdminvalid(this.nouvelleadmin.getUsername()) == false )
+       {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Matricule Existant."));
+            this.selectedPrivs = new ArrayList<privs>() ;  
+            this.nouvelleadmin = new Admin();
+       }
+       else if (service.ifExistsAdmin(this.nouvelleadmin.getMatricule()) == false && service.ifAdminvalid(this.nouvelleadmin.getUsername()) == true ) 
+       {
+           FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Username Existant."));
+           this.selectedPrivs = new ArrayList<privs>() ;  
+           this.nouvelleadmin = new Admin();
+       }
+       else {
+           if (this.selectedPrivs.contains(privs.ALL)){ // si le privilege du super admin a ete choisit donc les autres privileges ne seront pas necessaire
+               this.selectedPrivs = new ArrayList<privs>() ;
+               this.selectedPrivs.add(privs.ALL) ;
+           }
+           this.nouvelleadmin.setAdmin_privs(this.selectedPrivs); // ajout des privileges
+           this.service.ajouter(this.nouvelleadmin);
+        
         FacesContext f=FacesContext.getCurrentInstance();
-        f.addMessage(null,new FacesMessage("l'admin a bien ete ajouter"));
-    }
+        f.addMessage(null,new FacesMessage("Ajout effectuer"));
+        
+        
+        this.nouvelleadmin = new Admin(); // pour l'initialisation du formulaire apré l'ajout  
+        this.selectedPrivs = new ArrayList<privs>() ; // initialisation du checkbox           
+                      }              
+        }
           
 }

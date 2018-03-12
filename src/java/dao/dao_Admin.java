@@ -54,6 +54,28 @@ public class dao_Admin {
      return ds ;   
         
     }
+     
+     
+     public boolean ifAdminvalid(String username)
+    {
+       boolean result ; 
+        
+       openSession();
+        
+       String hq="FROM Admin A WHERE A.username = :user" ;
+       Query query = s.createQuery(hq);
+       query.setParameter("user", username);
+        if (!query.list().isEmpty()){
+       result = true ;
+            }
+        else{
+            result = false ;
+        }
+        closeSession();
+        
+    return result ;
+        
+    }
     
     public boolean ifcanbelogged(String username,String mdp)
     {
