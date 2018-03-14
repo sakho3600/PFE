@@ -34,8 +34,21 @@ public class test {
     
  
  public static void main (String []args){
+     dao_ville d=new dao_ville();
+     ville v=new ville(8,"dd");
+     ville v1=new ville (9,"ss");
+     List<String> l=new ArrayList<>();
+     l.add(v.toString());
+     l.add(v1.toString());
      
-     dao_Admin servicead = new dao_Admin() ;
+     Set<ville> lv=new HashSet<>();
+     lv=d.StringTOVille(l);
+     for (ville st:lv)
+         System.out.print(st.toString());
+     
+     
+     
+ /*    dao_Admin servicead = new dao_Admin() ;
  Admin adm = new Admin();
 
  
@@ -51,5 +64,5 @@ adm.setNom("leet");
 adm.setPernom("leet");
 
 
-   servicead.ajouter(adm);
+   servicead.ajouter(adm);*/
 }}

@@ -10,10 +10,27 @@ and open the template in the editor.
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
    <h:head>
-       
+          <title>Administrator</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+<!-- Bootstrap Core CSS -->
+<link href="../../resources/adminresource/css/bootstrap.css" rel='stylesheet' type='text/css' />
+<!-- Custom CSS -->
+<link href="../../resources/adminresource/css/style.css" rel='stylesheet' type='text/css' />
+
+<!-- font-awesome icons CSS-->
+<link href="../../resources/adminresource/css/font-awesome.css" rel="stylesheet"/> 
+<!-- //font-awesome icons CSS-->
+
+ <!-- side nav css file -->
+
+<!--webfonts-->
     </h:head>
-    <h:body><h:form>
-    <h:panelGrid columns="2" cellpadding="5">
+    <h:body>
        
         <h:outputLabel for="multiple" value="Multiple:" />
         <p:selectCheckboxMenu id="multiple" value="#{checkboxView.selectedCities2}" label="Cities" multiple="true"
@@ -21,22 +38,6 @@ and open the template in the editor.
             <f:selectItems value="#{checkboxView.cities}" />
         </p:selectCheckboxMenu>
          
-       
-    </h:panelGrid>
- 
-    <p:commandButton value="Submit" update="displayItems" oncomplete="PF('itemDialog').show()" style="margin-top:10px;" />
- 
-    <p:dialog header="Selected Items" modal="true" showEffect="fade" hideEffect="fade" widgetVar="itemDialog" width="250">
-        <p:outputPanel id="displayItems">
-            
-            <p:dataList value="#{checkboxView.selectedCities2}" var="city" emptyMessage="No cities selected">
-                <f:facet name="header">
-                    Multiple
-                </f:facet>
-                #{city}
-            </p:dataList>
-            </p:outputPanel>
-    </p:dialog>
-</h:form>
-    </h:body>
+    
+     </h:body>
 </html>

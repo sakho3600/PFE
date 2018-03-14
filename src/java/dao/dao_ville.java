@@ -7,7 +7,9 @@ package dao;
 
 import beans.ville;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import utilitaire.HibernateUtil;
@@ -43,6 +45,23 @@ public class dao_ville {
      return list ;   
         
     }
+     public Set<ville> StringTOVille(List<String> l){
+      Session s =HibernateUtil.getSessionFactory().openSession();
+        s.beginTransaction();
+     
+         
+         Set<ville> lv=new HashSet<>();
+     String st;    
+     for (String str:l){
+             st=str.substring(str.indexOf(':')+2,str.length());
+            lv.add((ville) s.get(ville.class,Integer.parseInt(st))) ;   
+
+     }
+     
+      s.getTransaction().commit();
+        s.close();
+        return lv;
+     }
      
      public void ajout(ville v){
       Session s =HibernateUtil.getSessionFactory().openSession();

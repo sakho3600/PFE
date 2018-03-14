@@ -6,9 +6,15 @@
 package modele;
 
 import beans.Agent;
+import beans.Mission;
+import beans.ville;
 import dao.dao_Agent;
+import dao.dao_Mission;
+import dao.dao_ville;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -16,7 +22,15 @@ import javax.faces.bean.SessionScoped;
 import utilitaire.SessionKeyGen;
 import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
-
+ 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+ 
+import org.primefaces.PrimeFaces;
+import org.primefaces.event.SelectEvent;
 /**
  *
  * @author Mohammed Mehdi Sarray#
@@ -24,6 +38,20 @@ import javax.faces.application.FacesMessage;
 @ManagedBean
 @SessionScoped
 public class modele_agent {
+    
+    //Les villes
+    private String[] selectedCities2;
+    private List<String> cities;
+    dao_ville d=new dao_ville();
+     
+    //Les dates
+    private Date date1;
+    private Date date2;
+    
+    // type de la mission
+      private String type;   
+  
+    
     
     /** variables **/
      private int matricule;
@@ -37,8 +65,9 @@ public class modele_agent {
     dao_Agent service = new dao_Agent();
     Agent agent = new Agent(); // connected 
     Agent nouvelleagent = new Agent(); // the new one 
-    
-    
+    Mission mission= new Mission();
+    dao_Mission serviceMission= new dao_Mission();
+    dao_ville serviceville= new dao_ville();
     SessionKeyGen sessionId= new SessionKeyGen() ; // generateur d'id de session (UUID)
     
     public modele_agent() {
@@ -50,12 +79,75 @@ public class modele_agent {
         this.Departement = new ArrayList<String>() ;
         this.selectedDepartements = new ArrayList<String>() ;
         this.Departement.add("Resource Humaine") ; 
+         cities = new ArrayList<String>();
+      List<ville> l=new ArrayList<>();
+      l=d.ListerVille();
+      for (ville str:l)
+          cities.add(str.toString());
        
-                
     }
+                
+    
+ 
+ 
+    public String[] getSelectedCities2() {
+        return selectedCities2;
+    }
+ 
+    public void setSelectedCities2(String[] selectedCities2) {
+        this.selectedCities2 = selectedCities2;
+    }
+ 
+    public List<String> getCities() {
+        return cities;
+    }
+    
+     public String getType() {
+        return type;
+    }
+ 
+    public void setType(String type) {
+        this.type = type;
+    }
+ 
+     
+ 
+
 
     public int getMatricule() {
         return matricule;
+    }
+
+    public List<String> getDepartement() {
+        return Departement;
+    }
+
+    public void setDepartement(List<String> Departement) {
+        this.Departement = Departement;
+    }
+
+    public List<String> getSelectedDepartements() {
+        return selectedDepartements;
+    }
+
+    public void setSelectedDepartements(List<String> selectedDepartements) {
+        this.selectedDepartements = selectedDepartements;
+    }
+
+    public Mission getMission() {
+        return mission;
+    }
+
+    public void setMission(Mission mission) {
+        this.mission = mission;
+    }
+
+    public dao_Mission getServiceMission() {
+        return serviceMission;
+    }
+
+    public void setServiceMission(dao_Mission serviceMission) {
+        this.serviceMission = serviceMission;
     }
 
     public void setMatricule(int matricule) {
@@ -110,12 +202,40 @@ public class modele_agent {
         this.sessionId = sessionId;
     }
     
+     public void onDateSelect(SelectEvent event) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+    }
+     
+    public void click() {
+        PrimeFaces.current().ajax().update("form:display");
+        PrimeFaces.current().executeScript("PF('dlg').show()");
+    }
+ 
+    public Date getDate1() {
+        return date1;
+    }
+ 
+    public void setDate1(Date date1) {
+        this.date1 = date1;
+    }
+ 
+    public Date getDate2() {
+        return date2;
+    }
+ 
+    public void setDate2(Date date2) {
+        this.date2 = date2;
+    }
+ 
+    
     
     public void logmein() throws IOException
   {
       if (service.ifcanbelogged(agent.getMatricule(),agent.getMotDePasse())) // verification de l'authentification
       {
-      
+      agent=service.ifExistsAgent(agent.getMatricule());
           this.SessionKey = this.sessionId.getRandomUUIDString() ; // affectation de valeur uuid 
           FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userkey", SessionKey); // Ajout de id de session
           FacesContext.getCurrentInstance().getExternalContext().redirect("mission/welcome.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
@@ -153,8 +273,18 @@ public class modele_agent {
               
          }
      }
-    
-    
-    
+     public void ajouterMission(){
+     
+         this.mission.setAgent(service.ifExistsAgent(this.agent.getMatricule()));
+        mission.setAgent(agent);
+        mission.setLes_villes(serviceville.StringTOVille(Arrays.asList(getSelectedCities2())));
+        mission.setType(type);
+        mission.setDateDeb(date1);
+        mission.setDateFin(date2);
+        serviceMission.ajoutMission(mission);
+         this.mission=new Mission();
+         FacesContext f=FacesContext.getCurrentInstance();
+        f.addMessage(null,new FacesMessage("Ajout effectuer"));
+        }
     
 }

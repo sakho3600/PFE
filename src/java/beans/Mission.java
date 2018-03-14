@@ -11,9 +11,12 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -28,6 +31,7 @@ import javax.persistence.Temporal;
 @Table(name = "Mission")
 public class Mission {
     @Id
+   @GeneratedValue (strategy=GenerationType.AUTO)
    @Column(name ="CodeMission" , unique = true) // valeur unique dans la BD 
     private int CodeMission ;
    
@@ -55,15 +59,20 @@ public class Mission {
     @Column (name="Kilometrage")
      public float Kilometrage;
  
-       
+    @Column (name="Type")
+     public String type;
+ 
+    @Column (name="Etat")
+    public int Etat;    
+           
    /* @OneToMany(mappedBy="id")
     private Set<VilleHeb> VilleHeber;
   */
-    @OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "LesVilleMission", joinColumns = { @JoinColumn(name = "CodeMission") }, inverseJoinColumns = { @JoinColumn(name = "Code_Postal") })
+    @ManyToMany(cascade = CascadeType.ALL )
+	@JoinTable(name = "LesVilleMission", joinColumns = { @JoinColumn(name = "CodeMission") }, inverseJoinColumns = { @JoinColumn(name = "Code_Postal")})
 	public Set<ville> Les_villes;
 
-      @OneToMany(cascade = CascadeType.ALL)
+      @ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "LesHebergementMission", joinColumns = { @JoinColumn(name = "CodeMission") }, inverseJoinColumns = { @JoinColumn(name = "CodeHeb") })
 	public Set<Hebergement> Les_Hebergement;
 
@@ -104,6 +113,21 @@ public class Mission {
         this.DateFin = DateFin;
         this.NbrJours = NbrJours;
         this.Kilometrage = Kilometrage;
+    }
+
+    public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, String type, int Etat, Set<ville> Les_villes, Set<Hebergement> Les_Hebergement) {
+        this.CodeMission = CodeMission;
+        this.agent = agent;
+        this.Intitule_Mission = Intitule_Mission;
+        this.Objectif = Objectif;
+        this.DateDeb = DateDeb;
+        this.DateFin = DateFin;
+        this.NbrJours = NbrJours;
+        this.Kilometrage = Kilometrage;
+        this.type = type;
+        this.Etat = Etat;
+        this.Les_villes = Les_villes;
+        this.Les_Hebergement = Les_Hebergement;
     }
 
     public int getCodeMission() {
@@ -184,6 +208,22 @@ public class Mission {
 
     public void setLes_Hebergement(Set<Hebergement> Les_Hebergement) {
         this.Les_Hebergement = Les_Hebergement;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getEtat() {
+        return Etat;
+    }
+
+    public void setEtat(int Etat) {
+        this.Etat = Etat;
     }
     
     
