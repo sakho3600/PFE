@@ -38,6 +38,9 @@
 <script src="../../resources/adminresource/js/custom.js"></script>
 <link href="../../resources/adminresource/css/custom.css" rel="stylesheet"> </link>
 <!--//Metis Menu -->
+<style>
+
+</style>
     </h:head>
     <h:body class="cbp-spmenu-push">
       
@@ -51,10 +54,10 @@
         <div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
-					<h2 class="title1">Ajouter un Administrateur </h2>
+					<h2 class="title1">Modifer / Supprimer un agent </h2>
 					<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
 						<div class="form-title">
-							<h4>Creation de compte admin :</h4>
+							<h4>Agent :</h4>
 						</div>
 						<div class="form-body">
                                                     <h:form> 
@@ -62,25 +65,27 @@
                                                         
                                                           </p:messages>
                                                         
-                                                        <div class="form-group"> <p:outputLabel  value="Matricule  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.matricule}" placeholder="Matricule" required="true"> </p:inputText> </div>
-                                                        <div class="form-group"> <p:outputLabel  value="Nom  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.nom}" placeholder="Nom" required="true" > </p:inputText> </div>
-                                                        <div class="form-group"> <p:outputLabel  value="Prenom :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.pernom}" placeholder="Prenom" required="true"></p:inputText> </div> 
-                                                        <div class="form-group"> <p:outputLabel  value="Pseudo :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.username}" placeholder="Pseudo" required="true"></p:inputText> </div> 
-                                                        <div class="form-group"> <p:outputLabel  value="Mot de passe :">  </p:outputLabel> <p:password class="form-control" value="#{modele_Admin.nouvelleadmin.motDePasse}" placeholder="Mot de Passe" required="true"></p:password> </div> 
-                                                        <div class="form-group"> <p:outputLabel  value="Privileges :"> </p:outputLabel> 
-                                                        <p:selectManyCheckbox id="grid" value="#{modele_Admin.selectedPrivs}" layout="grid" columns="3" converter="converenum">
-                                                            <f:selectItems value="#{modele_Admin.privilege}" var="privs" itemLabel="#{privs}" itemValue="#{privs}" />
-                                                        </p:selectManyCheckbox>  </div>
-                                                        <div class="form-group"> <p class="help-block">GA = Gestion Assurance <br/> 
-                                                                GM = Gestion Mission <br/>
-                                                                UPuser = Modifier un utilisateur <br/>
-                                                                ADDuser = Ajout des utilisateurs <br/>
-                                                                DELuser = suppression des utilisateurs <br/>
-                                                                GMA = Gestion Mission+Assurance <br/>
-                                                                ALL = Tout les droits </p></div> 
+                                                        <div class="form-group"> <p:outputLabel  value="Matricule  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.nouvelleagent.matricule}" placeholder="Matricule" required="true" disabled="true"> </p:inputText> </div>
+                                                        <div class="form-group"> <p:outputLabel  value="Nom  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.nouvelleagent.nom}" placeholder="Nom"  > </p:inputText> </div>
+                                                        <div class="form-group"> <p:outputLabel  value="Prenom :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.nouvelleagent.pernom}" placeholder="Prenom" ></p:inputText> </div> 
                                                         
-                                                        <p:commandButton value="Ajouter" id="ajax"  actionListener="#{modele_Admin.ajouter()}" class="btn btn-default" ajax="false"/>
-                                                        </h:form> 
+                                                        <div class="form-group"> <p:outputLabel  value="Mot de passe :">  </p:outputLabel> <p:password class="form-control" value="#{modele_agent.nouvelleagent.motDePasse}" placeholder="Mot de Passe" ></p:password> </div> 
+                                                      
+                                                        
+                                                         <div class="form-group"> 
+                                                        <p:commandButton value="Modifer"   actionListener="#{modele_agent.updateagent()}" class="btn btn-default" ajax="false">
+                                                        
+                                                        </p:commandButton>
+                                                        
+                                                        <p:commandButton value="Supprimer"   actionListener="#{modele_agent.deleteAgent()}" class="btn btn-default" ajax="false"/>
+                                                       
+                                                       
+                                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                       <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                       <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                    </p:confirmDialog>
+                                                     </div>
+                                                    </h:form> 
 						</div>
 					</div>
 					</div>
@@ -133,4 +138,3 @@
     </h:body>
         </f:view>
 </html>
-    

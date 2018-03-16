@@ -33,7 +33,8 @@ public class modele_Admin  {
 	private String msg; // Message
 	private String user; // Username
         private String userKey ; /* unique key pour la session */
-        private int matricule ;
+        private int matricule ; // matricule utiliser pour l'update
+        private boolean hide = true ; // panelgrid hiding 
     /** Tables **/
         private List<privs> privilege ; // les privileges
         private List<privs> selectedPrivs; // les privileges qui seront choisit seront affecter dans se tableau
@@ -152,6 +153,16 @@ public class modele_Admin  {
         this.user = user;
     }
 
+    public boolean isHide() {
+        return hide;
+    }
+
+    public void setHide(boolean hide) {
+        this.hide = hide;
+    }
+    
+    
+
     /** verification de l'authentification **/
   public void logmein() throws IOException
   {
@@ -167,7 +178,7 @@ public class modele_Admin  {
       }else{ // retour a la page de Connexion
 	FacesContext context=FacesContext.getCurrentInstance();
 	context.addMessage(null, new FacesMessage("Username or Password is invalid")); // Message d'erreur
-	context.addMessage(null, new FacesMessage("+ Check Capslock in keyboard :)"));
+	
          }
       
   
@@ -181,35 +192,42 @@ public class modele_Admin  {
        
   }
 
-    
+  
+  
     public void ajouter() // ajout d'un nouvelle administrateur
     {
        
         
-        
+        // verifier la matricule et le username de l'admin existe deja
        if (service.ifExistsAdmin(this.nouvelleadmin.getMatricule()) && service.ifAdminvalid(this.nouvelleadmin.getUsername() ) )
             { 
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Matricule et Username Existant."));
              this.selectedPrivs = new ArrayList<privs>() ; 
              this.nouvelleadmin = new Admin();
+            
              } 
+       
+       // verifier si
        else if (service.ifExistsAdmin(this.nouvelleadmin.getMatricule()) == true && service.ifAdminvalid(this.nouvelleadmin.getUsername()) == false )
        {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Matricule Existant."));
             this.selectedPrivs = new ArrayList<privs>() ;  
             this.nouvelleadmin = new Admin();
+            
        }
        else if (service.ifExistsAdmin(this.nouvelleadmin.getMatricule()) == false && service.ifAdminvalid(this.nouvelleadmin.getUsername()) == true ) 
        {
            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Username Existant."));
            this.selectedPrivs = new ArrayList<privs>() ;  
            this.nouvelleadmin = new Admin();
+           
        }
        else {
            if (this.selectedPrivs.contains(privs.ALL)){ // si le privilege du super admin a ete choisit donc les autres privileges ne seront pas necessaire
                this.selectedPrivs = new ArrayList<privs>() ;
                this.selectedPrivs.add(privs.ALL) ;
            }
+          
            this.nouvelleadmin.setAdmin_privs(this.selectedPrivs); // ajout des privileges
            this.service.ajouter(this.nouvelleadmin);
         
@@ -218,7 +236,8 @@ public class modele_Admin  {
         
         
         this.nouvelleadmin = new Admin(); // pour l'initialisation du formulaire apré l'ajout  
-        this.selectedPrivs = new ArrayList<privs>() ; // initialisation du checkbox           
+        this.selectedPrivs = new ArrayList<privs>() ; // initialisation du checkbox    
+        
                       }              
         }
           

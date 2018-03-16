@@ -50,17 +50,17 @@ public class modele_agent {
     
     // type de la mission
       private String type;   
-  
-    
+      private String Message;
+     
     
     /** variables **/
      private int matricule;
      private String password;
      private String SessionKey ;
-   
+     private String Departement  ;
      /** Tables **/ 
-     List<String> Departement  ;
-     List<String> selectedDepartements ;
+    private List<Agent> agents ;
+   
     /** Objects **/
     dao_Agent service = new dao_Agent();
     Agent agent = new Agent(); // connected 
@@ -76,9 +76,9 @@ public class modele_agent {
     @PostConstruct
     public void modele_agent() {
         
-        this.Departement = new ArrayList<String>() ;
-        this.selectedDepartements = new ArrayList<String>() ;
-        this.Departement.add("Resource Humaine") ; 
+       
+   
+        //this.Departement.add("Resource Humaine") ; 
          cities = new ArrayList<String>();
       List<ville> l=new ArrayList<>();
       l=d.ListerVille();
@@ -118,21 +118,17 @@ public class modele_agent {
         return matricule;
     }
 
-    public List<String> getDepartement() {
+    public String getDepartement() {
         return Departement;
     }
 
-    public void setDepartement(List<String> Departement) {
+    public void setDepartement(String Departement) {
         this.Departement = Departement;
     }
 
-    public List<String> getSelectedDepartements() {
-        return selectedDepartements;
-    }
+    
 
-    public void setSelectedDepartements(List<String> selectedDepartements) {
-        this.selectedDepartements = selectedDepartements;
-    }
+  
 
     public Mission getMission() {
         return mission;
@@ -201,6 +197,10 @@ public class modele_agent {
     public void setSessionId(SessionKeyGen sessionId) {
         this.sessionId = sessionId;
     }
+
+    
+    
+    
     
      public void onDateSelect(SelectEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -228,7 +228,39 @@ public class modele_agent {
     public void setDate2(Date date2) {
         this.date2 = date2;
     }
- 
+
+    public dao_ville getD() {
+        return d;
+    }
+
+    public void setD(dao_ville d) {
+        this.d = d;
+    }
+
+    public String getMessage() {
+        return Message;
+    }
+
+    public void setMessage(String Message) {
+        this.Message = Message;
+    }
+
+    public dao_ville getServiceville() {
+        return serviceville;
+    }
+
+    public void setServiceville(dao_ville serviceville) {
+        this.serviceville = serviceville;
+    }
+
+    public List<Agent> getAgents() {
+        return agents;
+    }
+
+    public void setAgents(List<Agent> agents) {
+        this.agents = agents;
+    }
+    
     
     
     public void logmein() throws IOException
@@ -257,11 +289,12 @@ public class modele_agent {
        FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
        
   }
-     
+     /**creation d'un nouvelle agent**/
      public void ajouter() {
          
          if(!service.ifExists(this.nouvelleagent.getMatricule()))
-         {
+         {   
+             this.nouvelleagent.setDepartement(this.Departement);
              service.ajouter(this.nouvelleagent);
              this.nouvelleagent = new Agent();
              FacesContext f=FacesContext.getCurrentInstance();
@@ -273,18 +306,60 @@ public class modele_agent {
               
          }
      }
+     // ajout d'une mission
      public void ajouterMission(){
      
          this.mission.setAgent(service.ifExistsAgent(this.agent.getMatricule()));
+         
         mission.setAgent(agent);
         mission.setLes_villes(serviceville.StringTOVille(Arrays.asList(getSelectedCities2())));
         mission.setType(type);
         mission.setDateDeb(date1);
         mission.setDateFin(date2);
+        
         serviceMission.ajoutMission(mission);
+        
          this.mission=new Mission();
+         
          FacesContext f=FacesContext.getCurrentInstance();
-        f.addMessage(null,new FacesMessage("Ajout effectuer"));
+         f.addMessage(null,new FacesMessage("Ajout effectuer"));
         }
+     // redirect to page edit page
+     public void leadstoupdate() throws IOException {
+       
+      if(
+          this.service.ifExists(this.matricule)){
+          this.nouvelleagent = this.service.ifExistsAgent(this.matricule) ;
+          
+          FacesContext.getCurrentInstance().getExternalContext().redirect("agentdetail.xhtml");
+      }else{
+          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Matricule inexistante."));
+      }
+          
+      
+       }  
+     public void updateagent() throws IOException
+      {
+          
+          this.Message = "Operation effectuer , Agent modifier" ;
+          
+          this.service.update(this.nouvelleagent);
+           this.nouvelleagent = new Agent();
+          FacesContext.getCurrentInstance().getExternalContext().redirect("users.xhtml");
+      }
+     public void deleteAgent() throws IOException
+     {
+         this.Message = "Operation effectuer , Agent supprimer" ;
+         this.service.delete(this.nouvelleagent);
+          this.nouvelleagent = new Agent();
+           FacesContext.getCurrentInstance().getExternalContext().redirect("users.xhtml");
+     }
+     
+     public List<Agent> tableAgent()
+     {
+        return  this.agents = service.listerAgent() ;
+     }
+     
+     
     
 }

@@ -133,7 +133,7 @@ public class dao_Agent {
     closeSession();
     return l;}
     
-    /* Ajouter un Personnel */
+    /* Ajouter un agent */
    public void ajouter(Object Employ)
    {
         try { 
@@ -145,4 +145,49 @@ public class dao_Agent {
     }
     }
     
+   
+   public void update(Agent Employ)
+   {
+       try { 
+    openSession() ;
+             s.update(Employ);
+    closeSession() ;
+    }catch(Exception e){
+	e.printStackTrace();
+    }
+    
+   }
+   
+   public void delete(Agent Employ)
+   {
+       try { 
+    openSession() ;
+             s.delete(Employ);
+    closeSession() ;
+    }catch(Exception e){
+	e.printStackTrace();
+    }
+    }
+   
+   
+   public List<Agent> listerAgent()
+   {
+        List<Agent> listeAgent= new ArrayList<>();
+       try { 
+    openSession() ;
+             String hql = "FROM Agent";
+             Query query = s.createQuery(hql);
+             listeAgent = query.list();
+    closeSession() ;
+    }catch(Exception e){
+	e.printStackTrace();
+       
+        }
+     return listeAgent ;
+
+    }
+   
+
+
+
 }
