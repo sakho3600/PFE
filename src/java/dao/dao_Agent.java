@@ -134,8 +134,9 @@ public class dao_Agent {
     return l;}
     
     /* Ajouter un agent */
-   public void ajouter(Object Employ)
+   public void ajouter(Agent Employ)
    {
+       this.AffectMatChef(Employ);
         try { 
     openSession() ;
              s.save(Employ);
@@ -145,6 +146,19 @@ public class dao_Agent {
     }
     }
     
+   public void AffectMatChef(Agent Employ){
+        String Depart=Employ.getDepartement();
+        Personnel p=new Personnel();
+        try { 
+    openSession() ; 
+      Query query = s.createQuery("from Personnel where Directeur= :code ");
+                    query.setParameter("code", Depart);
+                    p=(Personnel)query.list().get(0);
+               Employ.setMatriculeChef(p.getMatricule());
+    closeSession() ;
+    }catch(Exception e){
+	e.printStackTrace();
+    }}
    
    public void update(Agent Employ)
    {

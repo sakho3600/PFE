@@ -35,6 +35,12 @@ public class test {
  
  public static void main (String []args){
  dao_Agent d= new dao_Agent();
+ Agent a =new Agent("Informatique",1234,"ab","ab","ab");
+ d.ajouter(a);
+ 
+ 
+ 
+ /*
  List<Agent>l = new ArrayList<>();
  Set<Mission> m=new HashSet<>();
  l=d.ListerAgentParChef(1);

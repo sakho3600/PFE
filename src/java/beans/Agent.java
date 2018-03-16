@@ -71,6 +71,17 @@ public class Agent extends Personnel implements Serializable{
         this.Missions = Missions;
     }
 
+    public Agent(int MatriculeChef, String Departement, int Matricule, String Pernom, String Nom, String MotDePasse, String Directeur) {
+        super(Matricule, Pernom, Nom, MotDePasse, Directeur);
+        this.MatriculeChef = MatriculeChef;
+        this.Departement = Departement;
+    }
+
+    public Agent(String Departement, int Matricule, String Pernom, String Nom, String MotDePasse) {
+        super(Matricule, Pernom, Nom, MotDePasse);
+        this.Departement = Departement;
+    }
+
     public Agent() {
     }
     

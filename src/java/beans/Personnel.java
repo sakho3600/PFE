@@ -33,10 +33,10 @@ public class Personnel implements Serializable{
    private String Pernom;
     @Column(name ="Nom")
     private String Nom;
-    @Column(name ="MotDePasse" , unique = true)
+    @Column(name ="MotDePasse")
     private String MotDePasse;
-    
-      
+    @Column(name= "Directeur")
+      private String Directeur;
       
       
 
@@ -48,6 +48,14 @@ public class Personnel implements Serializable{
         this.Pernom = Pernom;
         this.Nom = Nom;
         this.MotDePasse = MotDePasse;
+    }
+
+    public Personnel(int Matricule, String Pernom, String Nom, String MotDePasse, String Directeur) {
+        this.Matricule = Matricule;
+        this.Pernom = Pernom;
+        this.Nom = Nom;
+        this.MotDePasse = MotDePasse;
+        this.Directeur = Directeur;
     }
 
     public String getMotDePasse() {
@@ -81,6 +89,14 @@ public class Personnel implements Serializable{
 
     public void setNom(String Nom) {
         this.Nom = Nom;
+    }
+
+    public String getDirecteur() {
+        return Directeur;
+    }
+
+    public void setDirecteur(String Directeur) {
+        this.Directeur = Directeur;
     }
 
    
