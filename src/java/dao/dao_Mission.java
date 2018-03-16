@@ -6,6 +6,7 @@
 package dao;
 
 import beans.Mission;
+import java.util.Date;
 import org.hibernate.Session;
 import utilitaire.HibernateUtil;
 
@@ -27,6 +28,7 @@ public class dao_Mission {
         s.close();
     }
    
+ 
     
   public void ajoutMission(Mission m){
       Session s =HibernateUtil.getSessionFactory().openSession();

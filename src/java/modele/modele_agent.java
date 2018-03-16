@@ -361,5 +361,13 @@ public class modele_agent {
      }
      
      
-    
+     public List<Mission> ListerMission()
+     {
+     return this.service.ListerlesMissionParAgent(this.agent.getMatricule());
+     }
+     
+    public void FormPrint(Mission m) throws IOException{
+        this.mission=m;
+             FacesContext.getCurrentInstance().getExternalContext().redirect("FormPrint.xhtml");
+    }
 }

@@ -34,7 +34,20 @@ public class test {
     
  
  public static void main (String []args){
-     dao_ville d=new dao_ville();
+ dao_Agent d= new dao_Agent();
+ List<Agent>l = new ArrayList<>();
+ Set<Mission> m=new HashSet<>();
+ l=d.ListerAgentParChef(1);
+
+List<Mission>lm =new ArrayList<>(); 
+lm= d.ListerMissionNonValiderDesAgents(l);
+     for (Mission st:lm)
+     {       System.out.print(st.toString());
+     }
+     
+     
+     
+     /*    dao_ville d=new dao_ville();
      ville v=new ville(8,"dd");
      ville v1=new ville (9,"ss");
      List<String> l=new ArrayList<>();
@@ -48,7 +61,7 @@ public class test {
      
      
      
- /*    dao_Admin servicead = new dao_Admin() ;
+     dao_Admin servicead = new dao_Admin() ;
  Admin adm = new Admin();
 
  

@@ -188,6 +188,54 @@ public class dao_Agent {
     }
    
 
+    public List<Agent> ListerAgentParChef(int Matricule){
+                   openSession();
+                   List<Agent> l= new ArrayList<>();
+                    Query query = s.createQuery("from Agent where MatriculeChef = :code ");
+                    query.setParameter("code", Matricule);
+                     if(query.list().isEmpty()){
+                     l=null;}
+                     else{
+                       l = query.list();
+                   }
+                  
+                     closeSession();
+    return l;}
+    
+    
+    public List<Mission> ListerlesMissionNonValiderParAgent(int Matricule){
+                   openSession();
+                   List<Mission> l= new ArrayList<>();
+                    Query query = s.createQuery("from Mission where Matricule = :code and Etat= 0");
+                    query.setParameter("code", Matricule);
+                     if(query.list().isEmpty()){
+                     l=null;}
+                     else{
+                       l = query.list();
+                   }
+                 
+    closeSession();
+    return l;}
+    
+    
+    
+    public List<Mission> ListerMissionNonValiderDesAgents(List<Agent> LAgent){
+        List<Mission>ListMiss=new ArrayList<>();       
+        
+        for (Agent ag:LAgent)
+                {
+                 List<Mission>List= ListerlesMissionNonValiderParAgent(ag.getMatricule());
+                    if (List !=null)
+                    {
+                    ListMiss.addAll(List);
+                    }
+              }
+        if (ListMiss!=null)
+            return ListMiss;
+        else 
+            return null;
+    
+    }
 
 
 }

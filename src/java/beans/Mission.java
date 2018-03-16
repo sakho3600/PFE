@@ -218,12 +218,20 @@ public class Mission {
         this.type = type;
     }
 
-    public int getEtat() {
-        return Etat;
+    public String getEtat() {
+       if (Etat==1)
+           return "OUI";
+       else 
+           return "NON";
     }
 
     public void setEtat(int Etat) {
         this.Etat = Etat;
+    }
+
+    @Override
+    public String toString() {
+        return "Mission{" + "CodeMission=" + CodeMission + '}';
     }
     
     

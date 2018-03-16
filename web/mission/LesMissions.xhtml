@@ -56,32 +56,10 @@
         <div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
-					<h2 class="title1">Modifier/Supprimer un Agent </h2>
-					<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
-						<div class="form-title">
-							<h4>Modification d'un Agent :</h4>
-						</div>
-						<div class="form-body">
-                                                    <h:form> 
-                                                        <p:messages id="messages" showDetail="true" closable="true">
-                                                        
-                                                          </p:messages>
-                                                        
-                                                  
-                                                         <div class="form-group">
-                                                         <p:inputText value="#{modele_agent.matricule}"  required="true"   style="width:20%"> </p:inputText> </div> 
-                                                          
-                                                             
-                                             
-                                                         <div class="form-group">   <p:commandButton value="Chercher" id="ajax"  actionListener="#{modele_agent.leadstoupdate()}" class="btn btn-default" ajax="false"/> </div> 
-                                                         <div class="form-group">   <p> <li> #{modele_agent.message}</li>  </p></div> 
-                                                    </h:form> 
-						</div>
-					</div>
-                                        
+				         
                                         <div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
 						<div class="form-title">
-							<h4>Liste des Agents :</h4>
+							<h4>Liste de mes missions :</h4>
 						</div>
 						<div class="form-body">
                                                     <h:form> 
@@ -91,35 +69,37 @@
                                                         
                                                   
                                                          <div class="form-group">
-                                                             <p:panelGrid  rendered="#{modele_Admin.hide}">
-                                                             <p:dataTable  var="agent" value="#{modele_agent.tableAgent()}" rows="9" paginator="true"  >
+               
+                                                             <p:dataTable  var="Missions" value="#{modele_agent.ListerMission()}" rows="9" paginator="true"  >
                     
-                                                                 <p:column headerText="Matricule Agent" filterBy="#{agent.matricule}" filterMatchMode="exact"   >
-                                                                     <h:outputText value="#{agent.matricule}"  />
+                                                                 <p:column headerText="Code Mission" filterBy="#{Missions.codeMission}" filterMatchMode="exact"   >
+                                                                     <h:outputText value="#{Missions.codeMission}"  />
                                                                   </p:column>
                         
-                                                                 <p:column headerText="Matricule Chef Hierarchique" filterBy="#{agent.matriculeChef}" filterMatchMode="contains"   >
-                                                                     <h:outputText value="#{agent.matriculeChef}"  />
+                                                                 <p:column headerText="intitule de la Mission" filterBy="#{Missions.intitule_Mission}" filterMatchMode="contains"   >
+                                                                     <h:outputText value="#{Missions.intitule_Mission}"  />
                                                                   </p:column>   
-                                                                 <p:column headerText="Nom" >
-                                                                     <h:outputText value="#{agent.nom}"  />
+                                                                 <p:column headerText="Date aller" >
+                                                                     <h:outputText value="#{Missions.dateDeb}"  />
                                                               </p:column> 
-                                                        <p:column headerText="Prenom" >
-                                                            <h:outputText value="#{agent.pernom}" />
+                                                        <p:column headerText="Date retour" >
+                                                            <h:outputText value="#{Missions.dateFin}" />
                                                           </p:column>  
-                                                         <p:column headerText="mot de passe" >
-                                                             <h:outputText value="#{agent.motDePasse}" />
+                                                         <p:column headerText="Objectif" >
+                                                             <h:outputText value="#{Missions.objectif}" />
                                                           </p:column>  
-                                                         </p:dataTable> 
-                                                                 </p:panelGrid>
+                                                         <p:column headerText="Imprimer" >
+                                                             <p:commandButton value="Imprimer" id="ajax"  actionListener="#{modele_agent.FormPrint(Missions)}" class="btn btn-default" ajax="false"/>
+                                                          </p:column>  
                                                          
+                                                             </p:dataTable> 
+                                                                 
                                                          </div> 
                                                         
                                                             
                                                              
                                              
-                                                         <div class="form-group">  <!-- <p:commandButton value="Lister Les Agent" id="ajax"  actionListener="" class="btn btn-default" ajax="false"/> --></div> 
-                                                         
+                                                          
                                                     </h:form> 
 						</div>
 					</div>
