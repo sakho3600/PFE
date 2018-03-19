@@ -36,17 +36,24 @@ public class test {
        
     
  
- public static void main (String []args){
-    Personnel p = new Personnel(1,"a","a","a","Informatique");
+ public static void main (String []args) throws NoSuchAlgorithmException{
+ 
+ /*    dao_Agent d= new dao_Agent();
+         System.out.print(d.ifExistsDirection("Personnel","Resource Humaine"));
+
+ 
+     
+     Personnel p = new Personnel(1,"a","a","a","Informatique");
      dao_Personnel da=new dao_Personnel();
      da.ajouter(p);
- dao_Agent d= new dao_Agent();
  Agent a =new Agent("Informatique",13,"ab","ab","ab");
  d.ajouter(a);
  
+    public boolean ifExistsDirection(String Direction,String Departement){
+    
  
  
- /*
+ 
  List<Agent>l = new ArrayList<>();
  Set<Mission> m=new HashSet<>();
  l=d.ListerAgentParChef(1);
@@ -71,7 +78,7 @@ lm= d.ListerMissionNonValiderDesAgents(l);
      for (ville st:lv)
          System.out.print(st.toString());
      
-     
+     */
      cryptpasswords encryption = new cryptpasswords();
      
      dao_Admin servicead = new dao_Admin() ;
@@ -79,10 +86,10 @@ lm= d.ListerMissionNonValiderDesAgents(l);
  dao_Agent aj = new dao_Agent() ;
  dao_Mission ms = new dao_Mission() ;
 
- /*
+ 
  List<privs> prv= new ArrayList<privs>() ;
 
-prv.add(privs.GA); 
+prv.add(privs.ALL); 
 
 adm.setAdmin_privs(prv);
 adm.setMatricule(02020);
@@ -93,7 +100,7 @@ adm.setPernom("tt");
 
 
    servicead.ajouter(adm);
-*/
+
 
  
  

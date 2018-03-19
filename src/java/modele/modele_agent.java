@@ -62,6 +62,7 @@ public class modele_agent {
      private String password;
      private String SessionKey ;
      private String Departement  ;
+     private String grade;
      /** Tables **/ 
     private List<Agent> agents ;
    
@@ -116,6 +117,14 @@ public class modele_agent {
  
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
  
      
@@ -301,8 +310,12 @@ public class modele_agent {
      * @throws java.security.NoSuchAlgorithmExceptiont**/
      public void ajouter() throws NoSuchAlgorithmException {
          
-         if(!service.ifExists(this.nouvelleagent.getMatricule()))
+         if(!service.ifExists(this.nouvelleagent.getMatricule()) && (!service.ifExistsDirection(grade, Departement)))
          {   
+             if (this.getGrade().equals("Directeur Departement")){
+             this.nouvelleagent.setDirecteur(this.Departement);
+             }else
+                 this.nouvelleagent.setDirecteur(grade);
              this.nouvelleagent.setDepartement(this.Departement);
              this.nouvelleagent.setMotDePasse(encryption.cryptme(this.nouvelleagent.getMotDePasse()))  ; 
              service.ajouter(this.nouvelleagent);
@@ -311,7 +324,7 @@ public class modele_agent {
              f.addMessage(null,new FacesMessage("Ajout effectuer"));
              
          }else{
-              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Matricule Existant."));
+              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Matricule Existant Ou Directeurs Existant."));
               this.nouvelleagent = new Agent();
               
          }

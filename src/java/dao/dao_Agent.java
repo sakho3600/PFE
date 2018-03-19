@@ -36,7 +36,7 @@ public class dao_Agent {
         s.close();
     }
     
-    
+       private String grade; 
     /**
      * 
      * Verifier si un Employer Existe dans la base 
@@ -59,6 +59,28 @@ public class dao_Agent {
          return result ;
                 
     }
+    
+    public boolean ifExistsDirection(String Direction,String Departement){
+    
+     
+       
+       boolean resultat=false ;
+       if (!Direction.equals("Personnel")){
+    openSession();
+     Query query = s.createQuery("from Personnel where Directeur= :code ");
+    if (Direction.equals("Directeur Generale"))
+                    query.setParameter("code", Direction);
+    else if (Direction.equals("Directeur Departement"))
+                    query.setParameter("code", Departement);
+           
+        if(!query.list().isEmpty())
+            resultat =true;
+                           
+    
+    closeSession();}
+       return resultat;   
+    }
+    
     public boolean ifExists(int matricule)
     {  
        Agent result = new Agent();
@@ -147,8 +169,14 @@ public class dao_Agent {
     }
     
    public void AffectMatChef(Agent Employ){
+     
+         Personnel p=new Personnel();
+       if (Employ.getDirecteur().equals("Directeur Generale"))
+            Employ.setPersonnel(Employ);
+       
+       
+       else if (Employ.getDirecteur().equals("Personnel")){      
         String Depart=Employ.getDepartement();
-        Personnel p=new Personnel();
         try { 
     openSession() ; 
       Query query = s.createQuery("from Personnel where Directeur= :code ");
@@ -159,6 +187,19 @@ public class dao_Agent {
     }catch(Exception e){
 	e.printStackTrace();
     }}
+       else {
+            try { 
+    openSession() ; 
+     
+         Query query = s.createQuery("from Personnel where Directeur= :code ");
+                    query.setParameter("code", "Directeur Generale");
+                    p=(Personnel)query.list().get(0);
+                    Employ.setPersonnel(p);
+       closeSession() ;
+    }catch(Exception e){
+	e.printStackTrace();
+    }
+               }}
    
    public void update(Agent Employ)
    {
