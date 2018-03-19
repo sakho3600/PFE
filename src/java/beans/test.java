@@ -94,35 +94,7 @@ adm.setPernom("tt");
 
    servicead.ajouter(adm);
 */
- Agent a = new Agent();
- a.setDepartement("rh");
- a.setMatricule(023);
- a.setMotDePasse("sae");
- a.setNom("sf");
-a.setPernom("sfa");
 
- 
- 
- Mission m =new Mission() ;
- m.setAgent(a);
- m.setCodeMission(010);
- m.setEtat(0);
- m.setType("reparation");
- m.setDateDeb(new Date());
- m.setDateFin(new Date());
- 
- m.setKilometrage(254.0F);
- m.setObjectif("vac");
- m.setNbrJours(54);
- m.setIntitule_Mission("testdate");
- 
-
- Set<Mission> sm = new HashSet<Mission>()  ; 
- sm.add(m) ;
- 
- a.setMissions(sm);
- 
- ms.ajoutMission(m);
  
  
 }}
