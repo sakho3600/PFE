@@ -15,6 +15,9 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import modele.privs;
 import java.util.Set;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,18 +33,66 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Agent extends Personnel implements Serializable{
     
    private static final long serialVersionUID = 1L; 
-   
-   @Column(name = "MatriculeChef" )
+    
+   /*@Column(name = "MatriculeChef")
    private int MatriculeChef; //matricule Chef hierarchique
-   @NotNull
+   */@NotNull
    @Column(name = "Departement")
    private String Departement; //departement de l'agent
    
         @OneToMany(mappedBy = "CodeMission")
             private Set<Mission> Missions;
 
+        /*@OneToMany(mappedBy = "Matricule")
+                  @MapKey(name="MatriculeChef")
+            private Set<Personnel> Chef;
+  */
+         @ManyToOne
+    @JoinColumn(name="MatriculeChef",referencedColumnName="Matricule")
+                           
+
+    private Personnel Personnel;
+   
+    public Agent(String Departement, Set<Mission> Missions, int Matricule, String Pernom, String Nom, String MotDePasse, String Directeur) {
+        super(Matricule, Pernom, Nom, MotDePasse, Directeur);
+        this.Departement = Departement;
+        this.Missions = Missions;
+    }
+
+    public Personnel getPersonnel() {
+        return Personnel;
+    }
+
+    public void setPersonnel(Personnel Personnel) {
+        this.Personnel = Personnel;
+    }
+
+    public Agent(String Departement, Set<Mission> Missions, Personnel Personnel) {
+        this.Departement = Departement;
+        this.Missions = Missions;
+        this.Personnel = Personnel;
+    }
+
+    public Agent(String Departement, Set<Mission> Missions, Personnel Personnel, int Matricule, String Pernom, String Nom, String MotDePasse) {
+        super(Matricule, Pernom, Nom, MotDePasse);
+        this.Departement = Departement;
+        this.Missions = Missions;
+        this.Personnel = Personnel;
+    }
+
+    public Agent(String Departement, Set<Mission> Missions, Personnel Personnel, int Matricule, String Pernom, String Nom, String MotDePasse, String Directeur) {
+        super(Matricule, Pernom, Nom, MotDePasse, Directeur);
+        this.Departement = Departement;
+        this.Missions = Missions;
+        this.Personnel = Personnel;
+    }
 
 
+
+        
+        
+
+/*
     public Agent(int MatriculeChef, String Departement, int Matricule, String Pernom, String Nom , String mdp) {
         super(Matricule, Pernom, Nom , mdp);
         this.MatriculeChef = MatriculeChef;
@@ -49,7 +100,7 @@ public class Agent extends Personnel implements Serializable{
        
         
     }
-
+*/
     public Set<Mission> getMissions() {
         return Missions;
     }
@@ -58,7 +109,7 @@ public class Agent extends Personnel implements Serializable{
         this.Missions = Missions;
     }
 
-    public Agent(int MatriculeChef, String Departement, Set<Mission> Missions) {
+  /*  public Agent(int MatriculeChef, String Departement, Set<Mission> Missions) {
         this.MatriculeChef = MatriculeChef;
         this.Departement = Departement;
         this.Missions = Missions;
@@ -71,10 +122,21 @@ public class Agent extends Personnel implements Serializable{
         this.Missions = Missions;
     }
 
+    public Agent(int MatriculeChef, String Departement, int Matricule, String Pernom, String Nom, String MotDePasse, String Directeur) {
+        super(Matricule, Pernom, Nom, MotDePasse, Directeur);
+        this.MatriculeChef = MatriculeChef;
+        this.Departement = Departement;
+    }
+*/
+    public Agent(String Departement, int Matricule, String Pernom, String Nom, String MotDePasse) {
+        super(Matricule, Pernom, Nom, MotDePasse);
+        this.Departement = Departement;
+    }
+
     public Agent() {
     }
     
-
+/*
     public int getMatriculeChef() {
         return MatriculeChef;
     }
@@ -82,13 +144,18 @@ public class Agent extends Personnel implements Serializable{
     public void setMatriculeChef(int MatriculeChef) {
         this.MatriculeChef = MatriculeChef;
     }
-
+*/
     public String getDepartement() {
         return Departement;
     }
 
     public void setDepartement(String Departement) {
         this.Departement = Departement;
+    }
+
+    @Override
+    public String toString() {
+        return "Agent{" + "Matricule= " + super.getMatricule() + "Nom= "+ super.getNom() + '}';
     }
 
   

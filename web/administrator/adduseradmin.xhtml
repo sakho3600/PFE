@@ -56,6 +56,7 @@
 						<div class="form-title">
 							<h4>Creation de compte admin :</h4>
 						</div>
+                                            <p:panelGrid rendered="#{modele_Admin.adduseradmin}"> 
 						<div class="form-body">
                                                     <h:form> 
                                                         <p:messages id="messages" showDetail="true" closable="true">
@@ -75,13 +76,13 @@
                                                                 GM = Gestion Mission <br/>
                                                                 UPuser = Modifier un utilisateur <br/>
                                                                 ADDuser = Ajout des utilisateurs <br/>
-                                                                DELuser = suppression des utilisateurs <br/>
                                                                 GMA = Gestion Mission+Assurance <br/>
-                                                                ALL = Tout les droits </p></div> 
+                                                                ALL = Tout les droits avec le droid d'ajouter un super Admin </p></div> 
                                                         
                                                         <p:commandButton value="Ajouter" id="ajax"  actionListener="#{modele_Admin.ajouter()}" class="btn btn-default" ajax="false"/>
                                                         </h:form> 
 						</div>
+                                                </p:panelGrid>
 					</div>
 					</div>
                             </div>

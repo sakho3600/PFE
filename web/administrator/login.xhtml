@@ -93,15 +93,17 @@ and open the template in the editor.
 				<div class="widget-shadow">
 					<div class="login-body">
                                             <h:form>
-                     <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+                     <p:messages id="messages" showDetail="true" closable="true">
+        <p:autoUpdate />
+    </p:messages>
                      <p:inputText  value="#{modele_Admin.admin.username}" required="true" styleClass="user" placeholder="Enter your username"/>
                      <p:password value="#{modele_Admin.admin.motDePasse}" required="true"  styleClass="lock" placeholder="Enter your password"/>
 							<div class="forgot-grid">
                                                           
 								<div class="clearfix"> </div>
 							</div>
-							<p:commandButton value="Login" update="growl" action="#{modele_Admin.logmein()}"
-                                                                oncomplete="handleLoginRequest(xhr, status, args)" />
+							<p:commandButton value="Login" action="#{modele_Admin.logmein()}"
+                                                                 ajax="true"/>
 							
 						</h:form>
 					</div>

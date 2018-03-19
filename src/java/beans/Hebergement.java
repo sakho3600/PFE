@@ -37,7 +37,7 @@ public class Hebergement {
     private String NomHeb;
     @Column (name="Prix")
     private float Prix;
-@ManyToOne
+    @ManyToOne
     @JoinColumn(name="Code_Postal") 
     private ville Ville ;
     
@@ -94,8 +94,5 @@ public class Hebergement {
 
     public void setVille(ville Ville) {
         this.Ville = Ville;
-    }
-
-    
-    
+    }   
 }

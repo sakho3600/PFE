@@ -134,8 +134,9 @@ public class dao_Agent {
     return l;}
     
     /* Ajouter un agent */
-   public void ajouter(Object Employ)
+   public void ajouter(Agent Employ)
    {
+       this.AffectMatChef(Employ);
         try { 
     openSession() ;
              s.save(Employ);
@@ -145,6 +146,19 @@ public class dao_Agent {
     }
     }
     
+   public void AffectMatChef(Agent Employ){
+        String Depart=Employ.getDepartement();
+        Personnel p=new Personnel();
+        try { 
+    openSession() ; 
+      Query query = s.createQuery("from Personnel where Directeur= :code ");
+                    query.setParameter("code", Depart);
+                    p=(Personnel)query.list().get(0);
+               Employ.setPersonnel(p);
+    closeSession() ;
+    }catch(Exception e){
+	e.printStackTrace();
+    }}
    
    public void update(Agent Employ)
    {
@@ -188,6 +202,54 @@ public class dao_Agent {
     }
    
 
+    public List<Agent> ListerAgentParChef(int Matricule){
+                   openSession();
+                   List<Agent> l= new ArrayList<>();
+                    Query query = s.createQuery("from Agent where MatriculeChef = :code ");
+                    query.setParameter("code", Matricule);
+                     if(query.list().isEmpty()){
+                     l=null;}
+                     else{
+                       l = query.list();
+                   }
+                  
+                     closeSession();
+    return l;}
+    
+    
+    public List<Mission> ListerlesMissionNonValiderParAgent(int Matricule){
+                   openSession();
+                   List<Mission> l= new ArrayList<>();
+                    Query query = s.createQuery("from Mission where Matricule = :code and Etat= 0");
+                    query.setParameter("code", Matricule);
+                     if(query.list().isEmpty()){
+                     l=null;}
+                     else{
+                       l = query.list();
+                   }
+                 
+    closeSession();
+    return l;}
+    
+    
+    
+    public List<Mission> ListerMissionNonValiderDesAgents(List<Agent> LAgent){
+        List<Mission>ListMiss=new ArrayList<>();       
+        
+        for (Agent ag:LAgent)
+                {
+                 List<Mission>List= ListerlesMissionNonValiderParAgent(ag.getMatricule());
+                    if (List !=null)
+                    {
+                    ListMiss.addAll(List);
+                    }
+              }
+        if (ListMiss!=null)
+            return ListMiss;
+        else 
+            return null;
+    
+    }
 
 
 }

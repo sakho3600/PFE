@@ -36,7 +36,40 @@ public class test {
        
     
  
- public static void main (String []args) throws NoSuchAlgorithmException{
+ public static void main (String []args){
+    Personnel p = new Personnel(1,"a","a","a","Informatique");
+     dao_Personnel da=new dao_Personnel();
+     da.ajouter(p);
+ dao_Agent d= new dao_Agent();
+ Agent a =new Agent("Informatique",13,"ab","ab","ab");
+ d.ajouter(a);
+ 
+ 
+ 
+ /*
+ List<Agent>l = new ArrayList<>();
+ Set<Mission> m=new HashSet<>();
+ l=d.ListerAgentParChef(1);
+
+List<Mission>lm =new ArrayList<>(); 
+lm= d.ListerMissionNonValiderDesAgents(l);
+     for (Mission st:lm)
+     {       System.out.print(st.toString());
+     }
+     
+     
+     
+     /*    dao_ville d=new dao_ville();
+     ville v=new ville(8,"dd");
+     ville v1=new ville (9,"ss");
+     List<String> l=new ArrayList<>();
+     l.add(v.toString());
+     l.add(v1.toString());
+     
+     Set<ville> lv=new HashSet<>();
+     lv=d.StringTOVille(l);
+     for (ville st:lv)
+         System.out.print(st.toString());
      
      
      cryptpasswords encryption = new cryptpasswords();

@@ -16,26 +16,59 @@ and open the template in the editor.
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Le Moteur Platform" />
 <title>LE Moteur-sa</title>
-
+<style>.ui-widget-content {
+    border: 1px solid #d5d5d5;
+    background: #fff;
+    color: #222;
+}</style>
     </h:head>
     <h:body>
-      <h:panelGrid id = "panel" columns = "2" border = "0"
-      cellpadding = "10" cellspacing = "1">
+      <p:panelGrid id = "panel" columns = "1"   columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid">
           
     <f:facet name="header">
-        <img src="../../resources/image/logo.jpg" alt="Le moteur" width="100" height="100" />
+        <img src="../../resources/image/logo.png" alt="Le moteur" width="200" height="100" />
     </f:facet>
+                     
+                         <h:outputLabel for="Matricule_Agent" value="Matricule de l'agent : #{modele_agent.agent.matricule}" />
+                     
+          
+          
+                         <h:outputLabel for="Nom_Agent" value="Nom de l'agent :#{modele_agent.agent.nom}" />
                         
-                         <h:outputLabel for="name" id="f" value="name:" />
-                         <h:outputLabel id="fff" value="#{modele_agent.agent.nom}"/>
-                         <h:outputLabel for="name" id="f1" value="Prenom" />
-                         <h:outputLabel id="fff1" value="#{modele_agent.agent.pernom}"/>
-                         <h:outputLabel for="name" id="f2" value="Matricule" />
-                         <h:outputLabel id="fff2" value="#{modele_agent.agent.matricule}"/>
+          
+          
+                         <h:outputLabel for="Prenom_Agent" value="Prenom de l'agent : #{modele_agent.agent.pernom}" />
+        
+          
+          
+                         <h:outputLabel for="Departement " value="depatement de l'agent : #{modele_agent.agent.departement}" />
+              
+          
+          
                          
+                         <h:outputLabel for="Code_mission" value="Code de la Mission : #{modele_agent.mission.codeMission}" />
+
+                         
+                         <h:outputLabel for="Intitule_mission" value="Intitule de la mission : #{modele_agent.mission.intitule_Mission}" />
+                                                  
+                         <h:outputLabel for="Date_Deb"  value="Date Depart : #{modele_agent.mission.dateDeb}" />
+
                          
                      
-    </h:panelGrid>
+                         <h:outputLabel for="Date_Ret" value="Date Retour : #{modele_agent.mission.dateFin}" />
+                         
+                         <h:outputLabel for="Valide" value="Valider Par le Chef : #{modele_agent.mission.etat}" />
+                         
+                         <h:outputLabel for="Kilometrage" value="Kilometrage : #{modele_agent.mission.kilometrage}" />
+                         
+                         <h:outputLabel for="Nombre_jours" value="Nombre de jours : #{modele_agent.mission.nbrJours}" />
+                         
+                         <h:outputLabel for="Objectif"  value="Objectif : #{modele_agent.mission.objectif}" />
+                      
+                         
+                         
+                         
+    </p:panelGrid>
      <p:commandButton value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
     <p:printer target="panel" />
 </p:commandButton>

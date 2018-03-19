@@ -15,9 +15,11 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import utilitaire.cryptpasswords;
 
 /**
  *
@@ -34,7 +36,15 @@ public class modele_Admin  {
 	private String user; // Username
         private String userKey ; /* unique key pour la session */
         private int matricule ; // matricule utiliser pour l'update
-        private boolean hide = true ; // panelgrid hiding 
+      
+    /** privileges panelgrid block **/
+        private boolean addagent=false;
+        private boolean adduseradmin=false;
+        private boolean editagent=false;
+        private boolean gestmission=false;
+        private boolean gestassurance=false;
+        
+        
     /** Tables **/
         private List<privs> privilege ; // les privileges
         private List<privs> selectedPrivs; // les privileges qui seront choisit seront affecter dans se tableau
@@ -45,7 +55,7 @@ public class modele_Admin  {
     Admin nouvelleadmin=new Admin(); // pour la création des administrateurs
     dao_Admin service=new dao_Admin(); // dao_Admin to acces the dao
     SessionKeyGen sessionId= new SessionKeyGen() ; // generateur d'id de session (UUID)
-
+    cryptpasswords encrypt=new cryptpasswords() ;
     public modele_Admin() {  
     }
     @PostConstruct // implementation des privileges a afficher
@@ -57,11 +67,10 @@ public class modele_Admin  {
         privilege.add(privs.ADDuser) ; 
         privilege.add(privs.ALL);
         privilege.add(privs.GM) ;
-        privilege.add(privs.DELuser);
         privilege.add(privs.GMA);
         privilege.add(privs.UPuser) ;
     }
-
+    /** start of getters and setters **/
     public List<privs> getSelectedPrivs() {
         return selectedPrivs;
     }
@@ -153,20 +162,64 @@ public class modele_Admin  {
         this.user = user;
     }
 
-    public boolean isHide() {
-        return hide;
+    public boolean isAddagent() {
+        return addagent;
     }
 
-    public void setHide(boolean hide) {
-        this.hide = hide;
+    public void setAddagent(boolean addagent) {
+        this.addagent = addagent;
     }
+
+    public boolean isAdduseradmin() {
+        return adduseradmin;
+    }
+
+    public void setAdduseradmin(boolean adduseradmin) {
+        this.adduseradmin = adduseradmin;
+    }
+
+    public boolean isEditagent() {
+        return editagent;
+    }
+
+    public void setEditagent(boolean editagent) {
+        this.editagent = editagent;
+    }
+
+    public boolean isGestmission() {
+        return gestmission;
+    }
+
+    public void setGestmission(boolean gestmission) {
+        this.gestmission = gestmission;
+    }
+
+    public cryptpasswords getEncrypt() {
+        return encrypt;
+    }
+
+    public void setEncrypt(cryptpasswords encrypt) {
+        this.encrypt = encrypt;
+    }
+
+    public boolean isGestassurance() {
+        return gestassurance;
+    }
+
+    public void setGestassurance(boolean gestassurance) {
+        this.gestassurance = gestassurance;
+    }
+
+    
+    /** end of getter and setter **/
+    
     
     
 
     /** verification de l'authentification **/
-  public void logmein() throws IOException
+  public void logmein() throws IOException, NoSuchAlgorithmException
   {
-      if (service.ifcanbelogged(admin.getUsername(), admin.getMotDePasse())) // verification de l'authentification
+      if (service.ifcanbelogged(admin.getUsername(), encrypt.cryptme(admin.getMotDePasse()))) // verification de l'authentification
       {
           admin = service.ifAdmin(admin.getUsername()); // verification si c'est un Administrateur
           
@@ -177,10 +230,10 @@ public class modele_Admin  {
           
       }else{ // retour a la page de Connexion
 	FacesContext context=FacesContext.getCurrentInstance();
-	context.addMessage(null, new FacesMessage("Username or Password is invalid")); // Message d'erreur
-	
+	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", "Username or Password Invalid."));
          }
       
+      checkprivs() ; /** verification des privileges **/
   
   }
   
@@ -194,7 +247,7 @@ public class modele_Admin  {
 
   
   
-    public void ajouter() // ajout d'un nouvelle administrateur
+    public void ajouter() throws NoSuchAlgorithmException // ajout d'un nouvelle administrateur
     {
        
         
@@ -227,8 +280,15 @@ public class modele_Admin  {
                this.selectedPrivs = new ArrayList<privs>() ;
                this.selectedPrivs.add(privs.ALL) ;
            }
+           if (this.selectedPrivs.contains(privs.GA) && this.selectedPrivs.contains(privs.GM))
+           {
+               this.selectedPrivs.remove(privs.GA) ;
+               this.selectedPrivs.remove(privs.GM) ;
+               this.selectedPrivs.add(privs.GM) ;
+           }
           
            this.nouvelleadmin.setAdmin_privs(this.selectedPrivs); // ajout des privileges
+           this.nouvelleadmin.setMotDePasse(encrypt.cryptme(this.nouvelleadmin.getMotDePasse())) ;
            this.service.ajouter(this.nouvelleadmin);
         
         FacesContext f=FacesContext.getCurrentInstance();
@@ -240,5 +300,59 @@ public class modele_Admin  {
         
                       }              
         }
+    
+    //activer les privileges 
+    public void allow(List<privs> privileges)
+    {
+        for(int i = 0 ; i < privileges.size() ; i++)
+        {
+            if ( privileges.get(i).equals(privs.ADDuser) )
+            {
+                this.addagent = true;
+                
+            }
+            if ( privileges.get(i).equals(privs.UPuser) )
+            {
+                this.editagent = true;
+                
+            }
+           
+            if ( privileges.get(i).equals(privs.GA) )
+            {
+                this.gestassurance = true;
+                
+            }
+            if ( privileges.get(i).equals(privs.GM) )
+            {
+                this.gestmission = true;
+                
+            }
+            if ( privileges.get(i).equals(privs.GMA) )
+            {
+                this.gestassurance = true;
+                this.gestmission = true;
+            }
+            
+        }
+    }
+    public void checkprivs()
+    {
+        boolean stop = false ;
+        List<privs> loggedprivs = new ArrayList<privs>() ;
+        loggedprivs = this.admin.getAdmin_privs() ;
+        if (loggedprivs.contains(privs.ALL)){ // SuperAdmin
+            this.addagent = true;
+            this.adduseradmin = true;
+            this.editagent = true;
+            this.gestmission = true;
+            this.gestassurance = true ;
+            stop = true ;
+        }
+        if ( stop == false)
+        {
+            allow(loggedprivs) ; // allow privileges access
+        }
+       
+    }
           
 }
