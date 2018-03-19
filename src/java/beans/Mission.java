@@ -5,6 +5,9 @@
  */
 package beans;
 
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,8 +22,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Persistence;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 /**
  *
@@ -50,24 +59,28 @@ public class Mission {
       private Date DateDeb;
       
       
-      @Column( name="DateFin")
+     @Column( name="DateFin")
     @Temporal(javax.persistence.TemporalType.DATE)
       private Date DateFin;
       
-         @Column( name="NbrJours")
+    @Column( name="NbrJours")
       private int NbrJours;
     @Column (name="Kilometrage")
-     public float Kilometrage;
+     private float Kilometrage;
  
     @Column (name="Type")
-     public String type;
+     private String type;
  
     @Column (name="Etat")
-    public int Etat;    
-           
-   /* @OneToMany(mappedBy="id")
-    private Set<VilleHeb> VilleHeber;
-  */
+    private int Etat;    
+    
+    // Date now = new Date();
+     
+    @Temporal(TemporalType.TIME)
+    @Column (name="DateDeCreation" )
+    private Date DateDeCreation = new Date() ;
+    
+ 
     @ManyToMany(cascade = CascadeType.ALL )
 	@JoinTable(name = "LesVilleMission", joinColumns = { @JoinColumn(name = "CodeMission") }, inverseJoinColumns = { @JoinColumn(name = "Code_Postal")})
 	public Set<ville> Les_villes;
@@ -76,7 +89,8 @@ public class Mission {
 	@JoinTable(name = "LesHebergementMission", joinColumns = { @JoinColumn(name = "CodeMission") }, inverseJoinColumns = { @JoinColumn(name = "CodeHeb") })
 	public Set<Hebergement> Les_Hebergement;
 
-    public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, Set<ville> Les_villes, Set<Hebergement> Les_Hebergement) {
+    
+      public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, Set<ville> Les_villes, Set<Hebergement> Les_Hebergement) {
         this.CodeMission = CodeMission;
         this.agent = agent;
         this.Intitule_Mission = Intitule_Mission;
@@ -225,6 +239,24 @@ public class Mission {
     public void setEtat(int Etat) {
         this.Etat = Etat;
     }
+
+    public Date getDateDeCreation() {
+        return DateDeCreation;
+    }
+
+    public void setDateDeCreation(Date DateDeCreation) {
+        this.DateDeCreation = DateDeCreation;
+    }
+
+   
+
     
+
+   
+
+   
+
+ 
     
+   
     }

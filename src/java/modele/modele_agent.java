@@ -12,6 +12,8 @@ import dao.dao_Agent;
 import dao.dao_Mission;
 import dao.dao_ville;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -31,6 +33,7 @@ import javax.faces.context.FacesContext;
  
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
+import utilitaire.cryptpasswords ;
 /**
  *
  * @author Mohammed Mehdi Sarray#
@@ -47,6 +50,7 @@ public class modele_agent {
     //Les dates
     private Date date1;
     private Date date2;
+    
     
     // type de la mission
       private String type;   
@@ -69,6 +73,9 @@ public class modele_agent {
     dao_Mission serviceMission= new dao_Mission();
     dao_ville serviceville= new dao_ville();
     SessionKeyGen sessionId= new SessionKeyGen() ; // generateur d'id de session (UUID)
+    cryptpasswords encryption = new cryptpasswords() ; // SHA ENCRYPTION
+    
+    
     
     public modele_agent() {
     }
@@ -79,6 +86,7 @@ public class modele_agent {
        
    
         //this.Departement.add("Resource Humaine") ; 
+        
          cities = new ArrayList<String>();
       List<ville> l=new ArrayList<>();
       l=d.ListerVille();
@@ -263,9 +271,9 @@ public class modele_agent {
     
     
     
-    public void logmein() throws IOException
+    public void logmein() throws IOException, NoSuchAlgorithmException
   {
-      if (service.ifcanbelogged(agent.getMatricule(),agent.getMotDePasse())) // verification de l'authentification
+      if (service.ifcanbelogged(agent.getMatricule(),encryption.cryptme(agent.getMotDePasse()))) // verification de l'authentification
       {
       agent=service.ifExistsAgent(agent.getMatricule());
           this.SessionKey = this.sessionId.getRandomUUIDString() ; // affectation de valeur uuid 
@@ -289,12 +297,14 @@ public class modele_agent {
        FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
        
   }
-     /**creation d'un nouvelle agent**/
-     public void ajouter() {
+     /**creation d'un nouvelle agen
+     * @throws java.security.NoSuchAlgorithmExceptiont**/
+     public void ajouter() throws NoSuchAlgorithmException {
          
          if(!service.ifExists(this.nouvelleagent.getMatricule()))
          {   
              this.nouvelleagent.setDepartement(this.Departement);
+             this.nouvelleagent.setMotDePasse(encryption.cryptme(this.nouvelleagent.getMotDePasse()))  ; 
              service.ajouter(this.nouvelleagent);
              this.nouvelleagent = new Agent();
              FacesContext f=FacesContext.getCurrentInstance();
@@ -316,7 +326,6 @@ public class modele_agent {
         mission.setType(type);
         mission.setDateDeb(date1);
         mission.setDateFin(date2);
-        
         serviceMission.ajoutMission(mission);
         
          this.mission=new Mission();
@@ -338,10 +347,11 @@ public class modele_agent {
           
       
        }  
-     public void updateagent() throws IOException
+     public void updateagent() throws IOException, NoSuchAlgorithmException
       {
           
           this.Message = "Operation effectuer , Agent modifier" ;
+          this.nouvelleagent.setMotDePasse(encryption.cryptme(this.nouvelleagent.getMotDePasse()))  ;
           
           this.service.update(this.nouvelleagent);
            this.nouvelleagent = new Agent();

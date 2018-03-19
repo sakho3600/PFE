@@ -31,7 +31,7 @@ public class Agent extends Personnel implements Serializable{
     
    private static final long serialVersionUID = 1L; 
    
-   @Column(name = "MatriculeChef" , unique = true)
+   @Column(name = "MatriculeChef" )
    private int MatriculeChef; //matricule Chef hierarchique
    @NotNull
    @Column(name = "Departement")
