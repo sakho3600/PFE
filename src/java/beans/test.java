@@ -34,8 +34,11 @@ public class test {
     
  
  public static void main (String []args){
+    Personnel p = new Personnel(1,"a","a","a","Informatique");
+     dao_Personnel da=new dao_Personnel();
+     da.ajouter(p);
  dao_Agent d= new dao_Agent();
- Agent a =new Agent("Informatique",1234,"ab","ab","ab");
+ Agent a =new Agent("Informatique",13,"ab","ab","ab");
  d.ajouter(a);
  
  

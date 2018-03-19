@@ -154,7 +154,7 @@ public class dao_Agent {
       Query query = s.createQuery("from Personnel where Directeur= :code ");
                     query.setParameter("code", Depart);
                     p=(Personnel)query.list().get(0);
-               Employ.setMatriculeChef(p.getMatricule());
+               Employ.setPersonnel(p);
     closeSession() ;
     }catch(Exception e){
 	e.printStackTrace();

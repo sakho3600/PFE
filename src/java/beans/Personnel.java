@@ -6,11 +6,16 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -37,9 +42,22 @@ public class Personnel implements Serializable{
     private String MotDePasse;
     @Column(name= "Directeur")
       private String Directeur;
-      
-      
+    
 
+        @OneToMany(mappedBy = "Matricule")
+                  @MapKey(name="MatriculeChef")
+            private Set<Agent> Agent;
+
+    public Set<Agent> getAgent() {
+        return Agent;
+    }
+
+    public void setAgent(Set<Agent> Agent) {
+        this.Agent = Agent;
+    }
+
+         
+         
     public Personnel() {
     }
 
