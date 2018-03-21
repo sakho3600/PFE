@@ -36,14 +36,15 @@ public class modele_Admin  {
 	private String user; // Username
         private String userKey ; /* unique key pour la session */
         private int matricule ; // matricule utiliser pour l'update
-      
-    /** privileges panelgrid block **/
-        private boolean addagent=false;
-        private boolean adduseradmin=false;
-        private boolean editagent=false;
-        private boolean gestmission=false;
-        private boolean gestassurance=false;
         
+         // <editor-fold desc="acces block" defaultstate="collapsed">
+        /** privileges panelgrid block **/
+        private boolean addagent;
+        private boolean adduseradmin;
+        private boolean editagent;
+        private boolean gestmission;
+        private boolean gestassurance;
+         //</editor-fold>
         
     /** Tables **/
         private List<privs> privilege ; // les privileges
@@ -56,8 +57,10 @@ public class modele_Admin  {
     dao_Admin service=new dao_Admin(); // dao_Admin to acces the dao
     SessionKeyGen sessionId= new SessionKeyGen() ; // generateur d'id de session (UUID)
     cryptpasswords encrypt=new cryptpasswords() ;
+    
     public modele_Admin() {  
     }
+    
     @PostConstruct // implementation des privileges a afficher
     public void init()
     {   
@@ -69,7 +72,15 @@ public class modele_Admin  {
         privilege.add(privs.GM) ;
         privilege.add(privs.GMA);
         privilege.add(privs.UPuser) ;
+        
+        addagent=false;
+        adduseradmin=false;
+        editagent=false;
+        gestmission=false;
+        gestassurance=false;
     }
+   
+    // <editor-fold desc="getters and setters" defaultstate="collapsed">
     /** start of getters and setters **/
     public List<privs> getSelectedPrivs() {
         return selectedPrivs;
@@ -213,17 +224,21 @@ public class modele_Admin  {
     
     /** end of getter and setter **/
     
+    // </editor-fold>
     
-    
-
+    // <editor-fold desc="Login Method" defaultstate="collapsed" >
     /** verification de l'authentification **/
+    
   public void logmein() throws IOException, NoSuchAlgorithmException
   {
       if (service.ifcanbelogged(admin.getUsername(), encrypt.cryptme(admin.getMotDePasse()))) // verification de l'authentification
       {
-          admin = service.ifAdmin(admin.getUsername()); // verification si c'est un Administrateur
+          admin = service.ifAdmin(admin.getUsername()); // detail de  l'Administrateur  ~
           
           this.userKey = this.sessionId.getRandomUUIDString() ; // affectation de valeur uuid 
+          
+          checkprivs() ; /** verification des privileges **/
+          
           FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userkey", userKey); // Ajout de id de session
           FacesContext.getCurrentInstance().getExternalContext().redirect("welcome.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
          
@@ -232,21 +247,24 @@ public class modele_Admin  {
 	FacesContext context=FacesContext.getCurrentInstance();
 	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", "Username or Password Invalid."));
          }
+  
       
-      checkprivs() ; /** verification des privileges **/
+    
   
   }
-  
+  // </editor-fold>
+    // <editor-fold desc="Logout Method"  defaultstate="collapsed" >
   public void logout() throws IOException // deconnexion
   {
       FacesContext context = FacesContext.getCurrentInstance(); 
        context.getExternalContext().getSessionMap().remove("userkey") ;
+       FacesContext.getCurrentInstance().getExternalContext().invalidateSession(); /*destroying the session context */
        FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
        
   }
-
+// </editor-fold >
   
-  
+    // <editor-fold desc="add administrator Method" defaultstate="collapsed">
     public void ajouter() throws NoSuchAlgorithmException // ajout d'un nouvelle administrateur
     {
        
@@ -300,7 +318,9 @@ public class modele_Admin  {
         
                       }              
         }
+    // </editor-fold>
     
+    // <editor-fold desc="allow privileges Method" defaultstate="collapsed">
     //activer les privileges 
     public void allow(List<privs> privileges)
     {
@@ -335,24 +355,35 @@ public class modele_Admin  {
             
         }
     }
+   // </editor-fold>  
+    
+    // <editor-fold desc="verification des privileges Method" defaultstate="collapsed">
     public void checkprivs()
     {
         boolean stop = false ;
-        List<privs> loggedprivs = new ArrayList<privs>() ;
+        List<privs> loggedprivs = new ArrayList<>() ;
         loggedprivs = this.admin.getAdmin_privs() ;
-        if (loggedprivs.contains(privs.ALL)){ // SuperAdmin
+        
+        for (int i= 0 ; i<loggedprivs.size() ; i++){
+            if (loggedprivs.get(i) == privs.ALL) //superAdmin
+            {
             this.addagent = true;
             this.adduseradmin = true;
             this.editagent = true;
             this.gestmission = true;
             this.gestassurance = true ;
             stop = true ;
+            }
         }
+        
+        
         if ( stop == false)
         {
             allow(loggedprivs) ; // allow privileges access
         }
        
     }
-          
+     //</editor-fold>     
+    
+    
 }

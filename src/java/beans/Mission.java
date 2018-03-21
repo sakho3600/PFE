@@ -5,6 +5,7 @@
  */
 package beans;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,6 +31,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import java.time.LocalDateTime ;
+import java.time.ZoneId;
 
 /**
  *
@@ -38,7 +41,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "Mission")
-public class Mission {
+public class Mission implements Serializable {
     @Id
    @GeneratedValue (strategy=GenerationType.AUTO)
    @Column(name ="CodeMission" , unique = true) // valeur unique dans la BD 
@@ -73,12 +76,10 @@ public class Mission {
  
     @Column (name="Etat")
     private int Etat;    
-    
-    // Date now = new Date();
-     
-    @Temporal(TemporalType.TIME)
+   
     @Column (name="DateDeCreation" )
-    private Date DateDeCreation = new Date() ;
+    @Temporal(javax.persistence.TemporalType.DATE)      
+    private Date DatedeCreation = new Date();
     
  
     @ManyToMany(cascade = CascadeType.ALL )
@@ -243,13 +244,17 @@ public class Mission {
         this.Etat = Etat;
     }
 
-    public Date getDateDeCreation() {
-        return DateDeCreation;
+    public Date getDatedeCreation() {
+        return DatedeCreation;
     }
 
-    public void setDateDeCreation(Date DateDeCreation) {
-        this.DateDeCreation = DateDeCreation;
+    public void setDatedeCreation(Date DatedeCreation) {
+        this.DatedeCreation = DatedeCreation;
     }
+
+  
+
+  
 
    
 

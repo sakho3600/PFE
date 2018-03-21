@@ -98,7 +98,7 @@ public class modele_agent {
                 
     
  
- 
+    // <editor-fold desc="getters and setters" defaultstate="collapsed">
     public String[] getSelectedCities2() {
         return selectedCities2;
     }
@@ -214,23 +214,7 @@ public class modele_agent {
     public void setSessionId(SessionKeyGen sessionId) {
         this.sessionId = sessionId;
     }
-
-    
-    
-    
-    
-     public void onDateSelect(SelectEvent event) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
-    }
-     
-    public void click() {
-        PrimeFaces.current().ajax().update("form:display");
-        PrimeFaces.current().executeScript("PF('dlg').show()");
-    }
- 
-    public Date getDate1() {
+ public Date getDate1() {
         return date1;
     }
  
@@ -278,8 +262,24 @@ public class modele_agent {
         this.agents = agents;
     }
     
+    //</editor-fold>
     
     
+     public void onDateSelect(SelectEvent event) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+    }
+     
+    public void click() {
+        PrimeFaces.current().ajax().update("form:display");
+        PrimeFaces.current().executeScript("PF('dlg').show()");
+    }
+ 
+   
+    
+    
+       // <editor-fold desc="Login Agent" defaultstate="collapsed">
     public void logmein() throws IOException, NoSuchAlgorithmException
   {
       if (service.ifcanbelogged(agent.getMatricule(),encryption.cryptme(agent.getMotDePasse()))) // verification de l'authentification
@@ -298,7 +298,9 @@ public class modele_agent {
       
   
   }
+    //</editor-fold>
     
+       // <editor-fold desc="logout" defaultstate="collapsed">
      public void logout() throws IOException // deconnexion
   {
       FacesContext context = FacesContext.getCurrentInstance(); 
@@ -306,6 +308,9 @@ public class modele_agent {
        FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
        
   }
+     //</editor-fold>
+     
+       // <editor-fold desc="new Agent" defaultstate="collapsed">
      /**creation d'un nouvelle agen
      * @throws java.security.NoSuchAlgorithmExceptiont**/
      public void ajouter() throws NoSuchAlgorithmException {
@@ -329,6 +334,9 @@ public class modele_agent {
               
          }
      }
+     //</editor-fold>
+     
+       // <editor-fold desc="ajout mission" defaultstate="collapsed">
      // ajout d'une mission
      public void ajouterMission(){
      
@@ -346,7 +354,10 @@ public class modele_agent {
          FacesContext f=FacesContext.getCurrentInstance();
          f.addMessage(null,new FacesMessage("Ajout effectuer"));
         }
-     // redirect to page edit page
+        // </editor-fold>
+     
+       // <editor-fold desc="redirect user detail" defaultstate="collapsed">
+    // redirect to page edit page
      public void leadstoupdate() throws IOException {
        
       if(
@@ -360,6 +371,9 @@ public class modele_agent {
           
       
        }  
+     //</editor-fold>
+     
+       // <editor-fold desc="Modifier Agent" defaultstate="collapsed">
      public void updateagent() throws IOException, NoSuchAlgorithmException
       {
           
@@ -370,6 +384,9 @@ public class modele_agent {
            this.nouvelleagent = new Agent();
           FacesContext.getCurrentInstance().getExternalContext().redirect("users.xhtml");
       }
+     //</editor-fold>
+     
+       // <editor-fold desc="suppression agent" defaultstate="collapsed">
      public void deleteAgent() throws IOException
      {
          this.Message = "Operation effectuer , Agent supprimer" ;
@@ -377,7 +394,9 @@ public class modele_agent {
           this.nouvelleagent = new Agent();
            FacesContext.getCurrentInstance().getExternalContext().redirect("users.xhtml");
      }
+     //</editor-fold>
      
+       // <editor-fold desc="Lists" defaultstate="collapsed">
      public List<Agent> tableAgent()
      {
         return  this.agents = service.listerAgent() ;
@@ -393,6 +412,9 @@ public class modele_agent {
      {
      return this.service.LesMissionAValiderDuChef(this.agent.getMatricule());
      }
+        // </editor-fold>
+     
+        // <editor-fold desc="print" defaultstate="collapsed">
     public void FormPrint(Mission m) throws IOException{
         this.mission=m;
              FacesContext.getCurrentInstance().getExternalContext().redirect("FormPrint.xhtml");
@@ -401,14 +423,15 @@ public class modele_agent {
         this.mission=m;
              FacesContext.getCurrentInstance().getExternalContext().redirect("FormValid.xhtml");
     }
+      //</editor-fold> 
        
-       
+       // <editor-fold desc="validation mission" defaultstate="collapsed">   
     public void ValiderMission() throws IOException{
    this.service.ValiderMission(this.mission);
             FacesContext.getCurrentInstance().getExternalContext().redirect("ValidationMission.xhtml");
 
     
     }
-       
+       //</editor-fold>
        
 }

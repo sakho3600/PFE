@@ -74,8 +74,10 @@
 						<div class="form-title">
 							<h4>Creation d'un Agent :</h4>
 						</div>
+                                            <p:panelGrid rendered="#{modele_Admin.addagent}">
 						<div class="form-body">
                                                     <h:form> 
+                                                        
                                                         <p:messages id="messages" showDetail="true" closable="true">
                                                         
                                                           </p:messages>
@@ -100,6 +102,7 @@
                                                         <p:commandButton value="Ajouter" id="ajax"  actionListener="#{modele_agent.ajouter()}" class="btn btn-default" ajax="false"/>
                                                         </h:form> 
 						</div>
+                                            </p:panelGrid>
 					</div>
 					</div>
                             </div>
