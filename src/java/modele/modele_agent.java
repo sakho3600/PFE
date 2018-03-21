@@ -75,7 +75,7 @@ public class modele_agent {
     dao_ville serviceville= new dao_ville();
     SessionKeyGen sessionId= new SessionKeyGen() ; // generateur d'id de session (UUID)
     cryptpasswords encryption = new cryptpasswords() ; // SHA ENCRYPTION
-    
+    String Villes=new String();
     
     
     public modele_agent() {
@@ -95,10 +95,19 @@ public class modele_agent {
           cities.add(str.toString());
        
     }
-                
+   
     
- 
+  
+
     // <editor-fold desc="getters and setters" defaultstate="collapsed">
+  
+      public String getVilles() {
+        return Villes;
+    }
+    public void setVilles(String Villes) {
+        this.Villes = Villes;
+    }
+
     public String[] getSelectedCities2() {
         return selectedCities2;
     }
@@ -405,6 +414,7 @@ public class modele_agent {
      
      public List<Mission> ListerMission()
      {
+        
      return this.service.ListerlesMissionParAgent(this.agent.getMatricule());
      }
      
@@ -412,12 +422,18 @@ public class modele_agent {
      {
      return this.service.LesMissionAValiderDuChef(this.agent.getMatricule());
      }
+     
+     public void LesVillesString(){
+     
+        this.Villes= this.serviceMission.StringVille(this.mission);}
         // </editor-fold>
      
         // <editor-fold desc="print" defaultstate="collapsed">
     public void FormPrint(Mission m) throws IOException{
+        
         this.mission=m;
-             FacesContext.getCurrentInstance().getExternalContext().redirect("FormPrint.xhtml");
+         this.LesVillesString();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("FormPrint.xhtml");
     }
        public void FormValid(Mission m) throws IOException{
         this.mission=m;

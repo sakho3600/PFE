@@ -38,6 +38,12 @@ public class test {
  
  public static void main (String []args) throws NoSuchAlgorithmException{
  
+     dao_Mission d=new dao_Mission();
+     Set<ville>l =new HashSet<>();
+        Mission m =new Mission();
+       //System.out.println(d.StringVille(26));
+     
+     /*
     dao_Agent d= new dao_Agent();
     List<Mission> l= new ArrayList<>();
     List<Agent> la=new ArrayList<>();

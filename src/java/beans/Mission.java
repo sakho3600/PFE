@@ -33,6 +33,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime ;
 import java.time.ZoneId;
+import javax.persistence.FetchType;
 
 /**
  *
@@ -82,11 +83,11 @@ public class Mission implements Serializable {
     private Date DatedeCreation = new Date();
     
  
-    @ManyToMany(cascade = CascadeType.ALL )
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER )
 	@JoinTable(name = "LesVilleMission", joinColumns = { @JoinColumn(name = "CodeMission") }, inverseJoinColumns = { @JoinColumn(name = "Code_Postal")})
 	public Set<ville> Les_villes;
 
-      @ManyToMany(cascade = CascadeType.ALL)
+      @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinTable(name = "LesHebergementMission", joinColumns = { @JoinColumn(name = "CodeMission") }, inverseJoinColumns = { @JoinColumn(name = "CodeHeb") })
 	public Set<Hebergement> Les_Hebergement;
 
