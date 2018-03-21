@@ -389,8 +389,26 @@ public class modele_agent {
      return this.service.ListerlesMissionParAgent(this.agent.getMatricule());
      }
      
+     public List<Mission>ListerMissionAValider()
+     {
+     return this.service.LesMissionAValiderDuChef(this.agent.getMatricule());
+     }
     public void FormPrint(Mission m) throws IOException{
         this.mission=m;
              FacesContext.getCurrentInstance().getExternalContext().redirect("FormPrint.xhtml");
     }
+       public void FormValid(Mission m) throws IOException{
+        this.mission=m;
+             FacesContext.getCurrentInstance().getExternalContext().redirect("FormValid.xhtml");
+    }
+       
+       
+    public void ValiderMission() throws IOException{
+   this.service.ValiderMission(this.mission);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("ValidationMission.xhtml");
+
+    
+    }
+       
+       
 }

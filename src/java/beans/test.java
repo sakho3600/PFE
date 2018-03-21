@@ -38,10 +38,18 @@ public class test {
  
  public static void main (String []args) throws NoSuchAlgorithmException{
  
- /*    dao_Agent d= new dao_Agent();
-         System.out.print(d.ifExistsDirection("Personnel","Resource Humaine"));
+    dao_Agent d= new dao_Agent();
+    List<Mission> l= new ArrayList<>();
+    List<Agent> la=new ArrayList<>();
+    la=d.ListerAgentParChef(14);
+    l=d.ListerMissionNonValiderDesAgents(la);
+     for (Mission s:l)
+         System.out.println(s.getCodeMission());
 
- 
+  /*for (Agent a:la)
+      System.out.println(a.getMatricule());
+    /* 
+ /* 
      
      Personnel p = new Personnel(1,"a","a","a","Informatique");
      dao_Personnel da=new dao_Personnel();
@@ -77,8 +85,6 @@ lm= d.ListerMissionNonValiderDesAgents(l);
      lv=d.StringTOVille(l);
      for (ville st:lv)
          System.out.print(st.toString());
-     
-     */
      cryptpasswords encryption = new cryptpasswords();
      
      dao_Admin servicead = new dao_Admin() ;
@@ -102,6 +108,8 @@ adm.setPernom("tt");
    servicead.ajouter(adm);
 
 
+     */
+     
  
  
 }}

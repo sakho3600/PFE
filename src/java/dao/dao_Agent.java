@@ -155,6 +155,19 @@ public class dao_Agent {
     closeSession();
     return l;}
     
+
+    
+     public List<Mission> ListerlesMissionAValider(int Matricule){
+      openSession();
+                   List<Mission> l= new ArrayList<>();
+                   
+     
+       closeSession();
+    return l;}
+     
+     
+     
+     
     /* Ajouter un agent */
    public void ajouter(Agent Employ)
    {
@@ -291,6 +304,16 @@ public class dao_Agent {
             return null;
     
     }
+public List<Mission> LesMissionAValiderDuChef(int Matricule){
+return  this.ListerMissionNonValiderDesAgents(this.ListerAgentParChef(Matricule));
+}
 
 
+public void ValiderMission(Mission m){
+                    m.setEtat(1);
+                   openSession();
+                          s.update(m);
+                   closeSession();
+
+}
 }

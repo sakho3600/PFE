@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+   <h:head>
+       
+       <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Le Moteur Platform" />
+<title>LE Moteur-sa</title>
+<style>.ui-widget-content {
+    border: 1px solid #d5d5d5;
+    background: #fff;
+    color: #222;
+}</style>
+    </h:head>
+    <h:body>
+      <p:panelGrid id = "panel" columns = "1"   columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid">
+          
+    <f:facet name="header">
+        <img src="../../resources/image/logo.png" alt="Le moteur" width="200" height="100" />
+    </f:facet>
+                     
+          <h:outputLabel for="Matricule_Agent" value="Matricule de l'agent : #{modele_agent.mission.agent.matricule}" />
+                     
+          
+          
+                         <h:outputLabel for="Nom_Agent" value="Nom de l'agent :#{modele_agent.mission.agent.nom}" />
+                        
+          
+          
+                         <h:outputLabel for="Prenom_Agent" value="Prenom de l'agent : #{modele_agent.mission.agent.pernom}" />
+        
+          
+          
+                         <h:outputLabel for="Departement " value="depatement de l'agent : #{modele_agent.mission.agent.departement}" />
+              
+          
+          
+                         
+                         <h:outputLabel for="Code_mission" value="Code de la Mission : #{modele_agent.mission.codeMission}" />
+
+                         
+                         <h:outputLabel for="Intitule_mission" value="Intitule de la mission : #{modele_agent.mission.intitule_Mission}" />
+                                                  
+                         <h:outputLabel for="Date_Deb"  value="Date Depart : #{modele_agent.mission.dateDeb}" />
+
+                         
+                     
+                         <h:outputLabel for="Date_Ret" value="Date Retour : #{modele_agent.mission.dateFin}" />
+                         
+                         <h:outputLabel for="Valide" value="Valider Par le Chef : #{modele_agent.mission.etat}" />
+                         
+                         <h:outputLabel for="Kilometrage" value="Kilometrage : #{modele_agent.mission.kilometrage}" />
+                         
+                         <h:outputLabel for="Nombre_jours" value="Nombre de jours : #{modele_agent.mission.nbrJours}" />
+                         
+                         <h:outputLabel for="Objectif"  value="Objectif : #{modele_agent.mission.objectif}" />
+                      
+                         
+                         
+                         
+    </p:panelGrid>
+     <p:commandButton value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+    <p:printer target="panel" />
+</p:commandButton>
+        <h:form>
+            <p:commandButton value="Valider" id="ajax"  actionListener="#{modele_agent.ValiderMission()}" icon="ui-icon-check" class="btn btn-default" ajax="false"/>
+
+        </h:form>
+    </h:body>
+</html>
