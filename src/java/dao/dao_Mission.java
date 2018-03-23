@@ -33,12 +33,21 @@ public class dao_Mission {
         s.close();
     }
    
+ public int CalculdJours(Mission m){
  
+      
+ final long MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24; 
+ long delta = (m.getDateFin().getTime() - m.getDateDeb().getTime()) / (MILLISECONDS_PER_DAY);
+ return (int)delta;
+ }
     
   public void ajoutMission(Mission m){
-      Session s =HibernateUtil.getSessionFactory().openSession();
+  
+      
+ Session s =HibernateUtil.getSessionFactory().openSession();
         s.beginTransaction();
         m.setEtat(0);
+        m.setNbrJours(this.CalculdJours(m));
               s.save(m);
    s.getTransaction().commit();
         s.close();    }

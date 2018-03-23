@@ -288,6 +288,10 @@ public class dao_Agent {
     
     
     public List<Mission> ListerMissionNonValiderDesAgents(List<Agent> LAgent){
+       if (LAgent==null){
+           return null;
+       }else{
+        
         List<Mission>ListMiss=new ArrayList<>();       
         
         for (Agent ag:LAgent)
@@ -302,10 +306,13 @@ public class dao_Agent {
             return ListMiss;
         else 
             return null;
-    
+       }
     }
-public List<Mission> LesMissionAValiderDuChef(int Matricule){
-return  this.ListerMissionNonValiderDesAgents(this.ListerAgentParChef(Matricule));
+public List<Mission> LesMissionAValiderDuChef(Agent agent){
+    if (agent.getDirecteur().equals("Personnel"))
+        return null ;
+    else    
+return  this.ListerMissionNonValiderDesAgents(this.ListerAgentParChef(agent.getMatricule()));
 }
 
 

@@ -420,7 +420,7 @@ public class modele_agent {
      
      public List<Mission>ListerMissionAValider()
      {
-     return this.service.LesMissionAValiderDuChef(this.agent.getMatricule());
+     return this.service.LesMissionAValiderDuChef(this.agent);
      }
      
      public void LesVillesString(){
