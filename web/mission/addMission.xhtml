@@ -54,10 +54,11 @@
 					<h2 class="title1">Ajouter une Mission </h2>
 					<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
 						<div class="form-title">
-							<h4>Creation d'une mission :</h4>
+							<h4>Information effectives de la mission :</h4>
 						</div>
+                                            <h:form> 
 						<div class="form-body">
-                                                    <h:form> 
+                                                    
                                                         <p:messages id="messages" showDetail="true" closable="true">
                                                         
                                                           </p:messages>
@@ -102,16 +103,35 @@
         <p:outputLabel for="date_retour" value="Date Retour:" />
         <p:calendar id="date_retour" value="#{modele_agent.date2}" style="padding-left: 50px;" />
                                                    </h:panelGrid></div>
-                                                        <p:commandButton value="Ajouter" id="ajax"  actionListener="#{modele_agent.ajouterMission()}" class="btn btn-default" ajax="false"/>
-                                                        </h:form> 
-						</div>
-					</div>
-					</div>
+                                                </div>
+                                                <div class="form-title">
+							<h4>Informations pour le budget accordé :</h4>
+						        </div>
+                                                     <div class="form-body">
+                                                        
+         <div class="form-group"> <p:outputLabel  value="Frais Transport  :"> </p:outputLabel> 
+             <p:inputNumber  value="#{modele_agent.ftransport}"  id="ftrans" readonly='true'> </p:inputNumber> </div>
+          <div class="form-group"> <p:outputLabel  value="Frais D'hébérgement  :"> </p:outputLabel> 
+              <p:inputNumber  value="#{modele_agent.fhebergement}"  id="fheber"  readonly='true'> </p:inputNumber> </div>
+        <div class="form-group"> <p:outputLabel  value="Frais Divers  :"> </p:outputLabel> 
+             <p:inputNumber  value="#{modele_agent.fdiver}"  id="fdiver" readonly='true'> </p:inputNumber> </div>                                             
+        <div class="form-group"> <p:outputLabel  value="Frais Total  :"> </p:outputLabel> 
+            <p:inputText class="form-control" value="#{modele_agent.ftotal}"  id="ftotal" readonly='true'> </p:inputText> </div>                                                
+       
+             <p:commandButton value="Ajouter" id="ajax"  actionListener="#{modele_agent.ajouterMission()}" class="btn btn-default" ajax="false"/>
+                                                        
+
+                                                    
+						
+                                        </div>
+                                            </h:form> 
+                                        </div>
+                                </div>
                             </div>
             </div>
         </div>
         
-            
+           
             
     
         

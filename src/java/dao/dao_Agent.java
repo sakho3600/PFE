@@ -273,11 +273,11 @@ public class dao_Agent {
     
     public List<Mission> ListerlesMissionNonValiderParAgent(int Matricule){
                    openSession();
-                   List<Mission> l= new ArrayList<>();
+                   List<Mission> l;
                     Query query = s.createQuery("from Mission where Matricule = :code and Etat= 0");
                     query.setParameter("code", Matricule);
                      if(query.list().isEmpty()){
-                     l=null;}
+                     l=new ArrayList<>();}
                      else{
                        l = query.list();
                    }
