@@ -70,7 +70,7 @@
                                                   
                                                          <div class="form-group">
                
-                                                             <p:dataTable  var="Missions" value="#{modele_agent.ListerMissionAValider()}" rows="9" paginator="true"  >
+                                                             <p:dataTable  var="Missions" emptyMessage="Vous n'avez aucune Mission a valider" value="#{modele_agent.ListerMissionAValider()}" rows="9" paginator="true"  >
                                                                  
                                                                  
                                                                  <p:column headerText="Matricule de l'agent" filterBy="#{Missions.agent.matricule}" filterMatchMode="exact"   >

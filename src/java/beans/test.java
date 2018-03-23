@@ -38,6 +38,19 @@ public class test {
  
  public static void main (String []args) throws NoSuchAlgorithmException{
  
+     Date d = new Date();
+     Date d2=new Date();
+     d.setDate(14);
+     d.setMonth(3);
+     d.setYear(2017);
+     
+     d2.setDate(18);
+     d2.setMonth(3);
+     d2.setYear(2018);
+ final long MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24; 
+ long delta = d2.getTime() - d.getTime();
+     System.out.println(delta / (MILLISECONDS_PER_DAY));
+     /*
      dao_Mission d=new dao_Mission();
      Set<ville>l =new HashSet<>();
         Mission m =new Mission();
