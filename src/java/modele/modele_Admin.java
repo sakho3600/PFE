@@ -466,14 +466,34 @@ public class modele_Admin  {
     //</editor-fold>
     
      
-     public void updateprevis()
-     {
-         service.updateprevision(this.updateprev);
+       public void updateprevis()  throws IOException {
+       
+           service.updateprevision(this.updateprev);
          this.updateprev = new prevision();
-  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "terminer!", "prevision Modifier."));
+ FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "terminer", "prevision modifier."));
+
+//          FacesContext.getCurrentInstance().getExternalContext().redirect("modifprevision.xhtml");
+    
+         
+     }
+          
+         public void deleteprevision()  throws IOException {
+         service.delete(this.updateprev);
+         this.updateprev = new prevision();
+       
+         
+          FacesContext.getCurrentInstance().getExternalContext().redirect("modifprevision.xhtml");
+    
+         
+     }
+          
+      /*
+     public void updateprevis() throws IOException
+     {
+/*   
+         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "terminer!", "prevision Modifier."));
 
      }
-     
      
      public void deleteprevision()
      {
@@ -481,6 +501,7 @@ public class modele_Admin  {
          this.updateprev = new prevision();
          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "terminer!", "prevision Supprimer."));
 
-     }
+     }*/
+     
     
 }
