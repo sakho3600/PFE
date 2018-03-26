@@ -6,6 +6,7 @@
 package modele;
 
 import beans.Admin;
+import beans.prevision;
 import dao.dao_Admin;
 import utilitaire.SessionKeyGen;
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class modele_Admin  {
 	private String user; // Username
         private String userKey ; /* unique key pour la session */
         private int matricule ; // matricule utiliser pour l'update
-        
+        private String choixprevision; // choix du prevision a modifier
          // <editor-fold desc="acces block" defaultstate="collapsed">
         /** privileges panelgrid block **/
         private boolean addagent;
@@ -49,7 +50,7 @@ public class modele_Admin  {
     /** Tables **/
         private List<privs> privilege ; // les privileges
         private List<privs> selectedPrivs; // les privileges qui seront choisit seront affecter dans se tableau
-           
+        private List<String> previsions ; //    
         
     /** Objects **/
     Admin admin= new Admin(); // Admin Object connexion admin
@@ -57,7 +58,8 @@ public class modele_Admin  {
     dao_Admin service=new dao_Admin(); // dao_Admin to acces the dao
     SessionKeyGen sessionId= new SessionKeyGen() ; // generateur d'id de session (UUID)
     cryptpasswords encrypt=new cryptpasswords() ;
-    
+    prevision previs=new prevision();
+    prevision updateprev = new prevision();
     public modele_Admin() {  
     }
     
@@ -78,6 +80,8 @@ public class modele_Admin  {
         editagent=false;
         gestmission=false;
         gestassurance=false;
+        
+        this.previsions = service.toutlesprevisions();
     }
    
     // <editor-fold desc="getters and setters" defaultstate="collapsed">
@@ -114,6 +118,24 @@ public class modele_Admin  {
         this.nouvelleadmin = nouvelleadmin;
     }
 
+    public String getChoixprevision() {
+        return choixprevision;
+    }
+
+    public void setChoixprevision(String choixprevision) {
+        this.choixprevision = choixprevision;
+    }
+
+    public List<String> getPrevisions() {
+        return previsions;
+    }
+
+    public void setPrevisions(List<String> previsions) {
+        this.previsions = previsions;
+    }
+
+   
+
     
     
     public List<privs> getPrivilege() {
@@ -145,6 +167,17 @@ public class modele_Admin  {
         return service;
     }
 
+    public prevision getPrevis() {
+        return previs;
+    }
+
+    public void setPrevis(prevision previs) {
+        this.previs = previs;
+    }
+
+    
+    
+    
     public void setService(dao_Admin service) {
         this.service = service;
     }
@@ -221,6 +254,14 @@ public class modele_Admin  {
         this.gestassurance = gestassurance;
     }
 
+    public prevision getUpdateprev() {
+        return updateprev;
+    }
+
+    public void setUpdateprev(prevision updateprev) {
+        this.updateprev = updateprev;
+    }
+    
     
     /** end of getter and setter **/
     
@@ -385,5 +426,61 @@ public class modele_Admin  {
     }
      //</editor-fold>     
     
+    //<editor-fold desc="Ajout prevision Method" defaultstate="collapsed" >
+    
+    public void ajouterprevision()
+    {
+        
+        if (service.verifprevision(this.previs.getType()))
+        
+        { 
+            this.service.addprevision(this.previs); //verification de l'existance du prevision
+             this.previsions = service.toutlesprevisions();
+          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "terminer!", "prevision Ajouter."));
+        this.previs = new prevision() ;  }
+        else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "prevision deja existante veuiller modifier l'ancienne."));
+        } 
+        
+    }
+    
+    
+    
+    //</editor-fold>
+    
+    //<editor-fold desc="Ajout prevision Method" defaultstate="collapsed" >
+      
+     public void leadstoupprevision() throws IOException {
+       
+      
+        this.updateprev = service.getprev(choixprevision) ;
+         
+          FacesContext.getCurrentInstance().getExternalContext().redirect("previsiondetail.xhtml");
+    
+         
+     }
+          
+      
+         
+
+    //</editor-fold>
+    
+     
+     public void updateprevis()
+     {
+         service.updateprevision(this.updateprev);
+         this.updateprev = new prevision();
+  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "terminer!", "prevision Modifier."));
+
+     }
+     
+     
+     public void deleteprevision()
+     {
+         service.delete(this.updateprev);
+         this.updateprev = new prevision();
+         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "terminer!", "prevision Supprimer."));
+
+     }
     
 }

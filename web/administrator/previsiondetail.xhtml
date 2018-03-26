@@ -1,0 +1,145 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view contentType="text/html">
+    <h:head>
+      <style> element.style { width: auto; height: auto; visibility: visible; z-index: 1010; display: block; } .ui-dialog { top: 40% !important; left: 50%!important; } </style>
+      
+        <title>Administrator</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+<!-- Bootstrap Core CSS -->
+<link href="../../resources/adminresource/css/bootstrap.css" rel='stylesheet' type='text/css' />
+<!-- Custom CSS -->
+<link href="../../resources/adminresource/css/style.css" rel='stylesheet' type='text/css' />
+
+<!-- font-awesome icons CSS-->
+<link href="../../resources/adminresource/css/font-awesome.css" rel="stylesheet"/> 
+<!-- //font-awesome icons CSS-->
+
+ <!-- side nav css file -->
+ <link href='../../resources/adminresource/css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css'/>
+ <!-- side nav css file -->
+ 
+ <!-- js-->
+<script src="../../resources/adminresource/js/jquery-1.11.1.min.js"></script>
+<script src="../../resources/adminresource/js/modernizr.custom.js"></script>
+
+<!--webfonts-->
+<link href="//fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet"></link>
+<!--//webfonts-->
+ 
+<!-- Metis Menu -->
+<script src="../../resources/adminresource/js/metisMenu.min.js"></script>
+<script src="../../resources/adminresource/js/custom.js"></script>
+<link href="../../resources/adminresource/css/custom.css" rel="stylesheet"> </link>
+<!--//Metis Menu -->
+<style>
+
+</style>
+    </h:head>
+    <h:body class="cbp-spmenu-push">
+      
+          <div class="main-content">
+          
+                 <ui:include src="topbar.xhtml" />
+            
+           
+                 <ui:include src="leftbar.xhtml" />
+            
+        <div id="page-wrapper">
+			<div class="main-page">
+				<div class="forms">
+					<h2 class="title1">Modifer / Supprimer une prevision </h2>
+					<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
+						<div class="form-title">
+							<h4>detail prevision :</h4>
+						</div>
+						<div class="form-body">
+                                                    <h:form> 
+                                                        <p:messages id="messages" showDetail="true" closable="true">
+                                                        
+                                                          </p:messages>
+                                                        
+                                                        <div class="form-group"> <p:outputLabel  value="Type  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.updateprev.type}"   > </p:inputText> </div>
+                                                        <div class="form-group"> <p:outputLabel  value="Frais Transport  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.updateprev.ftransport}"  > </p:inputText> </div>
+                                                        <div class="form-group"> <p:outputLabel  value="Frais Hebergement :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.updateprev.fhebergement}"  ></p:inputText> </div> 
+                                                        <div class="form-group"> <p:outputLabel  value="Frais Divers :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.updateprev.fdiver}"  ></p:inputText> </div> 
+                                                       
+                                                      
+                                                        
+                                                         
+                                                        <p:commandButton value="Modifer"   actionListener="#{modele_Admin.updateprevis()}" class="btn btn-default">
+                                                        <p:confirm header="Confirmation" message="Vous étes sur?" icon="ui-icon-alert" />
+                                                        </p:commandButton>
+                                                    
+                                                        <p:commandButton value="Supprimer"   actionListener="#{modele_Admin.deleteprevision()}" class="btn btn-default" >
+                                                        <p:confirm header="Confirmation" message="Vous étes sur?" icon="ui-icon-alert" />
+                                                        </p:commandButton>
+                                                             
+                                                        <p:confirmDialog global="true" >
+                                                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                        </p:confirmDialog>
+                                                        
+
+                                                       
+                                                    </h:form> 
+						</div>
+					</div>
+					</div>
+                            </div>
+            </div>
+        </div>
+        
+            
+            
+    
+        
+        <!-- side nav js -->
+	<script src='../../resources/adminresource/js/SidebarNav.min.js' type='text/javascript'></script>
+	<script>
+      $('.sidebar-menu').SidebarNav()
+    </script>
+	<!-- //side nav js -->
+	
+	<!-- Classie --><!-- for toggle left push menu script -->
+		<script src="../../resources/adminresource/js/classie.js"></script>
+		<script>
+			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+				showLeftPush = document.getElementById( 'showLeftPush' ),
+				body = document.body;
+                        
+                        
+			showLeftPush.onclick = function() {
+				classie.toggle( this, 'active' );
+				classie.toggle( body, 'cbp-spmenu-push-toright' );
+				classie.toggle( menuLeft, 'cbp-spmenu-open' );
+				disableOther( 'showLeftPush' );
+			};
+			
+			function disableOther( button ) {
+				if( button !== 'showLeftPush' ) {
+					classie.toggle( showLeftPush, 'disabled' );
+				}
+			}
+		</script>
+	<!-- //Classie --><!-- //for toggle left push menu script -->
+		
+	<!--scrolling js-->
+	<script src="../../resources/adminresource/js/jquery.nicescroll.js"></script>
+	<script src="../../resources/adminresource/js/scripts.js"></script>
+	<!--//scrolling js-->
+	
+	<!-- Bootstrap Core JavaScript -->
+   <script src="../../resources/adminresource/js/bootstrap.js"> </script>
+	<!-- //Bootstrap Core JavaScript -->
+    </h:body>
+        </f:view>
+</html>

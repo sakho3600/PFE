@@ -8,10 +8,13 @@ package dao;
 import modele.privs;
 import beans.Admin;
 import beans.Personnel;
+import beans.prevision;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Query ;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import utilitaire.HibernateUtil;
 
@@ -150,7 +153,97 @@ public class dao_Admin {
     }
     
    
-       
+      public void addprevision(Object prevision)
+      {
+          try { 
+    openSession() ;
+             s.save(prevision);
+    closeSession() ;
+    }catch(Exception e){
+	e.printStackTrace();
+    }
+      }
    
+      public boolean verifprevision(String type)
+    {
+       boolean result ; 
+        
+       openSession();
+        
+       String hq="FROM prevision A WHERE A.type = :type" ;
+       Query query = s.createQuery(hq);
+       query.setParameter("type", type);
+        if (query.list()!=null){
+         result = true ;
+            }
+        else{
+            result = false ;
+        }
+        closeSession();
+        
+    return result ;
+        
+    }
+      
+      
+      public List<String> toutlesprevisions() // getting only type column from prevision class
+      {
+       List<String> myprevision = null ;
+       openSession();
+        Criteria criteria = s.createCriteria(prevision.class) ;
+          criteria.setProjection(Projections.property("type")) ;
+        myprevision = criteria.list() ;
+       
+       
+        closeSession();
+      return myprevision ;
+      }
+      
+      public prevision getprev(String type)
+      {
+          prevision pv = new prevision();
+          openSession();
+          
+     String hq="FROM prevision A WHERE A.type = :type" ;
+     
+       Query query = s.createQuery(hq);
+       query.setParameter("type", type);
+       pv = (prevision) query.list().get(0) ;
+          
+          closeSession();
+       
+       
+          return pv ;
+      }
+      
+      
+      public void updateprevision(Object prevision)
+      {
+         
+          
+       try { 
+    openSession() ;
+    
+             s.update(prevision);
+    closeSession() ;
+    
+    }catch(Exception e){
+	e.printStackTrace();
+    }
+    
+   
+      }
+      
+      
+       public void delete(prevision prev)
+   {
+       try { 
+    openSession() ;
+             s.delete(prev);
+    closeSession() ;
+    }catch(Exception e){
+	e.printStackTrace();
+    }
+    }
       
 }

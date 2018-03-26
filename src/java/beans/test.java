@@ -37,7 +37,7 @@ public class test {
     
  
  public static void main (String []args) throws NoSuchAlgorithmException{
- 
+ /*
      Date d = new Date();
      Date d2=new Date();
      d.setDate(14);
@@ -49,7 +49,7 @@ public class test {
      d2.setYear(2018);
  final long MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24; 
  long delta = d2.getTime() - d.getTime();
-     System.out.println(delta / (MILLISECONDS_PER_DAY));
+     System.out.println(delta / (MILLISECONDS_PER_DAY));*/
      /*
      dao_Mission d=new dao_Mission();
      Set<ville>l =new HashSet<>();
@@ -129,6 +129,17 @@ adm.setPernom("tt");
 
      */
      
+     dao_Admin servad=new dao_Admin();
+     
+     
+     prevision p = new prevision();
+     
+     List<String> pr=new ArrayList();
+     
+    pr = servad.toutlesprevisions();
  
- 
+    for(String pv:pr){
+        System.out.println(pv) ;
+  
+    }
 }}
