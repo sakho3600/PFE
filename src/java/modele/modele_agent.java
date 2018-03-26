@@ -63,10 +63,6 @@ public class modele_agent {
      private String SessionKey ;
      private String Departement  ;
      private String grade;
-     private Float ftransport;
-     private Float fhebergement;
-     private Float ftotal ;
-     private Float fdiver ;
      
      /** Tables **/ 
     private List<Agent> agents ;
@@ -140,49 +136,6 @@ public class modele_agent {
     public void setGrade(String grade) {
         this.grade = grade;
     }
-
-    public Float getFtransport() {
-        return ftransport;
-    }
-
-    public void setFtransport(Float ftransport) {
-        this.ftransport = ftransport;
-    }
-
-    public Float getFhebergement() {
-        return fhebergement;
-    }
-
-    public void setFhebergement(Float fhebergement) {
-        this.fhebergement = fhebergement;
-    }
-
-    public Float getFtotal() {
-        return ftotal;
-    }
-
-    public void setFtotal(Float ftotal) {
-        this.ftotal = ftotal;
-    }
-
-    public cryptpasswords getEncryption() {
-        return encryption;
-    }
-
-    public void setEncryption(cryptpasswords encryption) {
-        this.encryption = encryption;
-    }
-
-    public Float getFdiver() {
-        return fdiver;
-    }
-
-    public void setFdiver(Float fdiver) {
-        this.fdiver = fdiver;
-    }
- 
-     
- 
 
 
     public int getMatricule() {
@@ -401,16 +354,8 @@ public class modele_agent {
         mission.setType(type);
         mission.setDateDeb(date1);
         mission.setDateFin(date2);
-        mission.setFtransport(this.ftransport);
-        mission.setFhebergement(this.fhebergement);
-        mission.setFtotal(this.ftotal);
-        mission.setFdivers(this.fdiver);
-        
-        this.fhebergement = 0F ;
-        this.ftransport = 0F;
-        this.ftotal = 0F;
-        this.fdiver = 0F;
-        
+          
+      
         serviceMission.ajoutMission(mission);
         
          this.mission=new Mission();
@@ -504,5 +449,14 @@ public class modele_agent {
     
     }
        //</editor-fold>
-       
+    
+          // <editor-fold desc="Cloture mission" defaultstate="collapsed">   
+  
+    public void ClotureMission() throws IOException{
+    this.Message=this.serviceMission.ClotureMission(mission, agent);
+    FacesContext.getCurrentInstance().getExternalContext().redirect("LesMissions.xhtml");}
+
+    
+           //</editor-fold>
+
 }

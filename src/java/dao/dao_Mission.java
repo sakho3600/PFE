@@ -5,6 +5,7 @@
  */
 package dao;
 
+import beans.Agent;
 import beans.Mission;
 import beans.ville;
 import java.util.ArrayList;
@@ -81,4 +82,27 @@ Mission m =new Mission();
    closeSession();
     return m;
 }
+
+public String ClotureMission(Mission mission,Agent agent){
+String Message=new String();
+Mission m=this.RetourMission(mission.getCodeMission());
+if (m==null){
+    Message="Mission inexistante";
+}
+else if (m.getAgent().getMatricule()==agent.getMatricule() && (m.getStatus().equals("En cours"))){
+openSession();
+    m.setStatus("Fin de Mission");
+s.update(m);
+closeSession();
+Message="Mission Terminée";}
+else if (m.getAgent().getMatricule()!=agent.getMatricule())
+    Message="Vous n'avez pas les droit sur cette mission";
+else if(m.getStatus().equals("Colturé"))
+    Message ="Mission deja cloturée";
+else if (m.getStatus().equals("Fin de Mission"))
+    Message="Mission deja terminée";
+return Message;
+}
+
+
 }

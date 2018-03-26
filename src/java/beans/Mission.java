@@ -61,18 +61,7 @@ public class Mission implements Serializable {
       @Column( name="Status" , nullable=false)
       private String Status = "En cours";
       
-      @Column( name="ftransport" , nullable=true)
-      private Float ftransport;
-      
-      @Column( name="fhebergement" , nullable=true)
-      private Float fhebergement; 
-      
-      @Column( name="fdivers" , nullable=true)
-      private Float fdivers; 
-      
-      @Column( name="ftotal")
-      private Float ftotal; 
-      
+        
       @Column( name="DateDeh")
     @Temporal(javax.persistence.TemporalType.DATE)
       private Date DateDeb;
@@ -161,6 +150,8 @@ public class Mission implements Serializable {
         this.Les_Hebergement = Les_Hebergement;
     }
 
+
+    
     public int getCodeMission() {
         return CodeMission;
     }
@@ -275,48 +266,6 @@ public class Mission implements Serializable {
     public void setStatus(String Status) {
         this.Status = Status;
     }
-
-    public Float getFtransport() {
-        return ftransport;
-    }
-
-    public void setFtransport(Float ftransport) {
-        this.ftransport = ftransport;
-    }
-
-    public Float getFhebergement() {
-        return fhebergement;
-    }
-
-    public void setFhebergement(Float fhebergement) {
-        this.fhebergement = fhebergement;
-    }
-
-    public Float getFdivers() {
-        return fdivers;
-    }
-
-    public void setFdivers(Float fdivers) {
-        this.fdivers = fdivers;
-    }
-
-    public Float getFtotal() {
-        return ftotal;
-    }
-
-    public void setFtotal(Float ftotal) {
-        this.ftotal = ftotal;
-    }
-
-  
-
-  
-
-   
-
-    
-
-   
 
    
 
