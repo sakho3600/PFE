@@ -6,8 +6,12 @@
 package modele;
 
 import beans.Admin;
+import beans.Cloture;
+import beans.Mission;
 import beans.prevision;
 import dao.dao_Admin;
+import dao.dao_Cloture;
+import dao.dao_Mission;
 import utilitaire.SessionKeyGen;
 import java.io.IOException;
 import javax.faces.application.FacesMessage;
@@ -53,13 +57,18 @@ public class modele_Admin  {
         private List<String> previsions ; //    
         
     /** Objects **/
+        String villes=new String();
+        Mission mission=new Mission();
     Admin admin= new Admin(); // Admin Object connexion admin
     Admin nouvelleadmin=new Admin(); // pour la création des administrateurs
     dao_Admin service=new dao_Admin(); // dao_Admin to acces the dao
+    dao_Mission serviceMission=new dao_Mission();
+    dao_Cloture serviceCloture=new dao_Cloture();
     SessionKeyGen sessionId= new SessionKeyGen() ; // generateur d'id de session (UUID)
     cryptpasswords encrypt=new cryptpasswords() ;
     prevision previs=new prevision();
     prevision updateprev = new prevision();
+    Cloture cloture=new Cloture();
     public modele_Admin() {  
     }
     
@@ -81,7 +90,8 @@ public class modele_Admin  {
         gestmission=false;
         gestassurance=false;
         
-      
+        this.updateprev = service.getprevision() ;
+   
     }
    
     // <editor-fold desc="getters and setters" defaultstate="collapsed">
@@ -261,7 +271,21 @@ public class modele_Admin  {
     public void setUpdateprev(prevision updateprev) {
         this.updateprev = updateprev;
     }
-    
+    public Mission getMission() {
+        return mission;
+    }
+
+    public void setMission(Mission mission) {
+        this.mission = mission;
+    }
+
+    public dao_Mission getServiceMission() {
+        return serviceMission;
+    }
+
+    public void setServiceMission(dao_Mission serviceMission) {
+        this.serviceMission = serviceMission;
+    }
     
     /** end of getter and setter **/
     
@@ -446,6 +470,13 @@ public class modele_Admin  {
     
     
     
+    
+     
+    
+    
+    
+    
+    
     //</editor-fold>
     
     //<editor-fold desc="update prevision" defaultstate="collapsed" >
@@ -458,7 +489,7 @@ public class modele_Admin  {
                                   +this.updateprev.getFhebergement());
               this.updateprev.setNumprevs(1); // the only prevision
               service.updateprevision(this.updateprev); 
-           this.updateprev = new prevision();
+          
          FacesContext f=FacesContext.getCurrentInstance();
         f.addMessage(null,new FacesMessage("Ajout effectuer"));
                
@@ -466,7 +497,54 @@ public class modele_Admin  {
           
        
              //</editor-fold>
+
+     public List<Mission> ListerMissionNonCloturer(){
+         return this.serviceMission.listMissionnoncloturer();
+         }
+          
+         public void CloturerMission(Mission mission) throws IOException{
+             this.mission=mission;
+          
+        this.villes= this.serviceMission.StringVille(this.mission);
+                     FacesContext.getCurrentInstance().getExternalContext().redirect("FinMission.xhtml");             
+         }
+
+    public String getVilles() {
+        return villes;
+    }
+
+    public void setVilles(String villes) {
+        this.villes = villes;
+    }
+    
+    public void AjoutCloture (){
+        this.cloture.setCodeMission(this.mission);
+        this.serviceCloture.ajoutCloture(cloture);
+        this.serviceMission.terminerMission(mission);
+    }
+
+    public dao_Cloture getServiceCloture() {
+        return serviceCloture;
+    }
+
+    public void setServiceCloture(dao_Cloture serviceCloture) {
+        this.serviceCloture = serviceCloture;
+    }
+
+    public Cloture getCloture() {
+        return cloture;
+    }
+
+    public void setCloture(Cloture cloture) {
+        this.cloture = cloture;
+    }
+           
+     
+   
+    
+   
+    
+  
    
      
-    
 }

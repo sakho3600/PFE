@@ -26,12 +26,15 @@ public class prevision implements Serializable{
     @GeneratedValue (strategy=GenerationType.AUTO)
     private int numprevs ;
    
+
     @Column(name="fdiver")
     private Float fdiver;
     @Column(name="fhebergement")
     private Float fhebergement;
     @Column(name="ftransport")
     private Float ftransport;
+    @Column (name="Total")
+    private Float Total;
     @Column(name="time")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date Heure_ = new Date();
@@ -104,3 +107,5 @@ public class prevision implements Serializable{
     
     
 }
+
+

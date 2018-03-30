@@ -17,6 +17,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import beans.Admin ;
 import dao.dao_Agent;
+import dao.dao_Cloture;
 import dao.dao_Hebergement;
 import dao.dao_Mission;
 import dao.dao_ville;
@@ -26,6 +27,8 @@ import modele.privs ;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import modele.modele_agent;
+import org.hibernate.Query;
 import utilitaire.HibernateUtil;
 import utilitaire.cryptpasswords;
 /**
@@ -37,6 +40,36 @@ public class test {
     
  
  public static void main (String []args) throws NoSuchAlgorithmException{
+     
+         Session s=HibernateUtil.getSessionFactory().openSession();
+        s.beginTransaction();
+
+     List<Mission> l= new ArrayList<>();
+                   Query query = s.createQuery("from Mission");
+                  //  query.setParameter("code", 11);
+                    l = query.list();
+                   s.getTransaction().commit();
+        s.close();
+ for (Mission p:l)
+         System.out.println(p.getCodeMission());
+     
+     
+     /* dao_Agent a = new dao_Agent();
+         List<Mission> l= new ArrayList<>();
+l=a.ListerlesMissionsNonValider();
+     for (Mission s:l)
+         System.out.println(s.getCodeMission());
+
+     /*modele_agent m = new modele_agent();
+     
+     
+     
+     /*
+     Mission m=new Mission(38);
+     Cloture c=new Cloture(m,1.0F,1.0F,1.0F);
+     dao_Cloture d=new dao_Cloture();
+     d.ajoutCloture(c);
+     
  /*
      Date d = new Date();
      Date d2=new Date();

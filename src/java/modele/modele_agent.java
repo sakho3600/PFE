@@ -538,6 +538,7 @@ public class modele_agent {
      return this.service.LesMissionAValiderDuChef(this.agent);
      }
      
+     
      public void LesVillesString(){
      
         this.Villes= this.serviceMission.StringVille(this.mission);}
@@ -558,7 +559,7 @@ public class modele_agent {
        
        // <editor-fold desc="validation mission" defaultstate="collapsed">   
     public void ValiderMission() throws IOException{
-   this.service.ValiderMission(this.mission);
+   this.service.ValiderMission(this.mission,this.agent);
             FacesContext.getCurrentInstance().getExternalContext().redirect("ValidationMission.xhtml");
 
     

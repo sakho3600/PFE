@@ -29,14 +29,14 @@ and open the template in the editor.
                                                    
                                                             
                                   <h:form>
-                                      <p:poll interval="3" listener="#{modele_agent.listerMissionAValider}" update="txt_count txt_count2" >
-                                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge"> <h:outputText  value="#{modele_agent.listerMissionAValider.size}" id="txt_count" /></span> </a>
+                                      <p:poll interval="3" listener="#{modele_agent.ListerMissionAValider()}" update="txt_count txt_count2" >
+                                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge"> <h:outputText  value="#{modele_agent.ListerMissionAValider().size()}" id="txt_count" /></span> </a>
 							<ul class="dropdown-menu">
 								<li>
                  
 
 									<div class="notification_header">
-                                                                            <h3>Vous avez <h:outputText  value="#{modele_agent.listerMissionAValider.size}" id="txt_count2" /> Mission a valider</h3>
+                                                                            <h3>Vous avez <h:outputText  value="#{modele_agent.ListerMissionAValider().size()}" id="txt_count2" /> Mission a valider</h3>
 									</div>
 								</li>
 								
@@ -92,4 +92,3 @@ and open the template in the editor.
     	
           
         </ui:composition>
-

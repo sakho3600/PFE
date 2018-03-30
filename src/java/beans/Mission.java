@@ -82,6 +82,10 @@ public class Mission implements Serializable {
     @Column (name="Etat")
     private int Etat;    
    
+    
+    @Column (name="ValidDirecturGeneral")
+    private int ValidDirecturGeneral;    
+   
     @Column (name="DateDeCreation" )
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)    
     private Date DatedeCreation = new Date();
@@ -105,6 +109,30 @@ public class Mission implements Serializable {
       @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinTable(name = "LesHebergementMission", joinColumns = { @JoinColumn(name = "CodeMission") }, inverseJoinColumns = { @JoinColumn(name = "CodeHeb") })
 	public Set<Hebergement> Les_Hebergement;
+
+    public int getValidDirecturGeneral() {
+        return ValidDirecturGeneral;
+    }
+
+    public void setValidDirecturGeneral(int ValidDirecturGeneral) {
+        this.ValidDirecturGeneral = ValidDirecturGeneral;
+    }
+
+    public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, String type, int Etat, int ValidDirecturGeneral, Set<ville> Les_villes, Set<Hebergement> Les_Hebergement) {
+        this.CodeMission = CodeMission;
+        this.agent = agent;
+        this.Intitule_Mission = Intitule_Mission;
+        this.Objectif = Objectif;
+        this.DateDeb = DateDeb;
+        this.DateFin = DateFin;
+        this.NbrJours = NbrJours;
+        this.Kilometrage = Kilometrage;
+        this.type = type;
+        this.Etat = Etat;
+        this.ValidDirecturGeneral = ValidDirecturGeneral;
+        this.Les_villes = Les_villes;
+        this.Les_Hebergement = Les_Hebergement;
+    }
 
     
       public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, Set<ville> Les_villes, Set<Hebergement> Les_Hebergement) {
@@ -160,6 +188,11 @@ public class Mission implements Serializable {
         this.Les_villes = Les_villes;
         this.Les_Hebergement = Les_Hebergement;
     }
+
+    public Mission(int CodeMission) {
+        this.CodeMission = CodeMission;
+    }
+    
 
 
     

@@ -271,6 +271,21 @@ public class dao_Agent {
     return l;}
     
     
+    public List<Mission> ListerlesMissionsNonValiderParDirecteur(){
+                   openSession();
+                   List<Mission> l= new ArrayList<>();
+                    Query query = s.createQuery("from Mission where ValidDirecturGeneral= 0");
+                     if(query.list().isEmpty()){
+                     l=null;}
+                     else{
+                       l = query.list();
+                   }
+                 
+    closeSession();
+    return l;}
+    
+    
+    
     public List<Mission> ListerlesMissionNonValiderParAgent(int Matricule){
                    openSession();
                    List<Mission> l;
@@ -284,6 +299,7 @@ public class dao_Agent {
                  
     closeSession();
     return l;}
+    
     
     
     
@@ -316,8 +332,19 @@ return  this.ListerMissionNonValiderDesAgents(this.ListerAgentParChef(agent.getM
 }
 
 
-public void ValiderMission(Mission m){
-                    m.setEtat(1);
+public void ValiderMission(Mission m,Agent a){
+    if (a.getDirecteur().equals("Directeur Generale")){
+        if (m.getAgent().getDirecteur().equals("Personnel")){
+        m.setValidDirecturGeneral(1);
+        }else {
+            m.setValidDirecturGeneral(1);
+            m.setEtat(1);
+        }
+    
+    }
+    else {
+        m.setEtat(1);}
+    
                    openSession();
                           s.update(m);
                    closeSession();
