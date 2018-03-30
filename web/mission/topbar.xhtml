@@ -23,12 +23,40 @@ and open the template in the editor.
 				<button id="showLeftPush"><i class="fa fa-bars"></i></button>
 				<!--toggle button end-->
 				<div class="profile_details_left"><!--notifications of menu start -->
-					
+					<ul class="nofitications-dropdown">
+                                            
+						<li class="dropdown head-dpdn">
+                                                   
+                                                            
+                                  <h:form>
+                                      <p:poll interval="3" listener="#{modele_agent.listerMissionAValider}" update="txt_count txt_count2" >
+                                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge"> <h:outputText  value="#{modele_agent.listerMissionAValider.size}" id="txt_count" /></span> </a>
+							<ul class="dropdown-menu">
+								<li>
+                 
+
+									<div class="notification_header">
+                                                                            <h3>Vous avez <h:outputText  value="#{modele_agent.listerMissionAValider.size}" id="txt_count2" /> Mission a valider</h3>
+									</div>
+								</li>
+								
+								<li>
+									<div class="notification_bottom">
+										<a href="ValidationMission.xhtml">voir les missions</a>
+									</div> 
+								</li>
+							</ul>
+                                      </p:poll>
+                                                    </h:form>
+						</li>
+                                             
+                           
+                                         </ul> 
 					<div class="clearfix"> </div>
 				</div>
 				<!--notification menu end -->
 				<div class="clearfix"> </div>
-			</div>
+			</div>  
 			<div class="header-right">
 				
 				
@@ -59,9 +87,9 @@ and open the template in the editor.
 			<div class="clearfix"> </div>	
 		</div>
 		<!-- //header-ends -->
+               
     
     	
-       
           
         </ui:composition>
 
