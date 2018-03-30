@@ -21,12 +21,11 @@ import javax.persistence.Temporal;
 @Table(name = "prevision")
 public class prevision implements Serializable{
     
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 7L;
     @Id
     @GeneratedValue (strategy=GenerationType.AUTO)
     private int numprevs ;
-    @Column(name="type")
-    private String type;
+   
     @Column(name="fdiver")
     private Float fdiver;
     @Column(name="fhebergement")
@@ -36,6 +35,10 @@ public class prevision implements Serializable{
     @Column(name="time")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date Heure_ = new Date();
+    @Column(name="prixEssence")
+    private Float prixEssence;
+    @Column(name="total")
+    private Float total;
     
     
     
@@ -48,14 +51,6 @@ public class prevision implements Serializable{
 
     public void setNumprevs(int numprivs) {
         this.numprevs = numprivs;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public Float getFdiver() {
@@ -82,12 +77,28 @@ public class prevision implements Serializable{
         this.ftransport = ftransport;
     }
 
-    public Date getHeure() {
+    public Date getHeure_() {
         return Heure_;
     }
 
-    public void setHeure(Date Heure) {
-        this.Heure_ = Heure;
+    public void setHeure_(Date Heure_) {
+        this.Heure_ = Heure_;
+    }
+
+    public Float getTotal() {
+        return total;
+    }
+
+    public void setTotal(Float total) {
+        this.total = total;
+    }
+
+    public Float getPrixEssence() {
+        return prixEssence;
+    }
+
+    public void setPrixEssence(Float prixEssence) {
+        this.prixEssence = prixEssence;
     }
     
     
