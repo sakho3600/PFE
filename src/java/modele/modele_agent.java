@@ -7,7 +7,9 @@ package modele;
 
 import beans.Agent;
 import beans.Mission;
+import beans.prevision;
 import beans.ville;
+import dao.dao_Admin;
 import dao.dao_Agent;
 import dao.dao_Mission;
 import dao.dao_ville;
@@ -24,18 +26,22 @@ import javax.faces.bean.SessionScoped;
 import utilitaire.SessionKeyGen;
 import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
- 
+import javax.faces.event.AjaxBehaviorEvent; 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+
  
-import org.primefaces.PrimeFaces;
+
 import org.primefaces.event.SelectEvent;
+
+
 import utilitaire.cryptpasswords ;
 /**
- *
+ * 
  * @author Mohammed Mehdi Sarray#
  */
 @ManagedBean
@@ -55,7 +61,7 @@ public class modele_agent {
     // type de la mission
       private String type;   
       private String Message;
-     
+      
     
     /** variables **/
      private int matricule;
@@ -63,11 +69,19 @@ public class modele_agent {
      private String SessionKey ;
      private String Departement  ;
      private String grade;
+     private Float fdiver;
+     private Float fhebergement;
+     private Float ftransport;
+     private Float prixEssance ;
+     private Float ftotal;
      
      /** Tables **/ 
     private List<Agent> agents ;
+    private List<Mission> notification ;
+    private int notif = 0 ;
    
     /** Objects **/
+    dao_Admin serviceadmin = new dao_Admin() ;
     dao_Agent service = new dao_Agent();
     Agent agent = new Agent(); // connected 
     Agent nouvelleagent = new Agent(); // the new one 
@@ -75,26 +89,28 @@ public class modele_agent {
     dao_Mission serviceMission= new dao_Mission();
     dao_ville serviceville= new dao_ville();
     SessionKeyGen sessionId= new SessionKeyGen() ; // generateur d'id de session (UUID)
-    cryptpasswords encryption = new cryptpasswords() ; // SHA ENCRYPTION
+    cryptpasswords encryption = new cryptpasswords() ; // SHA256 ENCRYPTION
     String Villes=new String();
-    
+    prevision previsions = new prevision() ;
     
     public modele_agent() {
     }
     
     @PostConstruct
     public void modele_agent() {
-        
-       
-   
-        //this.Departement.add("Resource Humaine") ; 
-        
+ 
          cities = new ArrayList<String>();
       List<ville> l=new ArrayList<>();
+      
       l=d.ListerVille();
+      
       for (ville str:l)
-          cities.add(str.toString());
+      {  cities.add(str.toString());}
+      
+       insertprevision();
        
+      
+               
     }
    
     
@@ -112,6 +128,16 @@ public class modele_agent {
     public String[] getSelectedCities2() {
         return selectedCities2;
     }
+
+    
+
+    public List<Mission> getNotification() {
+        return notification;
+    }
+
+    public void setNotification(List<Mission> notification) {
+        this.notification = notification;
+    }
  
     public void setSelectedCities2(String[] selectedCities2) {
         this.selectedCities2 = selectedCities2;
@@ -128,6 +154,56 @@ public class modele_agent {
     public void setType(String type) {
         this.type = type;
     }
+
+    public Float getFdiver() {
+        return fdiver;
+    }
+
+    public void setFdiver(Float fdiver) {
+        this.fdiver = fdiver;
+    }
+
+    public Float getPrixEssance() {
+        return prixEssance;
+    }
+
+    public void setPrixEssance(Float prixEssance) {
+        this.prixEssance = prixEssance;
+    }
+    
+    public Float getFhebergement() {
+        return fhebergement;
+    }
+
+    public int getNotif() {
+        return notif;
+    }
+
+    public void setNotif(int notif) {
+        this.notif = notif;
+    }
+
+    public void setFhebergement(Float fhebergement) {
+        this.fhebergement = fhebergement;
+    }
+
+    public Float getFtransport() {
+        return ftransport;
+    }
+
+    public void setFtransport(Float ftransport) {
+        this.ftransport = ftransport;
+    }
+
+    public Float getFtotal() {
+        return ftotal;
+    }
+
+    public void setFtotal(Float ftotal) {
+        this.ftotal = ftotal;
+    }
+    
+    
 
     public String getGrade() {
         return grade;
@@ -268,24 +344,53 @@ public class modele_agent {
     public void setAgents(List<Agent> agents) {
         this.agents = agents;
     }
+
+    public dao_Admin getServiceadmin() {
+        return serviceadmin;
+    }
+
+    public void setServiceadmin(dao_Admin serviceadmin) {
+        this.serviceadmin = serviceadmin;
+    }
+
+    public cryptpasswords getEncryption() {
+        return encryption;
+    }
+
+    public void setEncryption(cryptpasswords encryption) {
+        this.encryption = encryption;
+    }
+
+    public prevision getPrevisions() {
+        return previsions;
+    }
+
+    public void setPrevisions(prevision previsions) {
+        this.previsions = previsions;
+    }
+    
     
     //</editor-fold>
     
-    
-     public void onDateSelect(SelectEvent event) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+     // <editor-fold desc=" Events Methods" defaultstate="collapsed">   
+     public void onDateSelect1(SelectEvent event) { 
+        this.date1 = (Date) event.getObject();
+        if (this.date2 != null ){ // le cas si on a changer la date debut mais pas la date fin
+             calculMontant();
+        }
     }
-     
-    public void click() {
-        PrimeFaces.current().ajax().update("form:display");
-        PrimeFaces.current().executeScript("PF('dlg').show()");
+     public void onDateSelect2(SelectEvent event) {
+        this.date2 = (Date) event.getObject();
+        calculMontant();
+       }
+      public void onBlurkilometrage() { 
+        this.ftransport = this.mission.getVoitureCosomation() / 100  * this.mission.getKilometrage()  * this.prixEssance ; 
+                
+         this.ftotal = this.fdiver + this.fhebergement + this.ftransport ;
     }
- 
-   
-    
-    
+       
+     //</editor-fold>
+      
        // <editor-fold desc="Login Agent" defaultstate="collapsed">
     public void logmein() throws IOException, NoSuchAlgorithmException
   {
@@ -317,8 +422,8 @@ public class modele_agent {
   }
      //</editor-fold>
      
-       // <editor-fold desc="new Agent" defaultstate="collapsed">
-     /**creation d'un nouvelle agen
+       // <editor-fold desc="Ajout Agent" defaultstate="collapsed">
+     /**creation d'un nouvelle agent
      * @throws java.security.NoSuchAlgorithmExceptiont**/
      public void ajouter() throws NoSuchAlgorithmException {
          
@@ -354,11 +459,18 @@ public class modele_agent {
         mission.setType(type);
         mission.setDateDeb(date1);
         mission.setDateFin(date2);
-          
+        mission.setFdiver(this.fdiver);
+        mission.setFhebergement(this.fhebergement);
+        mission.setFtransport(this.ftransport);
+        mission.setTotal(this.ftotal);
       
         serviceMission.ajoutMission(mission);
         
          this.mission=new Mission();
+         insertprevision() ;
+         this.date1 = new Date();
+         this.date2 = new Date() ;
+         
          
          FacesContext f=FacesContext.getCurrentInstance();
          f.addMessage(null,new FacesMessage("Ajout effectuer"));
@@ -420,6 +532,9 @@ public class modele_agent {
      
      public List<Mission>ListerMissionAValider()
      {
+         if (this.agent.getDirecteur().equals("Directeur Generale")){
+          return this.service.ListerlesMissionsNonValiderParDirecteur();
+     }else
      return this.service.LesMissionAValiderDuChef(this.agent);
      }
      
@@ -428,7 +543,7 @@ public class modele_agent {
         this.Villes= this.serviceMission.StringVille(this.mission);}
         // </editor-fold>
      
-        // <editor-fold desc="print" defaultstate="collapsed">
+       // <editor-fold desc="print" defaultstate="collapsed">
     public void FormPrint(Mission m) throws IOException{
         
         this.mission=m;
@@ -450,7 +565,7 @@ public class modele_agent {
     }
        //</editor-fold>
     
-          // <editor-fold desc="Cloture mission" defaultstate="collapsed">   
+       // <editor-fold desc="Cloture mission" defaultstate="collapsed">   
   
     public void ClotureMission() throws IOException{
     this.Message=this.serviceMission.ClotureMission(mission, agent);
@@ -458,5 +573,47 @@ public class modele_agent {
 
     
            //</editor-fold>
+
+       // <editor-fold desc="données previsionnels" defaultstate="collapsed">   
+    public void insertprevision()
+    {
+        previsions = serviceadmin.getprevision(); // information du budget
+       this.fdiver = previsions.getFdiver() ;
+       this.fhebergement = previsions.getFhebergement();
+       this.ftransport = previsions.getFtransport();
+       this.prixEssance = previsions.getPrixEssence() ;
+       this.ftotal = previsions.getTotal() ;
+       
+    }
+    public void notifica()
+        {
+          if ( this.service.LesMissionAValiderDuChef(this.agent) == null )
+          {
+           this.notif = 0;
+           
+          }else{
+              this.notif = this.service.LesMissionAValiderDuChef(this.agent).size() ;
+          }
+        }
+    //</editor-fold>
+        
+       // <editor-fold desc="Calcul des montants " defaultstate="collapsed"> 
+    public void calculMontant()
+       {
+           
+          final long MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24; 
+ Long delta = (this.date2.getTime() - this.date1.getTime()) / (MILLISECONDS_PER_DAY);
+           if (delta != 0 ) { // le cas si la date depart et de retour est la meme
+          this.fhebergement = 100 * (float) delta;
+           
+           this.fdiver = delta * this.previsions.getFdiver() ;
+           
+           this.ftotal = this.fdiver + this.fhebergement + this.ftransport ;
+           }
+       }
+    
+ //</editor-fold>
+  
+        
 
 }
