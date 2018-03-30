@@ -134,12 +134,10 @@ adm.setPernom("tt");
      
      prevision p = new prevision();
      
-     List<String> pr=new ArrayList();
+     p.setFdiver(10F);
+     p.setFhebergement(100F);
+     p.setFtransport(20F);
+     p.setTotal(130F);
      
-    pr = servad.toutlesprevisions();
- 
-    for(String pv:pr){
-        System.out.println(pv) ;
-  
-    }
+     servad.addprevision(p);
 }}
