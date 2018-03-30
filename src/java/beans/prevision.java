@@ -25,17 +25,46 @@ public class prevision implements Serializable{
     @Id
     @GeneratedValue (strategy=GenerationType.AUTO)
     private int numprevs ;
-    @Column(name="type")
-    private String type;
+
     @Column(name="fdiver")
     private Float fdiver;
     @Column(name="fhebergement")
     private Float fhebergement;
     @Column(name="ftransport")
     private Float ftransport;
+    @Column (name="Total")
+    private Float Total;
     @Column(name="time")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date Heure_ = new Date();
+
+    public Float getTotal() {
+        return Total;
+    }
+
+    public void setTotal(Float Total) {
+        this.Total = Total;
+    }
+
+    public Date getHeure_() {
+        return Heure_;
+    }
+
+    public void setHeure_(Date Heure_) {
+        this.Heure_ = Heure_;
+    }
+
+    public prevision(int numprevs, Float fdiver, Float fhebergement, Float ftransport, Float Total) {
+        this.numprevs = numprevs;
+     
+        this.fdiver = fdiver;
+        this.fhebergement = fhebergement;
+        this.ftransport = ftransport;
+        this.Total = Total;
+    }
+
+    public prevision() {
+    }
     
     
     
@@ -50,13 +79,6 @@ public class prevision implements Serializable{
         this.numprevs = numprivs;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public Float getFdiver() {
         return fdiver;

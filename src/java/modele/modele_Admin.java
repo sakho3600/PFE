@@ -6,8 +6,12 @@
 package modele;
 
 import beans.Admin;
+import beans.Cloture;
+import beans.Mission;
 import beans.prevision;
 import dao.dao_Admin;
+import dao.dao_Cloture;
+import dao.dao_Mission;
 import utilitaire.SessionKeyGen;
 import java.io.IOException;
 import javax.faces.application.FacesMessage;
@@ -53,13 +57,18 @@ public class modele_Admin  {
         private List<String> previsions ; //    
         
     /** Objects **/
+        String villes=new String();
+        Mission mission=new Mission();
     Admin admin= new Admin(); // Admin Object connexion admin
     Admin nouvelleadmin=new Admin(); // pour la création des administrateurs
     dao_Admin service=new dao_Admin(); // dao_Admin to acces the dao
+    dao_Mission serviceMission=new dao_Mission();
+    dao_Cloture serviceCloture=new dao_Cloture();
     SessionKeyGen sessionId= new SessionKeyGen() ; // generateur d'id de session (UUID)
     cryptpasswords encrypt=new cryptpasswords() ;
     prevision previs=new prevision();
     prevision updateprev = new prevision();
+    Cloture cloture=new Cloture();
     public modele_Admin() {  
     }
     
@@ -81,7 +90,7 @@ public class modele_Admin  {
         gestmission=false;
         gestassurance=false;
         
-        this.previsions = service.toutlesprevisions();
+   
     }
    
     // <editor-fold desc="getters and setters" defaultstate="collapsed">
@@ -426,67 +435,48 @@ public class modele_Admin  {
     }
      //</editor-fold>     
     
-    //<editor-fold desc="Ajout prevision Method" defaultstate="collapsed" >
-    
-    public void ajouterprevision()
-    {
-        
-        if (service.verifprevision(this.previs.getType()))
-        
-        { 
-            this.service.addprevision(this.previs); //verification de l'existance du prevision
-             this.previsions = service.toutlesprevisions();
-          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "terminer!", "prevision Ajouter."));
-        this.previs = new prevision() ;  }
-        else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "prevision deja existante veuiller modifier l'ancienne."));
-        } 
-        
+         public List<Mission> ListerMissionNonCloturer(){
+         return this.serviceMission.listMissionnoncloturer();
+         }
+          
+         public void CloturerMission(Mission mission) throws IOException{
+             this.mission=mission;
+          
+        this.villes= this.serviceMission.StringVille(this.mission);
+                     FacesContext.getCurrentInstance().getExternalContext().redirect("FinMission.xhtml");             
+         }
+
+    public String getVilles() {
+        return villes;
+    }
+
+    public void setVilles(String villes) {
+        this.villes = villes;
     }
     
-    
-    
-    //</editor-fold>
-    
-    //<editor-fold desc="Ajout prevision Method" defaultstate="collapsed" >
-      
-     public void leadstoupprevision() throws IOException {
-       
-      
-        this.updateprev = service.getprev(choixprevision) ;
-         
-          FacesContext.getCurrentInstance().getExternalContext().redirect("previsiondetail.xhtml");
-    
-         
-     }
-          
-      
-         
+    public void AjoutCloture (){
+        this.cloture.setCodeMission(this.mission);
+        this.serviceCloture.ajoutCloture(cloture);
+        this.serviceMission.terminerMission(mission);
+    }
 
-    //</editor-fold>
-    
-     
-       public void updateprevis()  throws IOException {
-       
-           service.updateprevision(this.updateprev);
-         this.updateprev = new prevision();
- FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "terminer", "prevision modifier."));
+    public dao_Cloture getServiceCloture() {
+        return serviceCloture;
+    }
 
-//          FacesContext.getCurrentInstance().getExternalContext().redirect("modifprevision.xhtml");
-    
+    public void setServiceCloture(dao_Cloture serviceCloture) {
+        this.serviceCloture = serviceCloture;
+    }
+
+    public Cloture getCloture() {
+        return cloture;
+    }
+
+    public void setCloture(Cloture cloture) {
+        this.cloture = cloture;
+    }
          
-     }
-          
-         public void deleteprevision()  throws IOException {
-         service.delete(this.updateprev);
-         this.updateprev = new prevision();
-       
          
-          FacesContext.getCurrentInstance().getExternalContext().redirect("modifprevision.xhtml");
-    
-         
-     }
-          
       /*
      public void updateprevis() throws IOException
      {
@@ -502,6 +492,48 @@ public class modele_Admin  {
          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "terminer!", "prevision Supprimer."));
 
      }*/
-     
+
     
+    
+    public Mission getMission() {
+        return mission;
+    }
+
+    public void setMission(Mission mission) {
+        this.mission = mission;
+    }
+
+    public dao_Mission getServiceMission() {
+        return serviceMission;
+    }
+
+    public void setServiceMission(dao_Mission serviceMission) {
+        this.serviceMission = serviceMission;
+    }
+     
+    //<editor-fold desc="Ajout prevision Method" defaultstate="collapsed" >
+    
+    
+    
+    
+    //</editor-fold>
+    
+    //<editor-fold desc="update prevision" defaultstate="collapsed" >
+       public void updateprevis()  throws IOException {
+       
+           // calcul total 
+           
+              this.updateprev.setTotal(this.updateprev.getFdiver()
+                                   +this.updateprev.getFtransport()
+                                  +this.updateprev.getFhebergement());
+              this.updateprev.setNumprevs(1); // the only prevision
+              service.updateprevision(this.updateprev); 
+           this.updateprev = new prevision();
+         FacesContext f=FacesContext.getCurrentInstance();
+        f.addMessage(null,new FacesMessage("Ajout effectuer"));
+               
+       }
+          
+       
+             //</editor-fold>
 }

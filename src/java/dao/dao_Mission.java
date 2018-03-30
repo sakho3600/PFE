@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import utilitaire.HibernateUtil;
 
@@ -48,6 +49,7 @@ public class dao_Mission {
  Session s =HibernateUtil.getSessionFactory().openSession();
         s.beginTransaction();
         m.setEtat(0);
+        m.setValidDirecturGeneral(0);
         m.setNbrJours(this.CalculdJours(m));
               s.save(m);
    s.getTransaction().commit();
@@ -103,6 +105,31 @@ else if (m.getStatus().equals("Fin de Mission"))
     Message="Mission deja terminée";
 return Message;
 }
+
+public void terminerMission(Mission m){
+
+openSession();
+    m.setStatus("Colturé");
+s.update(m);
+closeSession();
+
+}
+
+    public List<Mission> listMissionnoncloturer() {
+        
+        List<Mission>l=new ArrayList<>();
+        openSession();     
+             Query query = s.createQuery("from Mission where Status = :code ");
+                    query.setParameter("code", "Fin de Mission");
+                     if(query.list().isEmpty()){
+                     l=null;}
+                     else{
+                       l = query.list();
+                   }
+                     closeSession();
+                
+return l;
+    }
 
 
 }

@@ -65,5 +65,6 @@ jdbc.connections.internal.C3P0ConnectionProvider</property>
     <mapping class="beans.ville"/>
     <mapping class="beans.Hebergement"/>
     <mapping class="beans.prevision"/>
+    <mapping class="beans.Cloture"/>
   </session-factory>
 </hibernate-configuration>

@@ -199,23 +199,6 @@ public class dao_Admin {
       return myprevision ;
       }
       
-      public prevision getprev(String type)
-      {
-          prevision pv = new prevision();
-          openSession();
-          
-     String hq="FROM prevision A WHERE A.type = :type" ;
-     
-       Query query = s.createQuery(hq);
-       query.setParameter("type", type);
-       pv = (prevision) query.list().get(0) ;
-          
-          closeSession();
-       
-       
-          return pv ;
-      }
-      
       
       public void updateprevision(Object prevision)
       {

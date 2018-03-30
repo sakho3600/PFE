@@ -420,8 +420,12 @@ public class modele_agent {
      
      public List<Mission>ListerMissionAValider()
      {
+         if (this.agent.getDirecteur().equals("Directeur Generale")){
+          return this.service.ListerlesMissionsNonValiderParDirecteur();
+     }else
      return this.service.LesMissionAValiderDuChef(this.agent);
      }
+     
      
      public void LesVillesString(){
      
@@ -443,7 +447,7 @@ public class modele_agent {
        
        // <editor-fold desc="validation mission" defaultstate="collapsed">   
     public void ValiderMission() throws IOException{
-   this.service.ValiderMission(this.mission);
+   this.service.ValiderMission(this.mission,this.agent);
             FacesContext.getCurrentInstance().getExternalContext().redirect("ValidationMission.xhtml");
 
     
