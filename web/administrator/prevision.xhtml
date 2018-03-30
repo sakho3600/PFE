@@ -67,11 +67,11 @@
                                                         <p:messages id="messages" showDetail="true" closable="true">
                                                         
                                                           </p:messages>
-                                                        <div class="form-group"> <p:outputLabel  value="Type :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.previs.type}" placeholder="Type de prevision" required="true" > </p:inputText> </div>
                                                         <p:outputLabel  value="Frais Transport  : ">  </p:outputLabel> <br/><p:inputText  value="#{modele_Admin.previs.ftransport}" placeholder="frais transport"  > </p:inputText> <br/>
                                                        <p:outputLabel  value="Frais Hebergement : ">  </p:outputLabel> <br/><p:inputText  value="#{modele_Admin.previs.fhebergement}" placeholder="frais hebergement" ></p:inputText> <br/>
                                                       <p:outputLabel  value="Frais Divers : ">  </p:outputLabel> <br/><p:inputText  value="#{modele_Admin.previs.fdiver}" placeholder="frais d'hivier" ></p:inputText> <br/>
-                                                              
+                                                      <p:outputLabel  value="Prix Essence : ">  </p:outputLabel> <br/><p:inputText  value="#{modele_Admin.previs.prixEssence}" placeholder="prix Essance" ></p:inputText> <br/>
+        
                                                          
                                                             
                                                         <p:commandButton value="Ajouter" id="ajax"  actionListener="#{modele_Admin.ajouterprevision()}" class="btn btn-default" ajax="false"/>
