@@ -164,63 +164,26 @@ public class dao_Admin {
     }
       }
    
-      public boolean verifprevision(String type)
-    {
-       boolean result ; 
-        
-       openSession();
-        
-       String hq="FROM prevision A WHERE A.type = :type" ;
-       Query query = s.createQuery(hq);
-       query.setParameter("type", type);
-        if (query.list()!=null){
-         result = true ;
-            }
-        else{
-            result = false ;
-        }
-        closeSession();
-        
-    return result ;
-        
-    }
-      
-      
-      public List<String> toutlesprevisions() // getting only type column from prevision class
-      {
-       List<String> myprevision = null ;
-       openSession();
-        Criteria criteria = s.createCriteria(prevision.class) ;
-          criteria.setProjection(Projections.property("type")) ;
-        myprevision = criteria.list() ;
-       
-       
-        closeSession();
-      return myprevision ;
-      }
-      
-      public prevision getprev(String type)
-      {
-          prevision pv = new prevision();
-          openSession();
+     public prevision getprevision()
+       {
           
-     String hq="FROM prevision A WHERE A.type = :type" ;
+           prevision prv =new prevision();
+           try { 
+    openSession() ;
+           prv = (prevision) s.get(prevision.class, 1) ;
+    closeSession() ;
      
-       Query query = s.createQuery(hq);
-       query.setParameter("type", type);
-       pv = (prevision) query.list().get(0) ;
-          
-          closeSession();
-       
-       
-          return pv ;
-      }
+    }catch(Exception e){
+	e.printStackTrace();
+    }
+         return prv ;
+       }
       
+ 
       
       public void updateprevision(Object prevision)
       {
-         
-          
+
        try { 
     openSession() ;
     
@@ -235,6 +198,7 @@ public class dao_Admin {
       }
       
       
+      
        public void delete(prevision prev)
    {
        try { 
@@ -245,5 +209,21 @@ public class dao_Admin {
 	e.printStackTrace();
     }
     }
+       public boolean ifexistspresion()
+       {
+           boolean result = false ;
+           try { 
+    openSession() ;
+          prevision prv = (prevision) s.get(prevision.class, 1) ;
+    closeSession() ;
+     if( prv!=null)
+     {
+         result = true ;
+     }
+    }catch(Exception e){
+	e.printStackTrace();
+    }
+           return result ;
+       }
       
 }
