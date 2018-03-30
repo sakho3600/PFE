@@ -81,7 +81,7 @@ public class modele_Admin  {
         gestmission=false;
         gestassurance=false;
         
-        this.previsions = service.toutlesprevisions();
+      
     }
    
     // <editor-fold desc="getters and setters" defaultstate="collapsed">
@@ -430,17 +430,17 @@ public class modele_Admin  {
     
     public void ajouterprevision()
     {
-        
-        if (service.verifprevision(this.previs.getType()))
-        
-        { 
-            this.service.addprevision(this.previs); //verification de l'existance du prevision
-             this.previsions = service.toutlesprevisions();
-          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "terminer!", "prevision Ajouter."));
-        this.previs = new prevision() ;  }
-        else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "prevision deja existante veuiller modifier l'ancienne."));
-        } 
+        if (service.ifexistspresion() == false ){
+            this.previs.setTotal(this.previs.getFdiver()
+                                   +this.previs.getFtransport()
+                                  +this.previs.getFhebergement());
+            service.addprevision(this.previs);
+    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Terminer!", "prevision Ajouter."));
+
+        }else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "prevision existante."));
+        }
+          
         
     }
     
@@ -448,60 +448,25 @@ public class modele_Admin  {
     
     //</editor-fold>
     
-    //<editor-fold desc="Ajout prevision Method" defaultstate="collapsed" >
-      
-     public void leadstoupprevision() throws IOException {
-       
-      
-        this.updateprev = service.getprev(choixprevision) ;
-         
-          FacesContext.getCurrentInstance().getExternalContext().redirect("previsiondetail.xhtml");
-    
-         
-     }
-          
-      
-         
-
-    //</editor-fold>
-    
-     
+    //<editor-fold desc="update prevision" defaultstate="collapsed" >
        public void updateprevis()  throws IOException {
        
-           service.updateprevision(this.updateprev);
-         this.updateprev = new prevision();
- FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "terminer", "prevision modifier."));
-
-//          FacesContext.getCurrentInstance().getExternalContext().redirect("modifprevision.xhtml");
-    
-         
-     }
+           // calcul total 
+           
+              this.updateprev.setTotal(this.updateprev.getFdiver()
+                                   +this.updateprev.getFtransport()
+                                  +this.updateprev.getFhebergement());
+              this.updateprev.setNumprevs(1); // the only prevision
+              service.updateprevision(this.updateprev); 
+           this.updateprev = new prevision();
+         FacesContext f=FacesContext.getCurrentInstance();
+        f.addMessage(null,new FacesMessage("Ajout effectuer"));
+               
+       }
           
-         public void deleteprevision()  throws IOException {
-         service.delete(this.updateprev);
-         this.updateprev = new prevision();
        
-         
-          FacesContext.getCurrentInstance().getExternalContext().redirect("modifprevision.xhtml");
-    
-         
-     }
-          
-      /*
-     public void updateprevis() throws IOException
-     {
-/*   
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "terminer!", "prevision Modifier."));
-
-     }
-     
-     public void deleteprevision()
-     {
-         service.delete(this.updateprev);
-         this.updateprev = new prevision();
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "terminer!", "prevision Supprimer."));
-
-     }*/
+             //</editor-fold>
+   
      
     
 }
