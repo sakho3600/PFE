@@ -83,8 +83,19 @@ public class Mission implements Serializable {
     private int Etat;    
    
     @Column (name="DateDeCreation" )
-    @Temporal(javax.persistence.TemporalType.DATE)      
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)    
     private Date DatedeCreation = new Date();
+    
+    @Column (name="voitureCosomation" )
+    private Float voitureCosomation ;
+    @Column(name="fdiver")
+    private Float fdiver;
+    @Column(name="fhebergement")
+    private Float fhebergement;
+    @Column(name="ftransport")
+    private Float ftransport;
+    @Column(name="total")
+    private Float total;
     
  
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER )
@@ -267,7 +278,47 @@ public class Mission implements Serializable {
         this.Status = Status;
     }
 
-   
+    public Float getFdiver() {
+        return fdiver;
+    }
+
+    public void setFdiver(Float fdiver) {
+        this.fdiver = fdiver;
+    }
+
+    public Float getFhebergement() {
+        return fhebergement;
+    }
+
+    public void setFhebergement(Float fhebergement) {
+        this.fhebergement = fhebergement;
+    }
+
+    public Float getFtransport() {
+        return ftransport;
+    }
+
+    public void setFtransport(Float ftransport) {
+        this.ftransport = ftransport;
+    }
+
+    public Float getTotal() {
+        return total;
+    }
+
+    public void setTotal(Float total) {
+        this.total = total;
+    }
+
+    public Float getVoitureCosomation() {
+        return voitureCosomation;
+    }
+
+    public void setVoitureCosomation(Float voitureCosommation) {
+        this.voitureCosomation = voitureCosommation;
+    }
+
+    
 
  
     
