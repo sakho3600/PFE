@@ -41,17 +41,7 @@ public class test {
  
  public static void main (String []args) throws NoSuchAlgorithmException{
      
-         Session s=HibernateUtil.getSessionFactory().openSession();
-        s.beginTransaction();
-
-     List<Mission> l= new ArrayList<>();
-                   Query query = s.createQuery("from Mission");
-                  //  query.setParameter("code", 11);
-                    l = query.list();
-                   s.getTransaction().commit();
-        s.close();
- for (Mission p:l)
-         System.out.println(p.getCodeMission());
+      
      
      
      /* dao_Agent a = new dao_Agent();
@@ -161,16 +151,9 @@ adm.setPernom("tt");
 
 
      */
+     dao_Mission dd = new dao_Mission();
+     Mission m = dd.RetourMission(2) ;
      
-     dao_Admin servad=new dao_Admin();
-     
-     
-     prevision p = new prevision();
-     
-     p.setFdiver(10F);
-     p.setFhebergement(100F);
-     p.setFtransport(20F);
-     p.setTotal(130F);
-     
-     servad.addprevision(p);
+     System.out.print(m.getDateDeb());
+     System.out.print(m.getIntitule_Mission());
 }}

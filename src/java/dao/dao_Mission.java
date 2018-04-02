@@ -130,6 +130,35 @@ closeSession();
                 
 return l;
     }
+    
+    public void updateMission(Object Mission)
+      {
 
+       try { 
+    openSession() ;
+    
+             s.update(Mission);
+    closeSession() ;
+    
+    }catch(Exception e){
+	e.printStackTrace();
+    }
 
+}
+    
+    public void deleteMission(Object Mission)
+      {
+
+       try { 
+    openSession() ;
+    
+             s.delete(Mission);
+    closeSession() ;
+    
+    }catch(Exception e){
+	e.printStackTrace();
+    }
+
+}
+    
 }

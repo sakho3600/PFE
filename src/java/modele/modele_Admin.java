@@ -36,12 +36,14 @@ import utilitaire.cryptpasswords;
 public class modele_Admin  {
   
     /** variables **/
+         private String Messageupdate1; // update/delete mission message
         private String pwd; // Password
 	private String msg; // Message
 	private String user; // Username
         private String userKey ; /* unique key pour la session */
         private int matricule ; // matricule utiliser pour l'update
         private String choixprevision; // choix du prevision a modifier
+        private int matriculeMission; //matricule de mission a modifiers/Supprimer
          // <editor-fold desc="acces block" defaultstate="collapsed">
         /** privileges panelgrid block **/
         private boolean addagent;
@@ -69,6 +71,8 @@ public class modele_Admin  {
     prevision previs=new prevision();
     prevision updateprev = new prevision();
     Cloture cloture=new Cloture();
+     Mission modifMission = new Mission();
+     
     public modele_Admin() {  
     }
     
@@ -144,7 +148,56 @@ public class modele_Admin  {
         this.previsions = previsions;
     }
 
+    public String getMessageupdate1() {
+        return Messageupdate1;
+    }
+
+    public void setMessageupdate1(String Messageupdate1) {
+        this.Messageupdate1 = Messageupdate1;
+    }
+
+    public Mission getModifMission() {
+        return modifMission;
+    }
+
+    public void setModifMission(Mission modifMission) {
+        this.modifMission = modifMission;
+    }
+
    
+    public String getVilles() {
+        return villes;
+    }
+
+    public void setVilles(String villes) {
+        this.villes = villes;
+    }
+
+    public int getMatriculeMission() {
+        return matriculeMission;
+    }
+
+    public void setMatriculeMission(int matriculeMission) {
+        this.matriculeMission = matriculeMission;
+    }
+    
+    
+
+    public dao_Cloture getServiceCloture() {
+        return serviceCloture;
+    }
+
+    public void setServiceCloture(dao_Cloture serviceCloture) {
+        this.serviceCloture = serviceCloture;
+    }
+
+    public Cloture getCloture() {
+        return cloture;
+    }
+
+    public void setCloture(Cloture cloture) {
+        this.cloture = cloture;
+    }
 
     
     
@@ -497,7 +550,8 @@ public class modele_Admin  {
           
        
              //</editor-fold>
-
+       
+   // <editor-fold desc="Cloture" defaultstate="collapsed">    
      public List<Mission> ListerMissionNonCloturer(){
          return this.serviceMission.listMissionnoncloturer();
          }
@@ -509,38 +563,42 @@ public class modele_Admin  {
                      FacesContext.getCurrentInstance().getExternalContext().redirect("FinMission.xhtml");             
          }
 
-    public String getVilles() {
-        return villes;
-    }
-
-    public void setVilles(String villes) {
-        this.villes = villes;
-    }
-    
+           
     public void AjoutCloture (){
         this.cloture.setCodeMission(this.mission);
         this.serviceCloture.ajoutCloture(cloture);
         this.serviceMission.terminerMission(mission);
-    }
-
-    public dao_Cloture getServiceCloture() {
-        return serviceCloture;
-    }
-
-    public void setServiceCloture(dao_Cloture serviceCloture) {
-        this.serviceCloture = serviceCloture;
-    }
-
-    public Cloture getCloture() {
-        return cloture;
-    }
-
-    public void setCloture(Cloture cloture) {
-        this.cloture = cloture;
-    }
-           
+    } 
+    //</editor-fold>
+    // <editor-fold desc="Update Delete Mission Methods" defaultstate="collapsed">
+    public void leadstoupdateMission() throws IOException
+       {
+    
+            this.modifMission = this.serviceMission.RetourMission(this.matriculeMission) ;
+            
+             if (this.modifMission != null){
      
-   
+          FacesContext.getCurrentInstance().getExternalContext().redirect("missiondetail.xhtml");}
+          else{
+          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Matricule Mission inexistante."));
+                  }
+                  }
+             
+       public void updateMission() throws IOException
+       {
+           this.serviceMission.updateMission(this.modifMission);
+           this.Messageupdate1 = "Mission Modifier!" ;
+           FacesContext.getCurrentInstance().getExternalContext().redirect("deletemission.xhtml");
+       }
+       
+                  
+       public void deleteMission() throws IOException
+       {
+           this.serviceMission.deleteMission(this.modifMission);
+           this.Messageupdate1 = "Mission Supprimer!" ;
+             FacesContext.getCurrentInstance().getExternalContext().redirect("deletemisson.xhtml");
+       }
+       //</editor-fold>
     
    
     

@@ -59,8 +59,10 @@ public class modele_agent {
     
     
     // type de la mission
-      private String type;   
-      private String Message;
+      private String type;
+      private int matriculeMission ;
+      private String Message; // update/delete agent message
+     
       
     
     /** variables **/
@@ -92,6 +94,7 @@ public class modele_agent {
     cryptpasswords encryption = new cryptpasswords() ; // SHA256 ENCRYPTION
     String Villes=new String();
     prevision previsions = new prevision() ;
+    
     
     public modele_agent() {
     }
@@ -202,9 +205,8 @@ public class modele_agent {
     public void setFtotal(Float ftotal) {
         this.ftotal = ftotal;
     }
-    
-    
 
+   
     public String getGrade() {
         return grade;
     }
@@ -224,6 +226,14 @@ public class modele_agent {
 
     public void setDepartement(String Departement) {
         this.Departement = Departement;
+    }
+
+    public int getMatriculeMission() {
+        return matriculeMission;
+    }
+
+    public void setMatriculeMission(int matriculeMission) {
+        this.matriculeMission = matriculeMission;
     }
 
     
@@ -614,7 +624,14 @@ public class modele_agent {
        }
     
  //</editor-fold>
-  
         
+     
+      
+       
 
 }
+
+       
+        
+
+
