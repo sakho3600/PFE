@@ -56,12 +56,17 @@
         <div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
-					<h2 class="title1">Modifier/Supprimer une Mission </h2>
+					<h2 class="title1">Modifier/Supprimer un Administrateur </h2>
 					<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
 						<div class="form-title">
-							<h4>Modification d'une Mission :</h4>
+							<h4>Modification d'un Administrateur :</h4>
 						</div>
-                                            <p:panelGrid rendered="#{modele_Admin.gestmission}"> 
+                                            <p:panelGrid rendered="#{!modele_Admin.updateuseradmin}">
+						<div class="form-body">
+                                                    <p style="color:red"> vous n'avez pas le droit d'acceder a cette page </p>
+						</div>
+                                            </p:panelGrid>
+                                            <p:panelGrid rendered="#{modele_Admin.updateuseradmin}"> 
 						<div class="form-body">
                                                     <h:form> 
                                                         <p:messages id="messages" showDetail="true" closable="true">
@@ -70,23 +75,68 @@
                                                         
                                                   
                                                          <div class="form-group">
-                                                             <p:inputText value="#{modele_Admin.matriculeMission}"  required="true"   style="width:20%"> </p:inputText> </div> 
+                                                             <p:inputText value="#{modele_Admin.matricule}"  required="true"   style="width:20%"> </p:inputText> </div> 
                                                           
                                                              
                                              
-                                                             <div class="form-group">   <p:commandButton value="Chercher" id="ajax"  actionListener="#{modele_Admin.leadstoupdateMission()}" class="btn btn-default" ajax="false"/> </div> 
-                                                             <div class="form-group">   <p>  #{modele_Admin.messageupdate1}  </p></div> 
+                                                         <div class="form-group">   <p:commandButton value="Chercher" id="ajax"  actionListener="#{modele_Admin.leadstoupdate()}" class="btn btn-default" ajax="false"/> </div> 
+                                                         <div class="form-group">   <p> <li> #{modele_Admin.messageupdate1}</li>  </p></div> 
                                                     </h:form> 
                                              
 						</div>
                                                  </p:panelGrid>
 					</div>
                                         
-                                       
+                                        <div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
+						<div class="form-title">
+							<h4>Liste des Admins :</h4>
+						</div>
+						<div class="form-body">
+                                                    <h:form> 
+                                                       
+                                                        
+                                                  
+                                                         <div class="form-group">
+                                                             
+                                                         
+                                                             <p:dataTable  var="Admin" value="#{modele_Admin.tableAdmin()}" rows="9" paginator="true" >
+                    
+                                                                 <p:column headerText="Matricule Agent" filterBy="#{Admin.matricule}" filterMatchMode="exact"   >
+                                                                     <h:outputText value="#{Admin.matricule}"  />
+                                                                  </p:column>
+                        
+                                                                <p:column headerText="Nom" >
+                                                                     <h:outputText value="#{Admin.nom}"  />
+                                                              </p:column> 
+                                                        <p:column headerText="Prenom" >
+                                                            <h:outputText value="#{Admin.pernom}" />
+                                                          </p:column>  
+                                                        
+                                                         </p:dataTable> 
+                                                                 
+                                                         
+                                                         </div> 
+                                                        
+                                                            
+                                                             
+                                             
+                                                         
+                                                         
+                                                    </h:form> 
+						</div>
+					</div>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+					</div>
                             </div>
             </div>
         </div>
-          </div>
+        
             
             
     

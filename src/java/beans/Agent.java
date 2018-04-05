@@ -34,19 +34,14 @@ public class Agent extends Personnel implements Serializable{
     
    private static final long serialVersionUID = 1L; 
     
-   /*@Column(name = "MatriculeChef")
-   private int MatriculeChef; //matricule Chef hierarchique
-   */@NotNull
+   @NotNull
    @Column(name = "Departement")
    private String Departement; //departement de l'agent
    
         @OneToMany(mappedBy = "CodeMission")
             private Set<Mission> Missions;
 
-        /*@OneToMany(mappedBy = "Matricule")
-                  @MapKey(name="MatriculeChef")
-            private Set<Personnel> Chef;
-  */
+      
          @ManyToOne
     @JoinColumn(name="MatriculeChef",referencedColumnName="Matricule")
                            

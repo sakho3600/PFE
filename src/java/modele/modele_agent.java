@@ -614,7 +614,17 @@ public class modele_agent {
            
           final long MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24; 
  Long delta = (this.date2.getTime() - this.date1.getTime()) / (MILLISECONDS_PER_DAY);
-           if (delta != 0 ) { // le cas si la date depart et de retour est la meme
+       
+         if (delta == 0) { // une mission sans hebergement
+          this.fhebergement = 0F;
+           
+           this.fdiver =  this.previsions.getFdiver() ;
+           
+           this.ftotal = this.fdiver + this.fhebergement + this.ftransport ;
+           }
+       
+
+        if (delta >= 1 ) { // 
           this.fhebergement = 100 * (float) delta;
            
            this.fdiver = delta * this.previsions.getFdiver() ;

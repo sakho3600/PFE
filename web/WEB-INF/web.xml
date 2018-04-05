@@ -8,9 +8,18 @@
         <param-name>primefaces.FONT_AWESOME</param-name>
         <param-value>true</param-value>
     </context-param>
+    <filter>
+        <description>Login Must be made</description>
+        <filter-name>assurance</filter-name>
+        <filter-class>utilitaire.ApplicationFilter</filter-class>
+    </filter>
     <filter-mapping>
         <filter-name>Mission</filter-name>
         <url-pattern>/misson/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>assurance</filter-name>
+        <url-pattern>/assurance/*</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
@@ -43,4 +52,8 @@
         <filter-name>restrict</filter-name>
         <url-pattern>/administrator/*</url-pattern>
     </filter-mapping>
+    <error-page>
+    <error-code>404</error-code>
+    <location>/faces/index.xhtml</location>
+    </error-page>
 </web-app>

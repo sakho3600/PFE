@@ -74,6 +74,12 @@
 						<div class="form-title">
 							<h4>Creation d'un Agent :</h4>
 						</div>
+                                            <p:panelGrid rendered="#{!modele_Admin.addagent}">
+						<div class="form-body">
+                                                    <p style="color:red"> vous n'avez pas le droit d'acceder a cette page </p>
+						</div>
+                                            </p:panelGrid>
+                                            
                                             <p:panelGrid rendered="#{modele_Admin.addagent}">
 						<div class="form-body">
                                                     <h:form> 

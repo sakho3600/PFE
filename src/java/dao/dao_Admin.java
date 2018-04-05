@@ -119,7 +119,20 @@ public class dao_Admin {
          return result != null;
                 
     }
-    
+    public Admin ifExistsAdminobject(int matricule)
+    {  
+       Admin result = new Admin();
+       
+        try{
+        openSession();
+         result = (Admin) s.get(Admin.class,matricule) ;   
+        closeSession();
+           }catch(Exception e){
+	e.printStackTrace();
+        }
+         return result ;
+                
+    }
     
    
     
@@ -151,8 +164,39 @@ public class dao_Admin {
 	e.printStackTrace();
     }
     }
+   
+   public void updateadmin(Object admin)
+      {
+
+       try { 
+    openSession() ;
+    
+             s.update(admin);
+    closeSession() ;
+    
+    }catch(Exception e){
+	e.printStackTrace();
+    }
     
    
+      }
+    
+    public List<Admin> listerAdmin()
+   {
+        List<Admin> listeAdmin= new ArrayList<>();
+       try { 
+    openSession() ;
+             String hql = "FROM Admin";
+             Query query = s.createQuery(hql);
+             listeAdmin = query.list();
+    closeSession() ;
+    }catch(Exception e){
+	e.printStackTrace();
+       
+        }
+     return listeAdmin ;
+
+    }
       public void addprevision(Object prevision)
       {
           try { 
@@ -199,7 +243,7 @@ public class dao_Admin {
       
       
       
-       public void delete(prevision prev)
+       public void delete(Object prev)
    {
        try { 
     openSession() ;

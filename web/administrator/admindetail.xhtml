@@ -56,46 +56,55 @@
         <div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
-					<h2 class="title1"> prévision </h2>
+					<h2 class="title1">Modifer / Supprimer un Admin </h2>
 					<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
 						<div class="form-title">
-							<h4>Ajout des données prévisionnels :</h4>
+							<h4>Admin :</h4>
 						</div>
-                                             <p:panelGrid rendered="#{!modele_Admin.gestmission}">
-						<div class="form-body">
-                                                    <p style="color:red"> vous n'avez pas le droit d'acceder a cette page </p>
-						</div>
-                                            </p:panelGrid>
-                                            <p:panelGrid rendered="#{modele_Admin.gestmission}"> 
 						<div class="form-body">
                                                     <h:form> 
                                                         <p:messages id="messages" showDetail="true" closable="true">
                                                         
                                                           </p:messages>
-                                                        <p:outputLabel  value="Frais Transport  : ">  </p:outputLabel> <br/><p:inputText  value="#{modele_Admin.previs.ftransport}" placeholder="frais transport"  > </p:inputText> <br/>
-                                                       <p:outputLabel  value="Frais Hebergement : ">  </p:outputLabel> <br/><p:inputText  value="#{modele_Admin.previs.fhebergement}" placeholder="frais hebergement" ></p:inputText> <br/>
-                                                      <p:outputLabel  value="Frais Divers : ">  </p:outputLabel> <br/><p:inputText  value="#{modele_Admin.previs.fdiver}" placeholder="frais d'hivier" ></p:inputText> <br/>
-                                                      <p:outputLabel  value="Prix Essence : ">  </p:outputLabel> <br/><p:inputText  value="#{modele_Admin.previs.prixEssence}" placeholder="prix Essance" ></p:inputText> <br/>
-        
-                                                         
-                                                            
-                                                        <p:commandButton value="Ajouter" id="ajax"  actionListener="#{modele_Admin.ajouterprevision()}" class="btn btn-default" ajax="false"/>
-                                                      
+                                                        <div class="form-group"> <p:outputLabel  value="Matricule  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.matricule}"  readonly="true"> </p:inputText> </div>
+                                                        <div class="form-group"> <p:outputLabel  value="Nom  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.nom}" placeholder="Nom"  > </p:inputText> </div>
+                                                        <div class="form-group"> <p:outputLabel  value="Prenom :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.pernom}" placeholder="Prenom" ></p:inputText> </div> 
+                                                        <div class="form-group"> <p:outputLabel  value="Pseudo :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.username}" placeholder="Pseudo" ></p:inputText> </div> 
+                                                        <div class="form-group"> <p:outputLabel  value="Mot de passe :">  </p:outputLabel> <p:password class="form-control" value="#{modele_Admin.pwd}" placeholder="Mot de Passe" ></p:password> </div> 
+                                                        <div class="form-group"> <p:outputLabel  value="Privileges :"> </p:outputLabel> 
+                                                        <p:selectManyCheckbox id="grid" value="#{modele_Admin.selectedPrivs}" layout="grid" columns="3" converter="converenum">
+                                                            <f:selectItems value="#{modele_Admin.privilege}" var="privs" itemLabel="#{privs}" itemValue="#{privs}" />
+                                                        </p:selectManyCheckbox>  </div>
+                                                        <div class="form-group"> <p class="help-block">GA = Gestion Assurance <br/> 
+                                                                GM = Gestion Mission <br/>
+                                                                UPuser = Modifier un utilisateur <br/>
+                                                                ADDuser = Ajout des utilisateurs <br/>
+                                                                GMA = Gestion Mission+Assurance <br/>
+                                                                UPuseradmin = Modifier un admin <br/>
+                                                                ALL = Tout les droits avec le droid d'ajouter un super Admin </p></div> 
                                                        
                                                         
+                                                         
+                                                        <p:commandButton value="Modifer"   actionListener="#{modele_Admin.updateAdmin()}" class="btn btn-default">
+                                                        <p:confirm header="Confirmation" message="Vous étes sur?" icon="ui-icon-alert" />
+                                                        </p:commandButton>
+                                                        
+                                                        <p:commandButton value="Supprimer"   actionListener="#{modele_Admin.deleteAdmin()}" class="btn btn-default" >
+                                                        <p:confirm header="Confirmation" message="Vous étes sur?" icon="ui-icon-alert" />
+                                                        </p:commandButton>
                                                              
-                                                      
+                                                        <p:confirmDialog global="true" >
+                                                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                        </p:confirmDialog>
+                                                        
 
                                                        
                                                     </h:form> 
-						
-                                                
-					        </div>
-                                            </p:panelGrid>>
+						</div>
 					</div>
-                                </div>
-                       
-                                </div>
+					</div>
+                            </div>
             </div>
         </div>
         

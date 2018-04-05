@@ -62,6 +62,12 @@
 						<div class="form-title">
 							<h4>Liste des missions non cloturés :</h4>
 						</div>
+                                             <p:panelGrid rendered="#{!modele_Admin.gestmission}">
+						<div class="form-body">
+                                                    <p style="color:red"> vous n'avez pas le droit d'acceder a cette page </p>
+						</div>
+                                            </p:panelGrid>
+                                           
 						<div class="form-body">
                                                     <h:form> 
                                                         <p:messages id="messages" showDetail="true" closable="true">
@@ -71,7 +77,7 @@
                                                   
                                                          <div class="form-group">
                                                              
-                                                         
+                                                            <p:panelGrid rendered="#{modele_Admin.gestmission}"> 
                                                              <p:dataTable  var="mission" value="#{modele_Admin.ListerMissionNonCloturer()}" rows="9" paginator="true" >
                     
                                                                  <p:column headerText="Code Mission" filterBy="#{mission.codeMission}" filterMatchMode="exact"   >
@@ -100,7 +106,7 @@
                                                                           
                                                                  
                                                          </p:dataTable> 
-                                                                 
+                                                             </p:panelGrid>  
                                                          
                                                          </div> 
                                                         
@@ -111,6 +117,7 @@
                                                          
                                                     </h:form> 
 						</div>
+                                               
 					</div>
                                         
                                         

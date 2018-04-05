@@ -36,7 +36,8 @@ import utilitaire.cryptpasswords;
 public class modele_Admin  {
   
     /** variables **/
-         private String Messageupdate1; // update/delete mission message
+       
+        private String Messageupdate1; // update/delete mission message
         private String pwd; // Password
 	private String msg; // Message
 	private String user; // Username
@@ -51,12 +52,14 @@ public class modele_Admin  {
         private boolean editagent;
         private boolean gestmission;
         private boolean gestassurance;
+        private boolean updateuseradmin;
          //</editor-fold>
         
     /** Tables **/
         private List<privs> privilege ; // les privileges
         private List<privs> selectedPrivs; // les privileges qui seront choisit seront affecter dans se tableau
-        private List<String> previsions ; //    
+        private List<String> previsions ; //   
+        private List<Admin> admins;
         
     /** Objects **/
         String villes=new String();
@@ -72,6 +75,7 @@ public class modele_Admin  {
     prevision updateprev = new prevision();
     Cloture cloture=new Cloture();
      Mission modifMission = new Mission();
+     cryptpasswords encryption = new cryptpasswords() ; // SHA256 ENCRYPTION
      
     public modele_Admin() {  
     }
@@ -87,12 +91,14 @@ public class modele_Admin  {
         privilege.add(privs.GM) ;
         privilege.add(privs.GMA);
         privilege.add(privs.UPuser) ;
+        privilege.add(privs.UPuseradmin) ;
         
         addagent=false;
         adduseradmin=false;
         editagent=false;
         gestmission=false;
         gestassurance=false;
+        updateuseradmin=false;
         
         this.updateprev = service.getprevision() ;
    
@@ -102,6 +108,30 @@ public class modele_Admin  {
     /** start of getters and setters **/
     public List<privs> getSelectedPrivs() {
         return selectedPrivs;
+    }
+
+    public boolean isUpdateuseradmin() {
+        return updateuseradmin;
+    }
+
+    public List<Admin> getAdmins() {
+        return admins;
+    }
+
+    public void setAdmins(List<Admin> admins) {
+        this.admins = admins;
+    }
+
+    public void setUpdateuseradmin(boolean updateuseradmin) {
+        this.updateuseradmin = updateuseradmin;
+    }
+
+    public cryptpasswords getEncryption() {
+        return encryption;
+    }
+
+    public void setEncryption(cryptpasswords encryption) {
+        this.encryption = encryption;
     }
 
     public void setSelectedPrivs(List<privs> selectedPrivs) {
@@ -465,6 +495,11 @@ public class modele_Admin  {
                 this.gestmission = true;
                 
             }
+            if ( privileges.get(i).equals(privs.UPuseradmin) )
+            {
+                this.updateuseradmin = true;
+                
+            }
             if ( privileges.get(i).equals(privs.GMA) )
             {
                 this.gestassurance = true;
@@ -490,6 +525,7 @@ public class modele_Admin  {
             this.editagent = true;
             this.gestmission = true;
             this.gestassurance = true ;
+            this.updateuseradmin = true ;
             stop = true ;
             }
         }
@@ -570,6 +606,7 @@ public class modele_Admin  {
         this.serviceMission.terminerMission(mission);
     } 
     //</editor-fold>
+    
     // <editor-fold desc="Update Delete Mission Methods" defaultstate="collapsed">
     public void leadstoupdateMission() throws IOException
        {
@@ -600,9 +637,53 @@ public class modele_Admin  {
        }
        //</editor-fold>
     
-   
-    
+   // <editor-fold desc="Update Delete Super Admin" defaultstate="collapsed">
+    public void leadstoupdate() throws IOException {
+       
+      if(
+          this.service.ifExistsAdmin(this.matricule)){
+          this.nouvelleadmin = this.service.ifExistsAdminobject(this.matricule) ;
+          
+          FacesContext.getCurrentInstance().getExternalContext().redirect("admindetail.xhtml");
+      }else{
+          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Admin inexistante."));
+      }
+          
+      
+       } 
+      public void updateAdmin() throws IOException, NoSuchAlgorithmException
+      {
+          
+          this.Messageupdate1 = "Operation effectuer , Admin modifier" ;
+          if ( !this.pwd.isEmpty()){
+              this.nouvelleadmin.setMotDePasse(encryption.cryptme(this.pwd))  ;
+              this.pwd = "";
+          }
+          
+          if ( !this.selectedPrivs.isEmpty())
+          {
+              this.nouvelleadmin.setAdmin_privs(selectedPrivs);
+              this.selectedPrivs = null ;
+          } 
+          
+          this.service.updateadmin(this.nouvelleadmin);
+           this.nouvelleadmin = new Admin();
+           
+          FacesContext.getCurrentInstance().getExternalContext().redirect("listeadministrateur.xhtml");
+      }
   
-   
+   public List<Admin> tableAdmin()
+     {
+        return  this.admins = service.listerAdmin() ;
+     }
      
+  public void deleteAdmin() throws IOException
+     {
+         this.Messageupdate1 = "Operation effectuer , Admin supprimer" ;
+         this.service.delete(this.nouvelleadmin);
+          this.nouvelleadmin = new Admin();
+           FacesContext.getCurrentInstance().getExternalContext().redirect("listeadministrateur.xhtml");
+     }
+   //</editor-fold>
+  
 }
