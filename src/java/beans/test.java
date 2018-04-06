@@ -22,9 +22,12 @@ import dao.dao_Hebergement;
 import dao.dao_Mission;
 import dao.dao_ville;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import utilitaire.SessionKeyGen ;
 import modele.privs ; 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import modele.modele_agent;
@@ -40,8 +43,31 @@ public class test {
     
  
  public static void main (String []args) throws NoSuchAlgorithmException{
+  
+     dao_Mission m=new dao_Mission();
+          
+     Mission mi=m.RetourMission(6);
+     String[] a = new String[mi.Les_villes.size()];
+     int i=0;
+    // String[] selectedC =mi.Les_villes.stream().toArray(String[]::new);
+    for (ville v:mi.Les_villes)
+    {    a[i]=v.toString();
+        i++;
+    }
+    for (int n=0;n<a.length;n++){
+   System.out.println(a[n]); 
+    }
+     /*
+     dao_Mission m=new dao_Mission();
+   System.out.println(m.compareDate(,null));
      
-      
+     /*  
+Calendar cal = Calendar.getInstance();
+   DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+   
+   cal.add(Calendar.DATE, -1);
+   System.out.println("Yesterday's date was "+dateFormat.format(cal.getTime())); 
+   
      
      
      /* dao_Agent a = new dao_Agent();
@@ -150,10 +176,11 @@ adm.setPernom("tt");
    servicead.ajouter(adm);
 
 
-     */
      dao_Mission dd = new dao_Mission();
      Mission m = dd.RetourMission(2) ;
      
      System.out.print(m.getDateDeb());
      System.out.print(m.getIntitule_Mission());
+     */
+
 }}

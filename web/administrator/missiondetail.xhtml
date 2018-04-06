@@ -75,40 +75,48 @@
           
 
                                                             <div class="form-group"> <p:outputLabel  value="depatement de l'agent : "> </p:outputLabel></div> 
-                      <div class="form-group">   <p:inputText class="form-control" value=" #{modele_Admin.modifMission.agent.departement}" placeholder="Departement" required="true" > </p:inputText> </div> 
-                                                        <div class="form-group"> <p:outputLabel  value="Code de la Mission : "> </p:outputLabel></div> 
+                      <!--<div class="form-group">   <p:inputText class="form-control" value=" #{modele_Admin.modifMission.agent.departement}" placeholder="Departement" required="true" > </p:inputText> </div> 
+                         -->                               <div class="form-group"> <p:outputLabel  value="Code de la Mission : "> </p:outputLabel></div> 
                       <div class="form-group">   <p:inputText class="form-control" value="#{modele_Admin.modifMission.codeMission}" placeholder="Code la mission" required="true" > </p:inputText> </div> 
-                                                         <div class="form-group"> <p:outputLabel  value="Intitule de la mission :"> </p:outputLabel></div> 
-                      <div class="form-group">   <p:inputText class="form-control" value=" #{modele_Admin.modifMission.intitule_Mission}" placeholder="intituler de la mission" required="true" > </p:inputText> </div> 
-                    
-                         
-                                                <div class="form-group"> <p:outputLabel  value="Date Depart :"> </p:outputLabel></div> 
-                      <div class="form-group">   <p:inputText class="form-control" value=" #{modele_Admin.modifMission.dateDeb}" placeholder="Date debut Mission" required="true" > </p:inputText> </div> 
-                                                <div class="form-group"> <p:outputLabel  value="Date Retour :"> </p:outputLabel></div> 
-                      <div class="form-group">   <p:inputText class="form-control" value=" #{modele_Admin.modifMission.dateFin}" placeholder="Date Fin Mission" required="true" > </p:inputText> </div> 
+         <div class="form-group"> <p:outputLabel  value="Intitule de la mission :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.modifMission.intitule_Mission}" required="true" placeholder="Intitule de la mission"></p:inputText> </div> 
+
+         <div class="form-group"> <p:outputLabel  value="Date Depart :">  </p:outputLabel> <p:calendar class="form-control" value="#{modele_Admin.date1}" required="true" /> </div> 
+         <div class="form-group"> <p:outputLabel  value="Date Retour :">  </p:outputLabel> <p:calendar class="form-control" value="#{modele_Admin.date2}" required="true" /> </div> 
+         
 
                                             <div class="form-group"> <p:outputLabel  value="Kilometrage : "> </p:outputLabel></div> 
                       <div class="form-group">   <p:inputText class="form-control" value="#{modele_Admin.modifMission.kilometrage}" placeholder="Kilometrage" required="true" > </p:inputText> </div> 
                                              <div class="form-group"> <p:outputLabel  value="Nombre de jours :"> </p:outputLabel></div> 
-                      <div class="form-group">   <p:inputText class="form-control" value=" #{modele_Admin.modifMission.nbrJours}" placeholder="Nombre de jour" required="true" > </p:inputText> </div> 
                                                 <div class="form-group"> <p:outputLabel  value="Objectif :"> </p:outputLabel></div> 
                        
                       <div class="form-group">   <p:inputText class="form-control" value=" #{modele_Admin.modifMission.objectif}" placeholder="Objectif" required="true" > </p:inputText> </div> 
                                         
-                                                                        <div class="form-group"> <p:outputLabel  value="Les Villes: "> </p:outputLabel></div> 
+                                                                     <!--   <div class="form-group"> <p:outputLabel  value="Les Villes: "> </p:outputLabel></div> 
                       <div class="form-group">   <p:inputText class="form-control" value="" placeholder="Les Villes" required="false" > </p:inputText> </div> 
                                               <div class="form-group"> <p:outputLabel  value="Date Creation de la mission : "> </p:outputLabel></div> 
-                                 
+                                 --><div class="form-group"> 
+                                                        <h:panelGrid columns="2" cellpadding="5">
+       
+        <p:outputLabel for="multiple" value="Les Villes:" />
+        <p:selectCheckboxMenu id="multiple" value="#{modele_Admin.selectedCities2}" label="Cities" multiple="true"
+                              filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+            <f:selectItems value="#{modele_Admin.cities}" />
+        </p:selectCheckboxMenu>
+        
+         
+       
+                                                    </h:panelGrid>     
+                                                       </div>
+                                                       
                       <div class="form-group">   <p:inputText class="form-control" value="#{modele_Admin.modifMission.datedeCreation}" placeholder="Date de Creation" required="true" > </p:inputText> </div> 
       
-                                                         
-                      <p:commandButton value="Modifer"   actionListener="#{modele_Admin.updateMission()}" class="btn btn-default">
-                                                        <p:confirm header="Confirmation" message="Vous étes sur?" icon="ui-icon-alert"  />
-                                                        </p:commandButton>
+                      <p:commandButton value="Modifer" id="ajax"  actionListener="#{modele_Admin.updateMission()}" class="btn btn-default" ajax="false"/>
+         <!--           <p:confirm header="Confirmation" message="Vous étes sur?" icon="ui-icon-alert"  />
+                                                -->       
                                                         
                       <p:commandButton value="Supprimer"   actionListener="#{modele_Admin.deleteMission()}" class="btn btn-default" >
-                                                        <p:confirm header="Confirmation" message="Vous étes sur?" icon="ui-icon-alert" />
-                                                        </p:commandButton>
+                                                   <!--     <p:confirm header="Confirmation" message="Vous étes sur?" icon="ui-icon-alert" />
+                                                       --> </p:commandButton>
                                                              
                                                         <p:confirmDialog global="true" >
                                                         <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" ajax="false" />

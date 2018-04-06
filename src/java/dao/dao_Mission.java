@@ -8,7 +8,11 @@ package dao;
 import beans.Agent;
 import beans.Mission;
 import beans.ville;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -91,6 +95,15 @@ Mission m=this.RetourMission(mission.getCodeMission());
 if (m==null){
     Message="Mission inexistante";
 }
+
+else if(m.getEtat()==0){
+Message="Mission Non validée par le chef hiarchique";
+}
+else if (m.getDateFin().after(new Date())){
+    Message="Erreur date fin de mission!!";
+
+}
+
 else if (m.getAgent().getMatricule()==agent.getMatricule() && (m.getStatus().equals("En cours"))){
 openSession();
     m.setStatus("Fin de Mission");
@@ -103,6 +116,8 @@ else if(m.getStatus().equals("Colturé"))
     Message ="Mission deja cloturée";
 else if (m.getStatus().equals("Fin de Mission"))
     Message="Mission deja terminée";
+else if (m.getStatus().equals("Annuler"))
+    Message="Mission Deja Annuler";
 return Message;
 }
 
@@ -160,5 +175,50 @@ return l;
     }
 
 }
+
+    public String AnnulerMission(Mission mission, Agent agent) {
+        
+        
+String Message=new String();
+Mission m=this.RetourMission(mission.getCodeMission());
+
+if (m==null){
+    Message="Mission inexistante";
+}
+else if(m.getEtat()==1){
+Message="Mission Deja Valider vous devez Contacter l'administration";
+}
+else if (m.getAgent().getMatricule()==agent.getMatricule() && (m.getStatus().equals("En cours"))){
+openSession();
+    m.setStatus("Annuler");
+s.update(m);
+closeSession();
+Message="Mission Annuler";}
+else if (m.getAgent().getMatricule()!=agent.getMatricule())
+    Message="Vous n'avez pas les droit sur cette mission";
+else if(m.getStatus().equals("Colturé"))
+    Message ="Mission cloturée";
+else if (m.getStatus().equals("Fin de Mission"))
+    Message="Mission terminée";
+else if (m.getStatus().equals("Annuler"))
+    Message="Mission Deja Annuler";
+
+return Message;
+    }
+    
+    
+    public boolean compareDate(Date d,Date d1) throws ParseException{
+ 
+      
+   DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+   Date today=new Date();
+   Date date=dateFormat.parse(dateFormat.format(today));
+   Date datedeb=dateFormat.parse(dateFormat.format(d));
+   Date dateFin=dateFormat.parse(dateFormat.format(d1));
+   
+    return(datedeb.before(date)|| datedeb.after(dateFin) );
+
+
+    }
     
 }

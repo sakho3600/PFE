@@ -16,6 +16,7 @@ import dao.dao_ville;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -113,7 +114,6 @@ public class modele_agent {
        insertprevision();
        
       
-               
     }
    
     
@@ -388,13 +388,13 @@ public class modele_agent {
         if (this.date2 != null ){ // le cas si on a changer la date debut mais pas la date fin
              calculMontant();
         }
-    }
+        }
      public void onDateSelect2(SelectEvent event) {
         this.date2 = (Date) event.getObject();
         calculMontant();
        }
       public void onBlurkilometrage() { 
-        this.ftransport = this.mission.getVoitureCosomation() / 100  * this.mission.getKilometrage()  * this.prixEssance ; 
+        this.ftransport = (((this.mission.getVoitureCosomation() / 100)  * this.mission.getKilometrage())  * this.prixEssance) ; 
                 
          this.ftotal = this.fdiver + this.fhebergement + this.ftransport ;
     }
@@ -460,7 +460,7 @@ public class modele_agent {
      
        // <editor-fold desc="ajout mission" defaultstate="collapsed">
      // ajout d'une mission
-     public void ajouterMission(){
+     public void ajouterMission() throws ParseException{
      
          this.mission.setAgent(service.ifExistsAgent(this.agent.getMatricule()));
          
@@ -473,7 +473,13 @@ public class modele_agent {
         mission.setFhebergement(this.fhebergement);
         mission.setFtransport(this.ftransport);
         mission.setTotal(this.ftotal);
-      
+       if (this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin())){
+          FacesContext f=FacesContext.getCurrentInstance();
+         f.addMessage(null,new FacesMessage("Erreur date!!"+(this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin()))));
+     
+        }else{
+        
+        
         serviceMission.ajoutMission(mission);
         
          this.mission=new Mission();
@@ -484,7 +490,7 @@ public class modele_agent {
          
          FacesContext f=FacesContext.getCurrentInstance();
          f.addMessage(null,new FacesMessage("Ajout effectuer"));
-        }
+        }}
         // </editor-fold>
      
        // <editor-fold desc="redirect user detail" defaultstate="collapsed">
@@ -634,10 +640,39 @@ public class modele_agent {
        }
     
  //</editor-fold>
-        
-     
+           
+       // <editor-fold desc="Annulation mission " defaultstate="collapsed"> 
+  public void AnnulerMission() throws IOException{
+  
+  this.Message=this.serviceMission.AnnulerMission(mission, agent);
+    FacesContext.getCurrentInstance().getExternalContext().redirect("AnnulerMission.xhtml");}
+
+  
+    
+    
+     //</editor-fold>
       
        
+       // <editor-fold desc="Annulation mission " defaultstate="collapsed"> 
+public void ModifierMission() throws IOException{
+this.mission=this.serviceMission.RetourMission(this.mission.getCodeMission());
+   this.LesVillesString();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("ModifierMission.xhtml");
+       
+ this.selectedCities2=new String[this.mission.Les_villes.size()];
+     int i=0;
+    
+        for (ville v:this.mission.Les_villes)
+    {   this.selectedCities2[i]=v.toString();
+        i++;
+    }
+        this.date1=this.mission.getDateDeb();
+                this.date2=this.mission.getDateFin();
+                this.type=this.mission.getType();
+
+    }
+
+  //</editor-fold>
 
 }
 

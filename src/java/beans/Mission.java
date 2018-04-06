@@ -284,11 +284,8 @@ public class Mission implements Serializable {
         this.type = type;
     }
 
-    public String getEtat() {
-       if (Etat==1)
-           return "OUI";
-       else 
-           return "NON";
+    public int getEtat() {
+       return this.Etat;
     }
 
     public void setEtat(int Etat) {
