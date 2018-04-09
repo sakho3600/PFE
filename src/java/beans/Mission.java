@@ -348,7 +348,12 @@ public class Mission implements Serializable {
         this.voitureCosomation = voitureCosommation;
     }
 
-    
+    public String etatToString(){
+    if (Etat==1)
+           return "OUI";
+       else 
+           return "NON";
+    }
 
  
     

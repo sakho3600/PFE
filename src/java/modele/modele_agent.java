@@ -653,10 +653,18 @@ public class modele_agent {
      //</editor-fold>
       
        
-       // <editor-fold desc="Annulation mission " defaultstate="collapsed"> 
+       // <editor-fold desc="Modifier mission " defaultstate="collapsed"> 
 public void ModifierMission() throws IOException{
 this.mission=this.serviceMission.RetourMission(this.mission.getCodeMission());
-   this.LesVillesString();
+if (this.mission.getAgent().getMatricule()!=agent.getMatricule()){
+   this.Message="Vous n'avez pas les droit sur cette mission";
+    FacesContext.getCurrentInstance().getExternalContext().redirect("AnnulerMission.xhtml");}
+else 
+
+{
+   this.Message=null;
+
+    this.LesVillesString();
         FacesContext.getCurrentInstance().getExternalContext().redirect("ModifierMission.xhtml");
        
  this.selectedCities2=new String[this.mission.Les_villes.size()];
@@ -670,9 +678,39 @@ this.mission=this.serviceMission.RetourMission(this.mission.getCodeMission());
                 this.date2=this.mission.getDateFin();
                 this.type=this.mission.getType();
 
-    }
+    }}
 
+     public void ModifierLaMission() throws ParseException, IOException{
+     
+        mission.setLes_villes(serviceville.StringTOVille(Arrays.asList(getSelectedCities2())));
+        mission.setType(type);
+        mission.setDateDeb(date1);
+        mission.setDateFin(date2);
+        mission.setFdiver(this.fdiver);
+        mission.setFhebergement(this.fhebergement);
+        mission.setFtransport(this.ftransport);
+        mission.setTotal(this.ftotal);
+       if (this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin())){
+          FacesContext f=FacesContext.getCurrentInstance();
+         f.addMessage(null,new FacesMessage("Erreur date!!"+(this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin()))));
+     
+        }else{
+        
+        
+        this.Message=serviceMission.ModifierMission(mission);
+        
+         this.mission=new Mission();
+         insertprevision() ;
+         this.date1 = new Date();
+         this.date2 = new Date() ;
+         
+    FacesContext.getCurrentInstance().getExternalContext().redirect("AnnulerMission.xhtml");
+ }}
+   
   //</editor-fold>
+
+
+   
 
 }
 

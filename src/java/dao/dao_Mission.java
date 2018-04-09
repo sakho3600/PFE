@@ -185,7 +185,7 @@ Mission m=this.RetourMission(mission.getCodeMission());
 if (m==null){
     Message="Mission inexistante";
 }
-else if(m.getEtat()==1){
+else if(m.getEtat()==1 || m.getValidDirecturGeneral()==1){
 Message="Mission Deja Valider vous devez Contacter l'administration";
 }
 else if (m.getAgent().getMatricule()==agent.getMatricule() && (m.getStatus().equals("En cours"))){
@@ -220,5 +220,21 @@ return Message;
 
 
     }
+
+    public String ModifierMission(Mission mission) {
+String Message;
+        openSession();
+            
+if(mission.getEtat()==1 || mission.getValidDirecturGeneral()==1){
+Message="Mission Deja Valider vous devez Contacter l'administration";
+}else{
+               mission.setNbrJours(this.CalculdJours(mission));
+              s.update(mission);
+
+            closeSession();
+            Message="Modification effectuee!!";
+    }
+    
+    return Message;}
     
 }

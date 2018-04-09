@@ -57,7 +57,7 @@ and open the template in the editor.
                      
                          <h:outputLabel for="Date_Ret" value="Date Retour : #{modele_agent.mission.dateFin}" />
                          
-                         <h:outputLabel for="Valide" value="Valider Par le Chef : #{modele_agent.mission.etat}" />
+                         <h:outputLabel for="Valide" value="Valider Par le Chef : #{modele_agent.mission.etatToString()}" />
                          
                          <h:outputLabel for="Kilometrage" value="Kilometrage : #{modele_agent.mission.kilometrage}" />
                          
