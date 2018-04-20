@@ -10,7 +10,6 @@ package beans;
  * @author Mohammed Mehdi Sarray#
  */
 import com.sun.istack.internal.NotNull;
-import modele.privs;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CollectionTable;
@@ -49,15 +48,9 @@ public class Admin extends Personnel implements Serializable{
    
    
    /* le Mapping du Type Enum */ 
-@ElementCollection(targetClass=privs.class, fetch=FetchType.EAGER)
-@Enumerated(EnumType.STRING)
-@CollectionTable(name="user_privs", joinColumns={@JoinColumn(name="id")})
-@Column(name="admin_privs")
-   private List<privs> admin_privs ;  // privileges d'acces
    
-    public Admin( int Matricule, String Pernom, String Nom, String MotDePasse , String username , List<privs> roles) {
+    public Admin( int Matricule, String Pernom, String Nom, String MotDePasse , String username ) {
         super(Matricule, Pernom, Nom , MotDePasse);
-        this.admin_privs = roles ;
         this.username = username ;
         
     }
@@ -72,14 +65,6 @@ public class Admin extends Personnel implements Serializable{
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public List<privs> getAdmin_privs() {
-        return admin_privs;
-    }
-
-    public void setAdmin_privs(List<privs> admin_privs) {
-        this.admin_privs = admin_privs;
     }
 
   
