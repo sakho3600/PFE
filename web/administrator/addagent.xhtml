@@ -74,13 +74,7 @@
 						<div class="form-title">
 							<h4>Creation d'un Agent :</h4>
 						</div>
-                                            <p:panelGrid rendered="#{!modele_Admin.addagent}">
-						<div class="form-body">
-                                                    <p style="color:red"> vous n'avez pas le droit d'acceder a cette page </p>
-						</div>
-                                            </p:panelGrid>
-                                            
-                                            <p:panelGrid rendered="#{modele_Admin.addagent}">
+                                           
 						<div class="form-body">
                                                     <h:form> 
                                                         
@@ -90,12 +84,12 @@
                                                         
                                                         <div class="form-group" > <p:outputLabel  value="Departement  :"> </p:outputLabel>  </div>
                                                         <div class="form-group">  <p:selectOneListbox id="basic" value="#{modele_agent.departement}" class="ui-selectlistbox-item ui-corner-all" style="width:150px">
-                                                                <f:selectItem  itemLabel="Resource Humaine" itemValue="Resource Humaine"    />
-                                                                <f:selectItem  itemLabel="Informatique" itemValue="Informatique"   />
+                                                                <f:selectItems  value="#{modele_agent.ListerDep()}" var="dep" itemValue="#{dep}" itemLabel="#{dep}"  />
                                                                 </p:selectOneListbox>  </div>
                                                         <div class="form-group"> <p:outputLabel  value="Matricule  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.nouvelleagent.matricule}" placeholder="Matricule" required="true" > </p:inputText> </div>
                                                         <div class="form-group"> <p:outputLabel  value="Nom  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.nouvelleagent.nom}" placeholder="Nom" required="true" > </p:inputText> </div>
                                                         <div class="form-group"> <p:outputLabel  value="Prenom :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.nouvelleagent.pernom}" placeholder="Prenom" required="true"></p:inputText> </div>
+                                                        <div class="form-group"> <p:outputLabel  value="Email :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.nouvelleagent.email}" placeholder="Email" required="true"> <f:validator validatorId="custom.emailValidator" /></p:inputText></div>
                                                         <div class="form-group"> <p:outputLabel  value="Mot de passe :">  </p:outputLabel> <p:password class="form-control" value="#{modele_agent.nouvelleagent.motDePasse}" placeholder="Mot de Passe" required="true"></p:password> </div> 
                                                         <div class="form-group">
                                                           <p:outputLabel for="console" value="Console:" />
@@ -108,7 +102,7 @@
                                                         <p:commandButton value="Ajouter" id="ajax"  actionListener="#{modele_agent.ajouter()}" class="btn btn-default" ajax="false"/>
                                                         </h:form> 
 						</div>
-                                            </p:panelGrid>
+                                        
 					</div>
 					</div>
                             </div>

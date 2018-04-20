@@ -61,12 +61,8 @@
 						<div class="form-title">
 							<h4>Modification d'un Agent :</h4>
 						</div>
-                                             <p:panelGrid rendered="#{!modele_Admin.editagent}">
-						<div class="form-body">
-                                                    <p style="color:red"> vous n'avez pas le droit d'acceder a cette page </p>
-						</div>
-                                            </p:panelGrid>
-                                            <p:panelGrid rendered="#{modele_Admin.editagent}"> 
+                                            
+                                            
 						<div class="form-body">
                                                     <h:form> 
                                                         <p:messages id="messages" showDetail="true" closable="true">
@@ -75,16 +71,16 @@
                                                         
                                                   
                                                          <div class="form-group">
-                                                         <p:inputText value="#{modele_agent.matricule}"  required="true"   style="width:20%"> </p:inputText> </div> 
+                                                         <p:inputText value="#{modele_agent.matricule}"  required="true"  validatorMessage="La Matricule doit étre un nombre" style="width:20%"> </p:inputText> </div> 
                                                           
                                                              
                                              
                                                          <div class="form-group">   <p:commandButton value="Chercher" id="ajax"  actionListener="#{modele_agent.leadstoupdate()}" class="btn btn-default" ajax="false"/> </div> 
-                                                         <div class="form-group">   <p> <li> #{modele_agent.message}</li>  </p></div> 
+                                                         <div class="form-group">   <p>  #{modele_agent.message}  </p></div> 
                                                     </h:form> 
                                              
 						</div>
-                                                 </p:panelGrid>
+                                                 
 					</div>
                                         
                                         <div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
@@ -107,7 +103,7 @@
                                                                      <h:outputText value="#{agent.matricule}"  />
                                                                   </p:column>
                         
-                                                                <p:column headerText="Nom" >
+                                                                <p:column headerText="Nom" filterMatchMode="contains">
                                                                      <h:outputText value="#{agent.nom}"  />
                                                               </p:column> 
                                                         <p:column headerText="Prenom" >

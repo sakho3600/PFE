@@ -40,8 +40,8 @@ public class Personnel implements Serializable{
     private String Nom;
     @Column(name ="MotDePasse")
     private String MotDePasse;
-@Column (name="email")
-private String email;
+    @Column (name="email")
+    private String email;
 
     public Personnel(int Matricule, String Pernom, String Nom, String MotDePasse, String email) {
         this.Matricule = Matricule;

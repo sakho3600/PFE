@@ -60,11 +60,12 @@ jdbc.connections.internal.C3P0ConnectionProvider</property>
     <mapping class="beans.Admin"/>
     <mapping class="beans.Agent"/>
     <mapping class="beans.Personnel"/>
-    <mapping class="beans.user_privs"/>
+    
     <mapping class="beans.Mission"/>
     <mapping class="beans.ville"/>
-    <mapping class="beans.Hebergement"/>
     <mapping class="beans.prevision"/>
     <mapping class="beans.Cloture"/>
+   <mapping class="beans.privileges"/>
+    <mapping class="beans.Departement"/>
   </session-factory>
 </hibernate-configuration>

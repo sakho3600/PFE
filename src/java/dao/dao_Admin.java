@@ -5,10 +5,10 @@ package dao;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import modele.privs;
 import beans.Admin;
 import beans.Personnel;
 import beans.prevision;
+import beans.privileges;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -134,18 +134,16 @@ public class dao_Admin {
                 
     }
     
-   
-    
     /* Lister les privileges d'un Admin */
-    public List<privs> listpriv(Admin admin)
+    public List<privileges> listpriv(Admin admin)
     {
-       List<privs> privileges = new ArrayList();
+       List<privileges> privileges = new ArrayList();
         
     try { 
        openSession() ;
         Admin result=(Admin)s.get(Admin.class,admin.getMatricule()) ;
         closeSession() ;
-         privileges = result.getAdmin_privs() ;
+         privileges.addAll(result.getLes_privileges()); // convert from set to LIST 
 
     }catch(Exception e){
 	e.printStackTrace();
@@ -153,18 +151,42 @@ public class dao_Admin {
         return privileges;
     }
     
+    public List<privileges> listpriv()
+    {
+       List<privileges> privileges = new ArrayList();
+        
+    try { 
+       openSession() ;
+      String hql = "FROM privileges";
+             Query query = s.createQuery(hql);
+               privileges = query.list();
+        closeSession() ;
+        
+
+    }catch(Exception e){
+	e.printStackTrace();
+    }
+        return privileges;
+    }
+    
+    /* Lister les privileges d'un Admin */
+   
      /* Ajouter un Personnel */
    public void ajouter(Object Employ)
    {
         try { 
     openSession() ;
-             s.save(Employ);
+             s.saveOrUpdate(Employ);
     closeSession() ;
     }catch(Exception e){
 	e.printStackTrace();
     }
     }
    
+   public void ajoutadmin(Admin a){
+   openSession();
+   s.save(a);
+   closeSession();}
    public void updateadmin(Object admin)
       {
 
@@ -197,11 +219,11 @@ public class dao_Admin {
      return listeAdmin ;
 
     }
-      public void addprevision(Object prevision)
+      public void addprevision(prevision p)
       {
           try { 
     openSession() ;
-             s.save(prevision);
+             s.save(p);
     closeSession() ;
     }catch(Exception e){
 	e.printStackTrace();
@@ -214,7 +236,9 @@ public class dao_Admin {
            prevision prv =new prevision();
            try { 
     openSession() ;
-           prv = (prevision) s.get(prevision.class, 1) ;
+    String hq="FROM prevision ORDER BY numprevs desc" ;
+       Query query = s.createQuery(hq);
+        prv=(prevision) query.list().get(0);
     closeSession() ;
      
     }catch(Exception e){
@@ -231,7 +255,7 @@ public class dao_Admin {
        try { 
     openSession() ;
     
-             s.update(prevision);
+             s.save(prevision);
     closeSession() ;
     
     }catch(Exception e){

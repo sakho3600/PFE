@@ -271,7 +271,6 @@ Departement rep=new Departement();
                       rep= (Departement)query.list().get(0);
                     
                    
-                closeSession();
                 
         return rep;
 }
@@ -352,16 +351,15 @@ return  this.ListerMissionNonValiderDesAgents(this.ListerAgentParChef(agent));
 
 public void ValiderMission(Mission m,Agent a){
     if (this.chefoupas(a).getNomDep().equals("Direction General")){
-        if (this.chefoupas(m.getAgent())==null){
+        if (this.chefoupas(m.getAgent()).getNomDep()==null){
         m.setValidDirecturGeneral(1);
         }else {
             m.setValidDirecturGeneral(1);
             m.setEtat(1);
         }
     
-    }
-    else {
-        m.setEtat(1);}
+    }else
+            m.setEtat(1);
     
                    openSession();
                           s.update(m);

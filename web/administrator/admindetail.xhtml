@@ -69,10 +69,11 @@
                                                         <div class="form-group"> <p:outputLabel  value="Matricule  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.matricule}"  readonly="true"> </p:inputText> </div>
                                                         <div class="form-group"> <p:outputLabel  value="Nom  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.nom}" placeholder="Nom"  > </p:inputText> </div>
                                                         <div class="form-group"> <p:outputLabel  value="Prenom :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.pernom}" placeholder="Prenom" ></p:inputText> </div> 
-                                                        <div class="form-group"> <p:outputLabel  value="Pseudo :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.username}" placeholder="Pseudo" ></p:inputText> </div> 
+                                                        <div class="form-group"> <p:outputLabel  value="Pseudo :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.username}" placeholder="Pseudo" ></p:inputText> </div>
+                                                        <div class="form-group"> <p:outputLabel  value="Email :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.email}" placeholder="Email" ></p:inputText> </div> 
                                                         <div class="form-group"> <p:outputLabel  value="Mot de passe :">  </p:outputLabel> <p:password class="form-control" value="#{modele_Admin.pwd}" placeholder="Mot de Passe" ></p:password> </div> 
                                                         <div class="form-group"> <p:outputLabel  value="Privileges :"> </p:outputLabel> 
-                                                        <p:selectManyCheckbox id="grid" value="#{modele_Admin.selectedPrivs}" layout="grid" columns="3" converter="converenum">
+                                                        <p:selectManyCheckbox id="grid" value="#{modele_Admin.selectedPrivs}" layout="grid" columns="3" >
                                                             <f:selectItems value="#{modele_Admin.privilege}" var="privs" itemLabel="#{privs}" itemValue="#{privs}" />
                                                         </p:selectManyCheckbox>  </div>
                                                         <div class="form-group"> <p class="help-block">GA = Gestion Assurance <br/> 

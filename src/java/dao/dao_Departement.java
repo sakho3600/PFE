@@ -8,8 +8,12 @@ package dao;
 import beans.Agent;
 import beans.Departement;
 import beans.Personnel;
+import java.util.ArrayList;
+import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import utilitaire.HibernateUtil;
 
 /**
@@ -60,6 +64,14 @@ Departement d=new Departement();
           closeSession();
           return d;
 }
+  
+  public List<String> ListerLesDepartement(){
+  List<String>Liste=new ArrayList<>();
+  openSession();
+  Liste= s.createCriteria(Departement.class).setProjection(Projections.property("NomDep")).list();
+  closeSession();
+  return Liste;
+  }
   public void EffacerDepartement(Departement d)
   {
       openSession();

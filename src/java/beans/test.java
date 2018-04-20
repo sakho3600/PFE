@@ -18,14 +18,15 @@ import org.hibernate.Session;
 import beans.Admin ;
 import dao.dao_Agent;
 import dao.dao_Cloture;
-import dao.dao_Hebergement;
+import dao.dao_Departement;
+
 import dao.dao_Mission;
 import dao.dao_ville;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import utilitaire.SessionKeyGen ;
-import modele.privs ; 
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -43,20 +44,78 @@ public class test {
     
  
  public static void main (String []args) throws NoSuchAlgorithmException{
-  
-     dao_Mission m=new dao_Mission();
+  dao_Admin d=new dao_Admin();
+  prevision  s=d.getprevision();
+  System.out.print(s.getFdiver());
+     
+     /*dao_Departement d=new dao_Departement();
+  List<String>l=d.ListerLesDepartement();
+  for (String s:l)
+        System.out.println(s);
+     /* dao_Agent aj = new dao_Agent() ;
+     Agent a=aj.ifExistsAgent(2);
+     if (aj.chefoupas(a).getNomDep()==null)
+     System.out.print("aa");
+     else
+     System.out.print("bb");    
+     
+     /*String[] selectedCities2;
+   List<String> cities;
+    dao_ville d=new dao_ville();
+   
+       cities = new ArrayList<String>();
+      List<ville> l=new ArrayList<>();
+      
+      l=d.ListerVille();
+      
+      for (ville str:l)
+      {  System.out.println(str.toString());}
+      
+     /*
+     dao_Admin service=new dao_Admin();
+    cryptpasswords d = new cryptpasswords() ;
+     privileges prve =new privileges("ALL");
+     Admin a = new Admin();
+     a.setMatricule(1040);
+     a.setMotDePasse(d.cryptme("tt"));
+     a.setUsername("tt");
+     
+     List<String> selectedPrivs = new ArrayList(); 
+     
+    selectedPrivs.add("ALL") ; 
+    selectedPrivs.add("GM");
+     selectedPrivs.add("GM");
+     
+     
+     privileges priv = new privileges();
+          List<privileges> prv = new ArrayList();
+          List <privileges> lista= service.listpriv() ;
           
-     Mission mi=m.RetourMission(6);
-     String[] a = new String[mi.Les_villes.size()];
-     int i=0;
-    // String[] selectedC =mi.Les_villes.stream().toArray(String[]::new);
-    for (ville v:mi.Les_villes)
-    {    a[i]=v.toString();
-        i++;
-    }
-    for (int n=0;n<a.length;n++){
-   System.out.println(a[n]); 
-    }
+         for(int i = 0 ; i<lista.size(); i++)
+         {
+           if( selectedPrivs.contains(lista.get(i).getLibelle()) )
+           {
+             
+               priv.setCode_privilege(lista.get(i).getCode_privilege());
+               priv.setLibelle(lista.get(i).getLibelle());
+               prv.add(priv) ;
+               priv = new privileges();
+             
+           }
+            
+         }
+         
+         for(privileges p : prv)
+         {
+             System.out.println(p.getLibelle()) ;
+         }
+    
+     
+            
+ 
+     
+     
+     
      /*
      dao_Mission m=new dao_Mission();
    System.out.println(m.compareDate(,null));
@@ -183,4 +242,5 @@ adm.setPernom("tt");
      System.out.print(m.getIntitule_Mission());
      */
 
-}}
+}
+}

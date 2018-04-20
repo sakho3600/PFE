@@ -31,24 +31,15 @@ public class ville implements Serializable {
     private int Code_Postal;
     @Column(name ="Nom")
    private String Nom;
-  @OneToMany(mappedBy = "CodeHeb")
-         	private Set<Hebergement> Hebergement;
-  
-  
-    public ville(int Code_Postal, String Nom, Set<Hebergement> Hebergement) {
-        this.Code_Postal = Code_Postal;
-        this.Nom = Nom;
-        this.Hebergement = Hebergement;
-    }
-    
-  
-  
+ 
   
     public ville(int Code_Postal, String Nom) {
         this.Code_Postal = Code_Postal;
         this.Nom = Nom;
     }
-
+    
+  
+  
     public ville() {
     }
 
@@ -73,14 +64,6 @@ public class ville implements Serializable {
         return Nom+" Code_Postal: " + Code_Postal  ;
     }
 
-    public Set<Hebergement> getHebergement() {
-        return Hebergement;
-    }
-
-    public void setHebergement(Set<Hebergement> Hebergement) {
-        this.Hebergement = Hebergement;
-    }
-    
     
       
 }

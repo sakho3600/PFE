@@ -106,10 +106,7 @@ public class Mission implements Serializable {
 	@JoinTable(name = "LesVilleMission", joinColumns = { @JoinColumn(name = "CodeMission") }, inverseJoinColumns = { @JoinColumn(name = "Code_Postal")})
 	public Set<ville> Les_villes;
 
-      @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	@JoinTable(name = "LesHebergementMission", joinColumns = { @JoinColumn(name = "CodeMission") }, inverseJoinColumns = { @JoinColumn(name = "CodeHeb") })
-	public Set<Hebergement> Les_Hebergement;
-
+   
     public int getValidDirecturGeneral() {
         return ValidDirecturGeneral;
     }
@@ -118,7 +115,7 @@ public class Mission implements Serializable {
         this.ValidDirecturGeneral = ValidDirecturGeneral;
     }
 
-    public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, String type, int Etat, int ValidDirecturGeneral, Set<ville> Les_villes, Set<Hebergement> Les_Hebergement) {
+    public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, String type, int Etat, int ValidDirecturGeneral, Set<ville> Les_villes) {
         this.CodeMission = CodeMission;
         this.agent = agent;
         this.Intitule_Mission = Intitule_Mission;
@@ -131,25 +128,10 @@ public class Mission implements Serializable {
         this.Etat = Etat;
         this.ValidDirecturGeneral = ValidDirecturGeneral;
         this.Les_villes = Les_villes;
-        this.Les_Hebergement = Les_Hebergement;
     }
 
     
-      public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, Set<ville> Les_villes, Set<Hebergement> Les_Hebergement) {
-        this.CodeMission = CodeMission;
-        this.agent = agent;
-        this.Intitule_Mission = Intitule_Mission;
-        this.Objectif = Objectif;
-        this.DateDeb = DateDeb;
-        this.DateFin = DateFin;
-        this.NbrJours = NbrJours;
-        this.Kilometrage = Kilometrage;
-        this.Les_villes = Les_villes;
-        this.Les_Hebergement = Les_Hebergement;
-    }
-
-    
-    public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, Set<ville> Les_villes) {
+      public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, Set<ville> Les_villes) {
         this.CodeMission = CodeMission;
         this.agent = agent;
         this.Intitule_Mission = Intitule_Mission;
@@ -160,6 +142,9 @@ public class Mission implements Serializable {
         this.Kilometrage = Kilometrage;
         this.Les_villes = Les_villes;
     }
+
+    
+   
     public Mission() {
     }
 
@@ -174,7 +159,7 @@ public class Mission implements Serializable {
         this.Kilometrage = Kilometrage;
     }
 
-    public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, String type, int Etat, Set<ville> Les_villes, Set<Hebergement> Les_Hebergement) {
+    public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, String type, int Etat, Set<ville> Les_villes) {
         this.CodeMission = CodeMission;
         this.agent = agent;
         this.Intitule_Mission = Intitule_Mission;
@@ -186,7 +171,6 @@ public class Mission implements Serializable {
         this.type = type;
         this.Etat = Etat;
         this.Les_villes = Les_villes;
-        this.Les_Hebergement = Les_Hebergement;
     }
 
     public Mission(int CodeMission) {
@@ -266,14 +250,6 @@ public class Mission implements Serializable {
 
     public void setLes_villes(Set<ville> Les_villes) {
         this.Les_villes = Les_villes;
-    }
-
-    public Set<Hebergement> getLes_Hebergement() {
-        return Les_Hebergement;
-    }
-
-    public void setLes_Hebergement(Set<Hebergement> Les_Hebergement) {
-        this.Les_Hebergement = Les_Hebergement;
     }
 
     public String getType() {

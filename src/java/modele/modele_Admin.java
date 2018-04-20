@@ -7,10 +7,14 @@ package modele;
 
 import beans.Admin;
 import beans.Cloture;
+import beans.Departement;
 import beans.Mission;
 import beans.prevision;
+import beans.privileges;
 import dao.dao_Admin;
+import dao.dao_Agent;
 import dao.dao_Cloture;
+import dao.dao_Departement;
 import dao.dao_Mission;
 import utilitaire.SessionKeyGen;
 import java.io.IOException;
@@ -53,20 +57,27 @@ public class modele_Admin  {
         private boolean gestmission;
         private boolean gestassurance;
         private boolean updateuseradmin;
-         //</editor-fold>
+       
+        //</editor-fold>
         
     /** Tables **/
-        private List<privs> privilege ; // les privileges
-        private List<privs> selectedPrivs; // les privileges qui seront choisit seront affecter dans se tableau
-        private List<String> previsions ; //   
+          private List<String> privilege ; // les privileges
+        private List<String> selectedPrivs; // les privileges qui seront choisit seront affecter dans se tableau
+        private List<privileges> mesprivileges;
+     
+  private List<String> previsions ; //   
         private List<Admin> admins;
         
     /** Objects **/
+        String nomDepartement;
+        Departement Departement=new Departement();
+        dao_Departement serviceDepartement= new dao_Departement();
         String villes=new String();
         Mission mission=new Mission();
     Admin admin= new Admin(); // Admin Object connexion admin
     Admin nouvelleadmin=new Admin(); // pour la création des administrateurs
     dao_Admin service=new dao_Admin(); // dao_Admin to acces the dao
+    dao_Agent serviceagent=new dao_Agent(); // dao_Admin to acces the dao
     dao_Mission serviceMission=new dao_Mission();
     dao_Cloture serviceCloture=new dao_Cloture();
     SessionKeyGen sessionId= new SessionKeyGen() ; // generateur d'id de session (UUID)
@@ -83,31 +94,61 @@ public class modele_Admin  {
     @PostConstruct // implementation des privileges a afficher
     public void init()
     {   
-        selectedPrivs = new ArrayList<privs>() ;
-        privilege = new ArrayList<privs>() ;
-        privilege.add(privs.GA) ;
-        privilege.add(privs.ADDuser) ; 
-        privilege.add(privs.ALL);
-        privilege.add(privs.GM) ;
-        privilege.add(privs.GMA);
-        privilege.add(privs.UPuser) ;
-        privilege.add(privs.UPuseradmin) ;
-        
         addagent=false;
         adduseradmin=false;
         editagent=false;
         gestmission=false;
         gestassurance=false;
         updateuseradmin=false;
+           selectedPrivs = new ArrayList<String>() ;
+        privilege = new ArrayList<String>() ;
+        this.mesprivileges = service.listpriv();
         
-        this.updateprev = service.getprevision() ;
+        for(int i=0 ; i < mesprivileges.size() ; i++)
+        {
+            privilege.add(mesprivileges.get(i).getLibelle()) ;
+        }
+       
+        
+    
+        
+       this.updateprev = service.getprevision() ;
    
     }
    
+ 
+    public List<String> getPrivilege() {
+        return privilege;
+    }
+
+    public void setPrivilege(List<String> privilege) {
+        this.privilege = privilege;
+    }
+
+    public List<String> getSelectedPrivs() {
+        return selectedPrivs;
+    }
+
+    public void setSelectedPrivs(List<String> selectedPrivs) {
+        this.selectedPrivs = selectedPrivs;
+    }
+
+    public List<privileges> getMesprivileges() {
+        return mesprivileges;
+    }
+
+    public void setMesprivileges(List<privileges> mesprivileges) {
+        this.mesprivileges = mesprivileges;
+    }
+
+    public dao_Agent getServiceagent() {
+        return serviceagent;
+    }
+
     // <editor-fold desc="getters and setters" defaultstate="collapsed">
     /** start of getters and setters **/
-    public List<privs> getSelectedPrivs() {
-        return selectedPrivs;
+    public void setServiceagent(dao_Agent serviceagent) { 
+        this.serviceagent = serviceagent;
     }
 
     public boolean isUpdateuseradmin() {
@@ -134,16 +175,45 @@ public class modele_Admin  {
         this.encryption = encryption;
     }
 
-    public void setSelectedPrivs(List<privs> selectedPrivs) {
-        this.selectedPrivs = selectedPrivs;
-    }
-
     public String getUserKey() {
         return userKey;
     }
 
     public void setUserKey(String userKey) {
         this.userKey = userKey;
+    }
+
+    public String getNomDepartement() {
+  
+String dep=this.serviceagent.chefoupas(this.mission.getAgent()).getNomDep();
+if (dep==null){
+    
+Departement d2 =this.mission.getAgent().getAgentAffecter();
+  return d2.getNomDep();//pas chef
+}else 
+{  return dep;//chef
+
+}  
+    }
+
+    public void setNomDepartement(String nomDepartement) {
+        this.nomDepartement = nomDepartement;
+    }
+
+    public Departement getDepartement() {
+        return Departement;
+    }
+
+    public void setDepartement(Departement Departement) {
+        this.Departement = Departement;
+    }
+
+    public dao_Departement getServiceDepartement() {
+        return serviceDepartement;
+    }
+
+    public void setServiceDepartement(dao_Departement serviceDepartement) {
+        this.serviceDepartement = serviceDepartement;
     }
 
     public int getMatricule() {
@@ -229,17 +299,7 @@ public class modele_Admin  {
         this.cloture = cloture;
     }
 
-    
-    
-    public List<privs> getPrivilege() {
-        return privilege;
-    }
-
-    public void setPrivilege(List<privs> privilege) {
-        this.privilege = privilege;
-    }
-
-    public Admin getAdmin() {
+     public Admin getAdmin() {
         return admin;
     }
 
@@ -384,8 +444,10 @@ public class modele_Admin  {
           admin = service.ifAdmin(admin.getUsername()); // detail de  l'Administrateur  ~
           
           this.userKey = this.sessionId.getRandomUUIDString() ; // affectation de valeur uuid 
+                    checkprivs() ; /** verification des privileges **/
+
           
-          checkprivs() ; /** verification des privileges **/
+          
           
           FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userkey", userKey); // Ajout de id de session
           FacesContext.getCurrentInstance().getExternalContext().redirect("welcome.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
@@ -413,7 +475,7 @@ public class modele_Admin  {
 // </editor-fold >
   
     // <editor-fold desc="add administrator Method" defaultstate="collapsed">
-    public void ajouter() throws NoSuchAlgorithmException // ajout d'un nouvelle administrateur
+     public void ajouter() throws NoSuchAlgorithmException // ajout d'un nouvelle administrateur
     {
        
         
@@ -421,7 +483,7 @@ public class modele_Admin  {
        if (service.ifExistsAdmin(this.nouvelleadmin.getMatricule()) && service.ifAdminvalid(this.nouvelleadmin.getUsername() ) )
             { 
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Matricule et Username Existant."));
-             this.selectedPrivs = new ArrayList<privs>() ; 
+             this.selectedPrivs = new ArrayList<String>() ; 
              this.nouvelleadmin = new Admin();
             
              } 
@@ -430,30 +492,31 @@ public class modele_Admin  {
        else if (service.ifExistsAdmin(this.nouvelleadmin.getMatricule()) == true && service.ifAdminvalid(this.nouvelleadmin.getUsername()) == false )
        {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Matricule Existant."));
-            this.selectedPrivs = new ArrayList<privs>() ;  
+            this.selectedPrivs = new ArrayList<String>() ;  
             this.nouvelleadmin = new Admin();
             
        }
        else if (service.ifExistsAdmin(this.nouvelleadmin.getMatricule()) == false && service.ifAdminvalid(this.nouvelleadmin.getUsername()) == true ) 
        {
            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Username Existant."));
-           this.selectedPrivs = new ArrayList<privs>() ;  
+           this.selectedPrivs = new ArrayList<String>() ;  
            this.nouvelleadmin = new Admin();
            
        }
        else {
-           if (this.selectedPrivs.contains(privs.ALL)){ // si le privilege du super admin a ete choisit donc les autres privileges ne seront pas necessaire
-               this.selectedPrivs = new ArrayList<privs>() ;
-               this.selectedPrivs.add(privs.ALL) ;
+           if (this.selectedPrivs.contains("ALL")){ // si le privilege du super admin a ete choisit donc les autres privileges ne seront pas necessaire
+               this.selectedPrivs = new ArrayList<String>() ;
+               this.selectedPrivs.add("ALL") ;
            }
-           if (this.selectedPrivs.contains(privs.GA) && this.selectedPrivs.contains(privs.GM))
+           if (this.selectedPrivs.contains("GA") && this.selectedPrivs.contains("GM"))
            {
-               this.selectedPrivs.remove(privs.GA) ;
-               this.selectedPrivs.remove(privs.GM) ;
-               this.selectedPrivs.add(privs.GM) ;
+               this.selectedPrivs.remove("GA") ;
+               this.selectedPrivs.remove("GM") ;
+               this.selectedPrivs.add("GMA") ;
            }
-          
-           this.nouvelleadmin.setAdmin_privs(this.selectedPrivs); // ajout des privileges
+       
+         
+           this.nouvelleadmin.setLes_privileges(affectprivileges()); // ajout des privileges
            this.nouvelleadmin.setMotDePasse(encrypt.cryptme(this.nouvelleadmin.getMotDePasse())) ;
            this.service.ajouter(this.nouvelleadmin);
         
@@ -462,45 +525,45 @@ public class modele_Admin  {
         
         
         this.nouvelleadmin = new Admin(); // pour l'initialisation du formulaire apré l'ajout  
-        this.selectedPrivs = new ArrayList<privs>() ; // initialisation du checkbox    
-        
+        this.selectedPrivs = new ArrayList<String>() ; // initialisation du checkbox    
+       
                       }              
         }
     // </editor-fold>
     
     // <editor-fold desc="allow privileges Method" defaultstate="collapsed">
     //activer les privileges 
-    public void allow(List<privs> privileges)
+   public void allow(List<privileges> privileges)
     {
         for(int i = 0 ; i < privileges.size() ; i++)
         {
-            if ( privileges.get(i).equals(privs.ADDuser) )
+            if ( privileges.get(i).getLibelle().equals("ADDuser") )
             {
                 this.addagent = true;
                 
             }
-            if ( privileges.get(i).equals(privs.UPuser) )
+            if ( privileges.get(i).getLibelle().equals("UPuser") )
             {
                 this.editagent = true;
                 
             }
            
-            if ( privileges.get(i).equals(privs.GA) )
+            if ( privileges.get(i).getLibelle().equals("GA") )
             {
                 this.gestassurance = true;
                 
             }
-            if ( privileges.get(i).equals(privs.GM) )
+            if ( privileges.get(i).getLibelle().equals("GM") )
             {
                 this.gestmission = true;
                 
             }
-            if ( privileges.get(i).equals(privs.UPuseradmin) )
+            if ( privileges.get(i).getLibelle().equals("UPuseradmin") )
             {
                 this.updateuseradmin = true;
                 
             }
-            if ( privileges.get(i).equals(privs.GMA) )
+            if ( privileges.get(i).getLibelle().equals("GMA") )
             {
                 this.gestassurance = true;
                 this.gestmission = true;
@@ -511,14 +574,18 @@ public class modele_Admin  {
    // </editor-fold>  
     
     // <editor-fold desc="verification des privileges Method" defaultstate="collapsed">
-    public void checkprivs()
+     public void checkprivs()
     {
         boolean stop = false ;
-        List<privs> loggedprivs = new ArrayList<>() ;
-        loggedprivs = this.admin.getAdmin_privs() ;
+ 
+    
         
-        for (int i= 0 ; i<loggedprivs.size() ; i++){
-            if (loggedprivs.get(i) == privs.ALL) //superAdmin
+        List<privileges> newList = new ArrayList<privileges>()  ;
+             newList = this.admin.getLes_privileges() ;
+                
+        for (int i= 0 ; i<newList.size() ; i++){
+            
+            if (newList.get(i).getLibelle().equals("ALL")) //superAdmin
             {
             this.addagent = true;
             this.adduseradmin = true;
@@ -533,26 +600,52 @@ public class modele_Admin  {
         
         if ( stop == false)
         {
-            allow(loggedprivs) ; // allow privileges access
+            allow(newList) ; // allow privileges access
         }
        
     }
+    
+    
+    
+    public List<privileges> affectprivileges() //compare les privileges qui ont étais choisit et les privileges qui sont dans la tables BD
+    {
+         privileges priv = new privileges();
+          List<privileges> prv = new ArrayList();
+         for(int i = 0 ; i<mesprivileges.size(); i++)
+         {
+           if( this.selectedPrivs.contains(mesprivileges.get(i).getLibelle()) )
+           {
+             
+               priv.setCode_privilege(mesprivileges.get(i).getCode_privilege());
+               priv.setLibelle(mesprivileges.get(i).getLibelle());
+               prv.add(priv) ;
+               priv = new privileges();
+             
+           }
+            
+         }
+         return prv;
+    }
      //</editor-fold>     
+    
+
+    
     
     //<editor-fold desc="Ajout prevision Method" defaultstate="collapsed" >
     
     public void ajouterprevision()
     {
-        if (service.ifexistspresion() == false ){
-            this.previs.setTotal(this.previs.getFdiver()
-                                   +this.previs.getFtransport()
-                                  +this.previs.getFhebergement());
-            service.addprevision(this.previs);
+        prevision p=new prevision();
+            p.setTotal(this.updateprev.getFdiver()
+                                   +this.updateprev.getFtransport()
+                                  +this.updateprev.getFhebergement());
+            p.setFdiver(this.updateprev.getFdiver());
+            p.setFhebergement(this.updateprev.getFhebergement());
+           p.setFtransport(this.updateprev.getFtransport());
+           p.setPrixEssence(this.updateprev.getPrixEssence());
+            service.addprevision(p);
     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Terminer!", "prevision Ajouter."));
 
-        }else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "prevision existante."));
-        }
           
         
     }
@@ -576,7 +669,6 @@ public class modele_Admin  {
               this.updateprev.setTotal(this.updateprev.getFdiver()
                                    +this.updateprev.getFtransport()
                                   +this.updateprev.getFhebergement());
-              this.updateprev.setNumprevs(1); // the only prevision
               service.updateprevision(this.updateprev); 
           
          FacesContext f=FacesContext.getCurrentInstance();
@@ -662,8 +754,9 @@ public class modele_Admin  {
           
           if ( !this.selectedPrivs.isEmpty())
           {
-              this.nouvelleadmin.setAdmin_privs(selectedPrivs);
-              this.selectedPrivs = null ;
+             
+              this.nouvelleadmin.setLes_privileges(affectprivileges()); 
+              this.selectedPrivs.clear(); ;
           } 
           
           this.service.updateadmin(this.nouvelleadmin);
@@ -685,5 +778,22 @@ public class modele_Admin  {
            FacesContext.getCurrentInstance().getExternalContext().redirect("listeadministrateur.xhtml");
      }
    //</editor-fold>
-  
+ 
+  public void AjoutDepartement(){
+   this.serviceDepartement.AjoutParNom(this.Departement.getNomDep());
+   FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Terminer!", "Departement Ajouter."));
+
+  }
+ public List<Mission> ListerMission(){
+ return this.serviceMission.listerLesMission();}
+ 
+ 
+ public void imprimer(Mission mission) throws IOException{
+ this.mission=mission;
+         this.villes= this.serviceMission.StringVille(this.mission);
+
+ FacesContext.getCurrentInstance().getExternalContext().redirect("FormPrint.xhtml");             
+
+ 
+ } 
 }

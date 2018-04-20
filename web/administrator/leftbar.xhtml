@@ -32,10 +32,12 @@
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                  <li><a href="adduseradmin.xhtml"><i class="fa fa-angle-right"></i> Ajouter un Administrateur</a></li>
-                  <li><a href="addagent.xhtml"><i class="fa fa-angle-right"></i> Ajouter un Agent </a></li>
-                  <li><a href="users.xhtml"><i class="fa fa-angle-right"></i> Utilisateurs Agents</a></li>
-                  <li><a href="listeadministrateur.xhtml"><i class="fa fa-angle-right"></i> Utilisateurs Admins</a></li>
+                    
+                    <li> <p:panelGrid rendered="#{modele_Admin.adduseradmin}"> <a href="adduseradmin.xhtml"><i class="fa fa-angle-right"> </i> Ajouter un Administrateur</a>   </p:panelGrid></li>
+                  <li> <p:panelGrid rendered="#{modele_Admin.addagent}"><a href="addagent.xhtml"><i class="fa fa-angle-right"></i> Ajouter un Agent </a> </p:panelGrid></li>
+                  <li> <p:panelGrid rendered="#{modele_Admin.editagent}">  <a href="users.xhtml"><i class="fa fa-angle-right"></i> Utilisateurs Agents</a> </p:panelGrid></li>
+                  <li><a href="AddDep.xhtml"><i class="fa fa-angle-right"></i> Ajout Departement</a></li>
+                  <li> <p:panelGrid rendered="#{modele_Admin.updateuseradmin}">  <a href="listeadministrateur.xhtml"><i class="fa fa-angle-right"></i> Utilisateurs Admins</a> </p:panelGrid></li>
                 </ul>
               </li>
               <li class="treeview">
@@ -44,10 +46,12 @@
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                  <li><a href="cloturemission.xhtml"><i class="fa fa-angle-right"></i> Cloture Mission</a></li>
-                  <li><a href="operationmission.xhtml"><i class="fa fa-angle-right"></i> Modification/Annulation Mission</a></li>
-                  <li><a href="prevision.xhtml"><i class="fa fa-angle-right"></i> Ajouter prevision</a></li>
-                  <li><a href="modifprevision.xhtml"><i class="fa fa-angle-right"></i> Modifier prevision</a></li>
+                  <li>  <p:panelGrid rendered="#{modele_Admin.gestmission}">  <a href="cloturemission.xhtml"><i class="fa fa-angle-right"></i> Cloture Mission</a> </p:panelGrid> </li>
+                  <li> <p:panelGrid rendered="#{modele_Admin.gestmission}"><a href="ToutesLesMission.xhtml"><i class="fa fa-angle-right"></i> Lister les Mission</a> </p:panelGrid></li>
+
+                  <li><p:panelGrid rendered="#{modele_Admin.gestmission}"> <a href="operationmission.xhtml"><i class="fa fa-angle-right"></i> Modification/Annulation Mission</a></p:panelGrid></li>
+                  <li><p:panelGrid rendered="#{modele_Admin.gestmission}"><a href="prevision.xhtml"><i class="fa fa-angle-right"></i> Ajouter prevision</a></p:panelGrid></li>
+                  <li> <p:panelGrid rendered="#{modele_Admin.gestmission}"><a href="modifprevision.xhtml"><i class="fa fa-angle-right"></i> Modifier prevision</a></p:panelGrid></li>
                 </ul>
               </li>
               <li class="treeview">

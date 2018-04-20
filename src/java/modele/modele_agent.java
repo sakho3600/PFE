@@ -224,15 +224,8 @@ public class modele_agent {
     }
 
     public String getDepartement() {
-String dep=this.service.chefoupas(this.agent).getNomDep();
-if (dep==null){
-    
-Departement d2 =this.agent.getAgentAffecter();
-  return d2.getNomDep();//pas chef
-}else 
-{  return dep;//chef
-
-}  }
+/*  */
+    return this.Departement;}
 
     public void setDepartement(String Departement) {
         this.Departement = Departement;
@@ -389,7 +382,20 @@ Departement d2 =this.agent.getAgentAffecter();
         this.previsions = previsions;
     }
     
+    public String DepAgent (){
+    String dep=this.service.chefoupas(this.agent).getNomDep();
+if (dep==null){
     
+Departement d2 =this.agent.getAgentAffecter();
+  return d2.getNomDep();//pas chef
+}else 
+{  return dep;//chef
+
+}}
+ 
+    public List<String> ListerDep(){
+    return this.serviceDepartement.ListerLesDepartement();
+    }
     //</editor-fold>
     
      // <editor-fold desc=" Events Methods" defaultstate="collapsed">   
