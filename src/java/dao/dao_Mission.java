@@ -236,5 +236,19 @@ Message="Mission Deja Valider vous devez Contacter l'administration";
     }
     
     return Message;}
+
+    public List<Mission> listerLesMission() {
+  
+        List<Mission>l=new ArrayList<>();
+        openSession();     
+             Query query = s.createQuery("from Mission ");
+                     if(query.list().isEmpty()){
+                     l=null;}
+                     else{
+                       l = query.list();
+                   }
+                     closeSession();
+                
+return l;    }
     
 }
