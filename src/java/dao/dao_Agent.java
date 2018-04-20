@@ -7,6 +7,7 @@ package dao;
 
 import beans.Admin;
 import beans.Agent;
+import beans.Departement;
 import beans.Mission;
 import beans.Personnel;
 import beans.Personnel;
@@ -171,7 +172,7 @@ public class dao_Agent {
     /* Ajouter un agent */
    public void ajouter(Agent Employ)
    {
-       this.AffectMatChef(Employ);
+     //  this.AffectMatChef(Employ);
         try { 
     openSession() ;
              s.save(Employ);
@@ -181,7 +182,13 @@ public class dao_Agent {
     }
     }
     
-   public void AffectMatChef(Agent Employ){
+     public void AjouterAgentDepartement(Agent a,Departement d){
+  a.setAgentAffecter(d);
+   openSession();
+        s.saveOrUpdate(a);
+          closeSession();
+  }
+/*   public void AffectMatChef(Agent Employ){
      
          Personnel p=new Personnel();
        if (Employ.getDirecteur().equals("Directeur Generale"))
@@ -225,7 +232,7 @@ public class dao_Agent {
     }
     
    }
-   
+   */
    public void delete(Agent Employ)
    {
        try { 
@@ -255,19 +262,33 @@ public class dao_Agent {
 
     }
    
-
-    public List<Agent> ListerAgentParChef(int Matricule){
-                   openSession();
-                   List<Agent> l= new ArrayList<>();
-                    Query query = s.createQuery("from Agent where MatriculeChef = :code ");
+public Departement chefoupas(Agent Matricule){
+Departement rep=new Departement();               
+    openSession();
+                    Query query = s.createQuery("from Departement where agentDirige= :code ");
                     query.setParameter("code", Matricule);
-                     if(query.list().isEmpty()){
-                     l=null;}
-                     else{
+                     if(!query.list().isEmpty())
+                      rep= (Departement)query.list().get(0);
+                    
+                   
+                closeSession();
+                
+        return rep;
+}
+    public List<Agent> ListerAgentParChef(Agent Matricule){
+          Departement d=new Departement();
+d=this.chefoupas(Matricule);          
+            List<Agent> l= new ArrayList<>();
+                    if (d!=null){
+                     openSession();
+                    Query query = s.createQuery("from Agent where AgentAffecter= :code ");
+                    query.setParameter("code", d);
+                     if(!query.list().isEmpty()){
                        l = query.list();
-                   }
+                          closeSession();
+                   }}else
+                        l=null;
                   
-                     closeSession();
     return l;}
     
     
@@ -325,16 +346,13 @@ public class dao_Agent {
        }
     }
 public List<Mission> LesMissionAValiderDuChef(Agent agent){
-    if (agent.getDirecteur().equals("Personnel"))
-        return null ;
-    else    
-return  this.ListerMissionNonValiderDesAgents(this.ListerAgentParChef(agent.getMatricule()));
+   
+return  this.ListerMissionNonValiderDesAgents(this.ListerAgentParChef(agent));
 }
 
-
 public void ValiderMission(Mission m,Agent a){
-    if (a.getDirecteur().equals("Directeur Generale")){
-        if (m.getAgent().getDirecteur().equals("Personnel")){
+    if (this.chefoupas(a).getNomDep().equals("Direction General")){
+        if (this.chefoupas(m.getAgent())==null){
         m.setValidDirecturGeneral(1);
         }else {
             m.setValidDirecturGeneral(1);
