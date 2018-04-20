@@ -40,26 +40,17 @@ public class Personnel implements Serializable{
     private String Nom;
     @Column(name ="MotDePasse")
     private String MotDePasse;
-    @Column(name= "Directeur")
-      private String Directeur;
+@Column (name="email")
+private String email;
+
+    public Personnel(int Matricule, String Pernom, String Nom, String MotDePasse, String email) {
+        this.Matricule = Matricule;
+        this.Pernom = Pernom;
+        this.Nom = Nom;
+        this.MotDePasse = MotDePasse;
+        this.email = email;
+    }
     
-
-        @OneToMany(mappedBy = "Matricule")
-                  @MapKey(name="MatriculeChef")
-            private Set<Agent> Agent;
-
-    public Set<Agent> getAgent() {
-        return Agent;
-    }
-
-    public void setAgent(Set<Agent> Agent) {
-        this.Agent = Agent;
-    }
-
-         
-         
-    public Personnel() {
-    }
 
     public Personnel(int Matricule, String Pernom, String Nom, String MotDePasse) {
         this.Matricule = Matricule;
@@ -68,22 +59,8 @@ public class Personnel implements Serializable{
         this.MotDePasse = MotDePasse;
     }
 
-    public Personnel(int Matricule, String Pernom, String Nom, String MotDePasse, String Directeur) {
-        this.Matricule = Matricule;
-        this.Pernom = Pernom;
-        this.Nom = Nom;
-        this.MotDePasse = MotDePasse;
-        this.Directeur = Directeur;
+    public Personnel() {
     }
-
-    public String getMotDePasse() {
-        return MotDePasse;
-    }
-
-    public void setMotDePasse(String MotDePasse) {
-        this.MotDePasse = MotDePasse;
-    }
-
 
     public int getMatricule() {
         return Matricule;
@@ -109,15 +86,21 @@ public class Personnel implements Serializable{
         this.Nom = Nom;
     }
 
-    public String getDirecteur() {
-        return Directeur;
+    public String getMotDePasse() {
+        return MotDePasse;
     }
 
-    public void setDirecteur(String Directeur) {
-        this.Directeur = Directeur;
+    public void setMotDePasse(String MotDePasse) {
+        this.MotDePasse = MotDePasse;
     }
 
-   
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
     
-    
+
 }
