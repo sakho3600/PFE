@@ -6,11 +6,13 @@
 package modele;
 
 import beans.Agent;
+import beans.Departement;
 import beans.Mission;
 import beans.prevision;
 import beans.ville;
 import dao.dao_Admin;
 import dao.dao_Agent;
+import dao.dao_Departement;
 import dao.dao_Mission;
 import dao.dao_ville;
 import java.io.IOException;
@@ -84,6 +86,7 @@ public class modele_agent {
     private int notif = 0 ;
    
     /** Objects **/
+    dao_Departement serviceDepartement=new dao_Departement();
     dao_Admin serviceadmin = new dao_Admin() ;
     dao_Agent service = new dao_Agent();
     Agent agent = new Agent(); // connected 
@@ -113,7 +116,7 @@ public class modele_agent {
       
        insertprevision();
        
-      
+   
     }
    
     
@@ -221,8 +224,15 @@ public class modele_agent {
     }
 
     public String getDepartement() {
-        return Departement;
-    }
+String dep=this.service.chefoupas(this.agent).getNomDep();
+if (dep==null){
+    
+Departement d2 =this.agent.getAgentAffecter();
+  return d2.getNomDep();//pas chef
+}else 
+{  return dep;//chef
+
+}  }
 
     public void setDepartement(String Departement) {
         this.Departement = Departement;
@@ -437,16 +447,26 @@ public class modele_agent {
      * @throws java.security.NoSuchAlgorithmExceptiont**/
      public void ajouter() throws NoSuchAlgorithmException {
          
-         if(!service.ifExists(this.nouvelleagent.getMatricule()) && (!service.ifExistsDirection(grade, Departement)))
-         {   
+         if(!service.ifExists(this.nouvelleagent.getMatricule()) )
+         {              Departement dep=new Departement();
+                 dep=this.serviceDepartement.RechercheDepParNom(this.Departement);
+
              if (this.getGrade().equals("Directeur Departement")){
-             this.nouvelleagent.setDirecteur(this.Departement);
-             }else
-                 this.nouvelleagent.setDirecteur(grade);
+              //Departement dep=new Departement();
+                 dep.setAgentDirige(this.nouvelleagent);
+                 Departement directionG=this.serviceDepartement.RechercheDepParNom("Direction General");
+                 this.nouvelleagent.setAgentAffecter(directionG);
+                 this.serviceDepartement.AjoutDirecteurDepartement(this.nouvelleagent, dep);
+//setDirecteur(this.Departement);
+             }else if (this.getGrade().equals("Personnel")){
+                this.nouvelleagent.setAgentAffecter(dep);}
+                this.nouvelleagent.setMotDePasse(encryption.cryptme(this.nouvelleagent.getMotDePasse()))  ;
+                /* this.nouvelleagent.setDirecteur(grade);
              this.nouvelleagent.setDepartement(this.Departement);
              this.nouvelleagent.setMotDePasse(encryption.cryptme(this.nouvelleagent.getMotDePasse()))  ; 
-             service.ajouter(this.nouvelleagent);
-             this.nouvelleagent = new Agent();
+            */    service.ajouter(this.nouvelleagent);
+         
+                this.nouvelleagent = new Agent();
              FacesContext f=FacesContext.getCurrentInstance();
              f.addMessage(null,new FacesMessage("Ajout effectuer"));
              
@@ -517,7 +537,7 @@ public class modele_agent {
           this.Message = "Operation effectuer , Agent modifier" ;
           this.nouvelleagent.setMotDePasse(encryption.cryptme(this.nouvelleagent.getMotDePasse()))  ;
           
-          this.service.update(this.nouvelleagent);
+         // this.service.update(this.nouvelleagent);
            this.nouvelleagent = new Agent();
           FacesContext.getCurrentInstance().getExternalContext().redirect("users.xhtml");
       }
@@ -548,9 +568,12 @@ public class modele_agent {
      
      public List<Mission>ListerMissionAValider()
      {
-         if (this.agent.getDirecteur().equals("Directeur Generale")){
-          return this.service.ListerlesMissionsNonValiderParDirecteur();
-     }else
+         String Poste=this.service.chefoupas(this.agent).getNomDep();
+        if (Poste==null)
+            return null;
+        else if (Poste.equals("Direction General"))
+             return this.service.ListerlesMissionsNonValiderParDirecteur();
+         else 
      return this.service.LesMissionAValiderDuChef(this.agent);
      }
      
@@ -602,7 +625,7 @@ public class modele_agent {
        this.ftotal = previsions.getTotal() ;
        
     }
-    public void notifica()
+    /*public void notifica()
         {
           if ( this.service.LesMissionAValiderDuChef(this.agent) == null )
           {
@@ -612,7 +635,7 @@ public class modele_agent {
               this.notif = this.service.LesMissionAValiderDuChef(this.agent).size() ;
           }
         }
-    //</editor-fold>
+   */ //</editor-fold>
         
        // <editor-fold desc="Calcul des montants " defaultstate="collapsed"> 
     public void calculMontant()
@@ -656,7 +679,14 @@ public class modele_agent {
        // <editor-fold desc="Modifier mission " defaultstate="collapsed"> 
 public void ModifierMission() throws IOException{
 this.mission=this.serviceMission.RetourMission(this.mission.getCodeMission());
-if (this.mission.getAgent().getMatricule()!=agent.getMatricule()){
+if (this.mission==null){
+    this.Message="Mission innexistante";
+    this.mission=new Mission();
+    FacesContext.getCurrentInstance().getExternalContext().redirect("AnnulerMission.xhtml");
+    
+}
+
+else if (this.mission.getAgent().getMatricule()!=agent.getMatricule()){
    this.Message="Vous n'avez pas les droit sur cette mission";
     FacesContext.getCurrentInstance().getExternalContext().redirect("AnnulerMission.xhtml");}
 else 
