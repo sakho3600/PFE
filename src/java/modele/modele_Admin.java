@@ -117,6 +117,26 @@ public class modele_Admin  {
     }
    
  
+    
+
+    // <editor-fold desc="getters and setters" defaultstate="collapsed">
+    /** start of getters and setters **/
+    public void setServiceagent(dao_Agent serviceagent) { 
+        this.serviceagent = serviceagent;
+    }
+
+    public boolean isUpdateuseradmin() {
+        return updateuseradmin;
+    }
+
+    public List<Admin> getAdmins() {
+        return admins;
+    }
+
+    public void setAdmins(List<Admin> admins) {
+        this.admins = admins;
+    }
+    
     public List<String> getPrivilege() {
         return privilege;
     }
@@ -144,25 +164,6 @@ public class modele_Admin  {
     public dao_Agent getServiceagent() {
         return serviceagent;
     }
-
-    // <editor-fold desc="getters and setters" defaultstate="collapsed">
-    /** start of getters and setters **/
-    public void setServiceagent(dao_Agent serviceagent) { 
-        this.serviceagent = serviceagent;
-    }
-
-    public boolean isUpdateuseradmin() {
-        return updateuseradmin;
-    }
-
-    public List<Admin> getAdmins() {
-        return admins;
-    }
-
-    public void setAdmins(List<Admin> admins) {
-        this.admins = admins;
-    }
-
     public void setUpdateuseradmin(boolean updateuseradmin) {
         this.updateuseradmin = updateuseradmin;
     }
@@ -521,7 +522,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
            this.service.ajouter(this.nouvelleadmin);
         
         FacesContext f=FacesContext.getCurrentInstance();
-        f.addMessage(null,new FacesMessage("Ajout effectuer"));
+        f.addMessage(null,new FacesMessage("Ajout effectué"));
         
         
         this.nouvelleadmin = new Admin(); // pour l'initialisation du formulaire apré l'ajout  
@@ -679,7 +680,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
        
              //</editor-fold>
        
-   // <editor-fold desc="Cloture" defaultstate="collapsed">    
+    // <editor-fold desc="Cloture" defaultstate="collapsed">    
      public List<Mission> ListerMissionNonCloturer(){
          return this.serviceMission.listMissionnoncloturer();
          }
@@ -729,7 +730,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
        }
        //</editor-fold>
     
-   // <editor-fold desc="Update Delete Super Admin" defaultstate="collapsed">
+     // <editor-fold desc="Update Delete Super Admin" defaultstate="collapsed">
     public void leadstoupdate() throws IOException {
        
       if(
@@ -779,6 +780,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
      }
    //</editor-fold>
  
+     // <editor-fold desc="add dep , listeMission , imprimer" defaultstate="collapsed">
   public void AjoutDepartement(){
    this.serviceDepartement.AjoutParNom(this.Departement.getNomDep());
    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Terminer!", "Departement Ajouter."));
@@ -795,5 +797,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
  FacesContext.getCurrentInstance().getExternalContext().redirect("FormPrint.xhtml");             
 
  
- } 
+ }
+
+// </editor-fold> 
 }
