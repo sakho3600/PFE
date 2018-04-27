@@ -628,10 +628,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
          return prv;
     }
      //</editor-fold>     
-    
-
-    
-    
+   
     //<editor-fold desc="Ajout prevision Method" defaultstate="collapsed" >
     
     public void ajouterprevision()
@@ -730,7 +727,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
        }
        //</editor-fold>
     
-     // <editor-fold desc="Update Delete Super Admin" defaultstate="collapsed">
+    // <editor-fold desc="Update Delete Super Admin" defaultstate="collapsed">
     public void leadstoupdate() throws IOException {
        
       if(
@@ -780,7 +777,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
      }
    //</editor-fold>
  
-     // <editor-fold desc="add dep , listeMission , imprimer" defaultstate="collapsed">
+    // <editor-fold desc="add dep , listeMission , imprimer" defaultstate="collapsed">
   public void AjoutDepartement(){
    this.serviceDepartement.AjoutParNom(this.Departement.getNomDep());
    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Terminer!", "Departement Ajouter."));
