@@ -797,4 +797,13 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
  }
 
 // </editor-fold> 
+ 
+public void AnnulerMission() throws IOException{
+    this.mission=this.serviceMission.RetourMission(matriculeMission);
+this.service.AnnulerMission(this.mission,this.admin);
+this.Messageupdate1 = "Operation effectuer ,Mission Annuler" ;
+FacesContext.getCurrentInstance().getExternalContext().redirect("operationmission.xhtml");
+this.mission=new Mission();
+
+}
 }

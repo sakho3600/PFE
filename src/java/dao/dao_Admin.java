@@ -6,6 +6,7 @@ package dao;
  * and open the template in the editor.
  */
 import beans.Admin;
+import beans.Mission;
 import beans.Personnel;
 import beans.prevision;
 import beans.privileges;
@@ -100,6 +101,7 @@ public class dao_Admin {
     
     
     
+    
     /**
      * 
      * Verifier si un Employer Existe dans la table Admin 
@@ -183,6 +185,7 @@ public class dao_Admin {
     }
     }
    
+   
    public void ajoutadmin(Admin a){
    openSession();
    s.save(a);
@@ -202,6 +205,12 @@ public class dao_Admin {
     
    
       }
+   public void AnnulerMission(Mission m,Admin a){
+   openSession();
+   m.setStatus("Mission Annuler Par Administrateur "+a.getUsername());
+   s.update(m);
+   closeSession();
+   }
     
     public List<Admin> listerAdmin()
    {

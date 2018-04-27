@@ -261,7 +261,7 @@ public class dao_Agent {
      return listeAgent ;
 
     }
-   
+//Close   
 public Departement chefoupas(Agent Matricule){
 Departement rep=new Departement();               
     openSession();
@@ -270,10 +270,11 @@ Departement rep=new Departement();
                      if(!query.list().isEmpty())
                       rep= (Departement)query.list().get(0);
                     
-                   
+                   closeSession();
                 
         return rep;
 }
+
     public List<Agent> ListerAgentParChef(Agent Matricule){
           Departement d=new Departement();
 d=this.chefoupas(Matricule);          
@@ -350,6 +351,7 @@ return  this.ListerMissionNonValiderDesAgents(this.ListerAgentParChef(agent));
 }
 
 public void ValiderMission(Mission m,Agent a){
+    openSession();
     if (this.chefoupas(a).getNomDep().equals("Direction General")){
         if (this.chefoupas(m.getAgent()).getNomDep()==null){
         m.setValidDirecturGeneral(1);
@@ -361,7 +363,7 @@ public void ValiderMission(Mission m,Agent a){
     }else
             m.setEtat(1);
     
-                   openSession();
+                   
                           s.update(m);
                    closeSession();
 
