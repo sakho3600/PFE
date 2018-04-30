@@ -2,13 +2,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:p="http://primefaces.org/ui">
     <f:view contentType="text/html">
     <h:head>
-              <style> element.style { width: auto; height: auto; visibility: visible; z-index: 1010; display: block; } .ui-dialog { top: 40% !important; left: 50%!important; } </style>
-
-        <title>Agent</title>
+        <title>Administrator</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -29,7 +26,7 @@
  <!-- side nav css file -->
  
  <!-- js-->
-<script src="../../resources/adminresource/js/jquery-1.11.1.min.js"></script>
+<!-- prob <script src="../../resources/adminresource/js/jquery-1.11.1.min.js"></script>-->
 <script src="../../resources/adminresource/js/modernizr.custom.js"></script>
 
 <!--webfonts-->
@@ -41,14 +38,10 @@
 <script src="../../resources/adminresource/js/custom.js"></script>
 <link href="../../resources/adminresource/css/custom.css" rel="stylesheet"> </link>
 <!--//Metis Menu -->
-    <style>
- 
-
-    </style>
     </h:head>
     <h:body class="cbp-spmenu-push">
       
-          <div class="main-content">
+        
           
                  <ui:include src="topbar.xhtml" />
             
@@ -58,45 +51,44 @@
         <div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
-<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
+					<h2 class="title1">Ajouter une Mission </h2>
+					<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
 						<div class="form-title">
-							<h4>Annulation mission :</h4>
+							<h4>Information effectives de la mission :</h4>
 						</div>
-                                            	<div class="form-body">
-                                                    <h:form> 
-                                                        <p:messages id="messages" showDetail="true" closable="true">
+                                        						<div class="form-body">
+
+                                            <h:form> 
+                                                            
+                                                        <div class="form-group" > <p:outputLabel  value="Departement  :"> </p:outputLabel>  </div>
+                                                        <div class="form-group">  <p:selectOneListbox id="basic" required="true" requiredMessage="Vous devez indiquer un departement" value="#{modele_Admin.departements}" class="ui-selectlistbox-item ui-corner-all" style="width:150px">
+                                                                <f:selectItems  value="#{modele_Admin.ListerDep()}" var="dep" itemValue="#{dep}" itemLabel="#{dep}"  />
+                                                                </p:selectOneListbox>  </div>
                                                         
-                                                          </p:messages>
                                                         
-                                                  
-                                                         <div class="form-group">
-                                                             <p:inputText value="#{modele_agent.mission.codeMission}"  required="true"   style="width:20%"> </p:inputText> </div> 
-                                                          
-                                                             
-                                                      
-                                             
-                                                             <div class="form-group">    
-                                                                 <p:commandButton value="Modifier La mission"   actionListener="#{modele_agent.ModifierMission()}" class="btn btn-default">                                                        </p:commandButton>
-                                                      </div>      
-                                                         <div class="form-group">   <p> <li> #{modele_agent.message}</li>  </p></div> 
-                                                    </h:form> 
-                                             
-						</div>
-					</div>			         
-                                      
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        
-					</div>
+                                                                  <div class="form-group">     
+                                                        <h:panelGrid columns="4" cellpadding="5">
+        <p:outputLabel for="date_aller" value="Date aller: "/>
+        <p:calendar id="date_aller" value="#{modele_Admin.date1}" style="padding-left: 50px;padding-right:100px;">  
+        </p:calendar>
+        <p:outputLabel for="date_retour" value="Date Retour:" />
+        <p:calendar id="date_retour" value="#{modele_Admin.date2}" style="padding-left: 50px;" >
+        </p:calendar>
+        
+                                                   </h:panelGrid></div>
+                                                           
+                                                 
+                                                        <p:commandButton value="Ajouter" id="ajax"  actionListener="#{modele_Admin.StatDepartement()}" class="btn btn-default" ajax="false"/>
+                                                        
+
+                                                                                </h:form> 
+                                </div>
+                                        </div>
                             </div>
             </div>
         </div>
         
-            
+           
             
     
         
@@ -140,4 +132,5 @@
 	<!-- //Bootstrap Core JavaScript -->
     </h:body>
         </f:view>
-</html> 
+</html>
+    

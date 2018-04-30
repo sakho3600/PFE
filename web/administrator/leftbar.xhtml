@@ -60,6 +60,13 @@
                 <span>Statistique</span>
                 <span class="label label-primary pull-right">charts</span>
                 </a>
+                    <ul class="treeview-menu">
+                  <li>  <p:panelGrid rendered="#{modele_Admin.gestmission}">  <a href="StatAgent.xhtml"><i class="fa fa-angle-right"></i> Par Agent</a> </p:panelGrid> </li>
+                  <li> <p:panelGrid rendered="#{modele_Admin.gestmission}"><a href="StatDepartement.xhtml"><i class="fa fa-angle-right"></i> Par departement</a> </p:panelGrid></li>
+                  <li> <p:panelGrid rendered="#{modele_Admin.gestmission}"><a href="StatDate.xhtml"><i class="fa fa-angle-right"></i> Par Date </a></p:panelGrid></li>
+                  <li> <p:panelGrid rendered="#{modele_Admin.gestmission}"><a href="StatComparaison.xhtml"><i class="fa fa-angle-right"></i>comparer Les departements</a></p:panelGrid></li>                  
+                    </ul>
+      
               </li>
               		  
               <li class="header">Gestion Assurance</li>

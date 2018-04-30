@@ -24,6 +24,7 @@ import dao.dao_Mission;
 import dao.dao_ville;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import utilitaire.SessionKeyGen ;
 
@@ -43,8 +44,56 @@ public class test {
        
     
  
- public static void main (String []args) throws NoSuchAlgorithmException{
-  dao_Admin d=new dao_Admin();
+ public static void main (String []args) throws NoSuchAlgorithmException, ParseException{
+   dao_Departement d=new dao_Departement();
+    dao_Agent da=new dao_Agent();
+
+   List<Departement>ld=d.ListerLesDepartements();
+   for(Departement dd:ld){
+            System.out.println(dd.getNomDep()+" : ");
+       List<Agent>a= d.TousLesAgentDepartement(dd);
+       List<Mission>lm=da.ListerLesMissionClotureDesAgents(a);
+       String chr=da.LesFraixdesMissionCloture(lm);
+      System.out.println(chr);
+      System.out.println("-----------------------------------------------");
+      if(chr.length()>0){
+         
+String[] parts = chr.split(",");
+      System.out.println( parts[0]); // 004
+      System.out.println( parts[1]); // 004
+      System.out.println( parts[2]); // 004
+            
+      }
+                }
+   
+
+     /*  dao_Agent d=new dao_Agent();
+     List<Mission>lim=new ArrayList<>();
+     Date d1=new Date(2018,04,11);
+     Date d2=new Date(2018,04,25);
+     lim=d.ListerLesMissionClotureParDate(d1,d2);
+      
+     System.out.println(d.LesFraixdesMissionClotureParAgent(lim));
+
+     /*dao_Agent d=new dao_Agent();
+     dao_Departement daod=new dao_Departement();
+     List <Agent> lm=new ArrayList<>();
+     Departement dp=daod.RechercheDepParNom("Informatique");
+     lm=daod.TousLesAgentDepartement(dp);
+     List<Mission>lim=new ArrayList<>();
+     lim=d.ListerLesMissionClotureDesAgents(lm);
+     
+     for (Mission m:lim)
+     System.out.println(m.getCodeMission());
+
+     /*
+     
+     dao_Agent d=new dao_Agent();
+     List <Mission> lm=new ArrayList<>();
+     lm=d.ListerlesMissionClotureParAgent(2);
+     System.out.print(d.LesFraixdesMissionClotureParAgent(lm));
+
+     /* dao_Admin d=new dao_Admin();
   prevision  s=d.getprevision();
   System.out.print(s.getFdiver());
      

@@ -6,6 +6,7 @@
 package modele;
 
 import beans.Admin;
+import beans.Agent;
 import beans.Cloture;
 import beans.Departement;
 import beans.Mission;
@@ -25,9 +26,12 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import org.primefaces.event.SelectEvent;
 import utilitaire.cryptpasswords;
 
 /**
@@ -49,6 +53,13 @@ public class modele_Admin  {
         private int matricule ; // matricule utiliser pour l'update
         private String choixprevision; // choix du prevision a modifier
         private int matriculeMission; //matricule de mission a modifiers/Supprimer
+        private String Stat;
+        private String Departements;
+        private String TypeRejet;
+        private String Rejet;
+         //Les dates
+    private Date date1;
+    private Date date2;
          // <editor-fold desc="acces block" defaultstate="collapsed">
         /** privileges panelgrid block **/
         private boolean addagent;
@@ -64,6 +75,7 @@ public class modele_Admin  {
           private List<String> privilege ; // les privileges
         private List<String> selectedPrivs; // les privileges qui seront choisit seront affecter dans se tableau
         private List<privileges> mesprivileges;
+        private List<Mission>MissionStat;
      
   private List<String> previsions ; //   
         private List<Admin> admins;
@@ -115,13 +127,66 @@ public class modele_Admin  {
        this.updateprev = service.getprevision() ;
    
     }
-   
- 
-    
 
+    public String getDepartements() {
+        return Departements;
+    }
+
+    public void setDepartements(String Departements) {
+        this.Departements = Departements;
+    }
+
+    public String getRejet() {
+        return Rejet;
+    }
+
+    public void setRejet(String Rejet) {
+        this.Rejet = Rejet;
+    }
+
+    public String getStat() {
+        return Stat;
+    }
+
+    public void setStat(String Stat) {
+        this.Stat = Stat;
+    }
+
+    public String getTypeRejet() {
+        return TypeRejet;
+    }
+
+    public void setTypeRejet(String TypeRejet) {
+        this.TypeRejet = TypeRejet;
+    }
+
+   
+    public Date getDate1() { 
+        return date1;
+    }
+
+    public void setDate1(Date date1) {
+        this.date1 = date1;
+    }
+
+    public Date getDate2() {
+        return date2;
+    }
+   public void onDateSelect1(SelectEvent event) { 
+        this.date1 = (Date) event.getObject();
+      
+        }
+     public void onDateSelect2(SelectEvent event) {
+        this.date2 = (Date) event.getObject();
+       }
+  
     // <editor-fold desc="getters and setters" defaultstate="collapsed">
     /** start of getters and setters **/
-    public void setServiceagent(dao_Agent serviceagent) { 
+    public void setDate2(Date date2) {
+        this.date2 = date2; 
+    }
+
+    public void setServiceagent(dao_Agent serviceagent) {
         this.serviceagent = serviceagent;
     }
 
@@ -182,6 +247,14 @@ public class modele_Admin  {
 
     public void setUserKey(String userKey) {
         this.userKey = userKey;
+    }
+
+    public List<Mission> getMissionStat() {
+        return MissionStat;
+    }
+
+    public void setMissionStat(List<Mission> MissionStat) {
+        this.MissionStat = MissionStat;
     }
 
     public String getNomDepartement() {
@@ -695,6 +768,8 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
         this.serviceCloture.ajoutCloture(cloture);
         this.serviceMission.terminerMission(mission);
     } 
+    
+    
     //</editor-fold>
     
     // <editor-fold desc="Update Delete Mission Methods" defaultstate="collapsed">
@@ -806,4 +881,50 @@ FacesContext.getCurrentInstance().getExternalContext().redirect("operationmissio
 this.mission=new Mission();
 
 }
+
+ 
+    public List<String> ListerDep(){
+    return this.serviceDepartement.ListerLesDepartement();
+    }
+
+public void StatDate() throws IOException, ParseException{
+          FacesContext.getCurrentInstance().getExternalContext().redirect("MissionStat.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
+this.MissionStat=this.serviceagent.ListerLesMissionClotureParDate(this.date1,this.date2);
+this.Stat=this.serviceagent.LesFraixdesMissionClotureParAgent(this.MissionStat);
+
+}
+public void StatAgent() throws IOException, ParseException{
+FacesContext.getCurrentInstance().getExternalContext().redirect("MissionStat.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
+if (this.date1==null || this.date2==null){
+this.MissionStat=this.serviceagent.ListerlesMissionClotureParAgent(this.matricule);
+this.Stat=this.serviceagent.LesFraixdesMissionClotureParAgent(this.MissionStat);
+}else{
+this.MissionStat=this.serviceagent.ListerlesMissionClotureParAgentParDate(this.matricule, this.date1, this.date2);
+this.Stat=this.serviceagent.LesFraixdesMissionClotureParAgent(this.MissionStat);
+
+}
+}
+
+public void StatDepartement() throws IOException, ParseException{
+    
+FacesContext.getCurrentInstance().getExternalContext().redirect("MissionStat.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
+if (this.date1==null || this.date2==null){
+this.MissionStat=this.serviceagent.ListerLesMissionClotureDesAgents(this.serviceDepartement.TousLesAgentDepartement(this.serviceDepartement.RechercheDepParNom(this.Departements)));
+this.Stat=this.serviceagent.LesFraixdesMissionClotureParAgent(this.MissionStat);}
+else{
+this.MissionStat=this.serviceagent.ListerLesMissionClotureDesAgentsParDate(this.serviceDepartement.TousLesAgentDepartement(this.serviceDepartement.RechercheDepParNom(this.Departements)),this.date1,this.date2);
+this.Stat=this.serviceagent.LesFraixdesMissionClotureParAgent(this.MissionStat);
+        }
+}
+
+
+
+public void rejet(){
+this.mission.setRejet(this.Rejet);
+this.service.AffecterRejet(mission);
+    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Terminer!", "prevision Ajouter."));
+
+}
+
+
 }

@@ -6,6 +6,8 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <f:view contentType="text/html">
     <h:head>
+              <style> element.style { width: auto; height: auto; visibility: visible; z-index: 1010; display: block; } .ui-dialog { top: 40% !important; left: 50%!important; } </style>
+
         <title>Agent</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -56,7 +58,12 @@
         <div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
-				         
+<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
+						<div class="form-title">
+							<h4>Le Mission Rejeter :</h4>
+						</div>
+                                            	
+					</div>			         
                                         <div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
 						<div class="form-title">
 							<h4>Liste de mes missions :</h4>
@@ -70,14 +77,8 @@
                                                   
                                                          <div class="form-group">
                
-                                                             <p:dataTable  var="Missions" emptyMessage="Vous n'avez aucune Mission a valider" value="#{modele_agent.ListerMissionAValider()}" rows="9" paginator="true"  >
-                                                                 
-                                                                 
-                                                                 <p:column headerText="Matricule de l'agent" filterBy="#{Missions.agent.matricule}" filterMatchMode="exact"   >
-                                                                     <h:outputText value="#{Missions.agent.matricule}"  />
-                                                                  </p:column>
+                                                             <p:dataTable  var="Missions" emptyMessage="Vous n'avez aucune mission." value="#{modele_agent.ListerMissionRejeter()}" rows="9" paginator="true"  >
                     
-                                                                 
                                                                  <p:column headerText="Code Mission" filterBy="#{Missions.codeMission}" filterMatchMode="exact"   >
                                                                      <h:outputText value="#{Missions.codeMission}"  />
                                                                   </p:column>
@@ -94,8 +95,12 @@
                                                          <p:column headerText="Objectif" >
                                                              <h:outputText value="#{Missions.objectif}" />
                                                           </p:column>  
-                                                         <p:column headerText="Afficher" style=' width: 200px;'>
-                                                             <p:commandButton value="Afficher" id="ajax"  actionListener="#{modele_agent.FormValid(Missions)}" class="btn btn-default" ajax="false"/>
+                                                                 
+                                                         <p:column headerText="Motif" >
+                                                             <h:outputText value="#{Missions.rejet}" />
+                                                          </p:column>   
+                                                         <p:column headerText="Imprimer" style=' width: 200px;' >
+                                                             <p:commandButton value="Imprimer" id="ajax"  actionListener="#{modele_agent.FormPrintRejet(Missions)}" class="btn btn-default" ajax="false"/>
                                                           </p:column>  
                                                          
                                                              </p:dataTable> 
@@ -164,5 +169,5 @@
    <script src="../../resources/adminresource/js/bootstrap.js"> </script>
 	<!-- //Bootstrap Core JavaScript -->
     </h:body>
-        </f:view> 
-</html>
+        </f:view>
+</html> 

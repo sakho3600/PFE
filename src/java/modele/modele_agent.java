@@ -66,7 +66,7 @@ public class modele_agent {
       private int matriculeMission ;
       private String Message; // update/delete agent message
      
-      
+      private String Rejet;
     
     /** variables **/
      private int matricule;
@@ -79,7 +79,7 @@ public class modele_agent {
      private Float ftransport;
      private Float prixEssance ;
      private Float ftotal;
-     
+     private String rejet;
      /** Tables **/ 
     private List<Agent> agents ;
     private List<Mission> notification ;
@@ -118,13 +118,25 @@ public class modele_agent {
        
    
     }
-   
-    
   
+      public String getRejet() {
+        return Rejet;
+    }
+
+    public void setRejet(String Rejet) {
+        this.Rejet = Rejet;
+    }
+
+    public dao_Departement getServiceDepartement() {
+        return serviceDepartement;
+    }
 
     // <editor-fold desc="getters and setters" defaultstate="collapsed">
-  
-      public String getVilles() {
+    public void setServiceDepartement(dao_Departement serviceDepartement) {
+        this.serviceDepartement = serviceDepartement;
+    }
+
+    public String getVilles() {
         return Villes;
     }
     public void setVilles(String Villes) {
@@ -572,6 +584,13 @@ Departement d2 =this.agent.getAgentAffecter();
      return this.service.ListerlesMissionParAgent(this.agent.getMatricule());
      }
      
+      
+     public List<Mission> ListerMissionRejeter()
+     {
+        
+     return this.service.ListerlesMissionRejeterParAgent(this.agent.getMatricule());
+     }
+     
      public List<Mission>ListerMissionAValider()
      {
          String Poste=this.service.chefoupas(this.agent).getNomDep();
@@ -595,6 +614,12 @@ Departement d2 =this.agent.getAgentAffecter();
         this.mission=m;
          this.LesVillesString();
         FacesContext.getCurrentInstance().getExternalContext().redirect("FormPrint.xhtml");
+    }
+      public void FormPrintRejet(Mission m) throws IOException{
+        
+        this.mission=m;
+         this.LesVillesString();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("FormPrintRejet.xhtml");
     }
        public void FormValid(Mission m) throws IOException{
         this.mission=m;
@@ -746,7 +771,13 @@ else
   //</editor-fold>
 
 
-   
+
+public void rejet() throws IOException{
+this.mission.setRejet(this.Rejet);
+this.service.AffecterRejet(mission);
+FacesContext.getCurrentInstance().getExternalContext().redirect("ValidationMission.xhtml");
+
+}   
 
 }
 

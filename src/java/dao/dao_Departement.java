@@ -78,7 +78,53 @@ Departement d=new Departement();
       s.delete(d);
        closeSession();
   }
+  
+  
+  public List<Agent> LesAgentAffecter(Departement d){
+  List<Agent>LA= new ArrayList<>();
+    openSession();
+      Query query = s.createQuery("from Agent where NumDep = :code ");
+                    query.setParameter("code",d.getNumDep());
+                    if(query.list().isEmpty()){
+                     LA=null;}
+                     else{
+                       LA= (List<Agent>)query.list();
+                   }
+                   
+    closeSession();
+return LA;
+  
+  }
+  
+  public List<Departement> ListerLesDepartements(){
+  List<Departement>ld=new ArrayList<>();
+      openSession();
+      Query query = s.createQuery("from Departement");
+ if(!query.list().isEmpty())
+                    ld=(List<Departement>)query.list();
 
+      closeSession();
+
+  
+  return ld;}
+
+   
+  public List<Agent> TousLesAgentDepartement(Departement d){
+  List<Agent>LA= new ArrayList<>();
+    openSession();
+      Query query = s.createQuery("from Agent where NumDep = :code ");
+                    query.setParameter("code",d.getNumDep());
+                    if(!query.list().isEmpty()){
+                      LA= (List<Agent>)query.list();
+                   }
+                   
+    closeSession();
+    if (d.getAgentDirige()!=null)
+    LA.add(d.getAgentDirige());
+return LA;
+  
+  }
+  
     public void updateDep(Departement dep) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

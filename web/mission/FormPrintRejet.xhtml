@@ -47,7 +47,9 @@ and open the template in the editor.
     border: 1px solid #d5d5d5;
     background: #fff;
     color: #222;
-}</style>    </h:head>
+}
+</style>
+    </h:head>
     <h:body class="cbp-spmenu-push">
       
           <div class="main-content">
@@ -58,8 +60,8 @@ and open the template in the editor.
               <div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
-<div class="form-grids row widget-shadow" data-example-id="basic-forms">      
-    <p:panelGrid id = "panel" columns = "1"   columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid">
+<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
+      <p:panelGrid id = "panel" columns = "1"   columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid">
           
     <f:facet name="header">
         <img src="../../resources/image/logo.png" alt="Le moteur" width="200" height="100" />
@@ -100,19 +102,21 @@ and open the template in the editor.
                          
                          <h:outputLabel for="Objectif"  value="Objectif : #{modele_agent.mission.objectif}" />
                       
+                         <h:outputLabel for="Motif"  value="Motif: #{modele_agent.mission.rejet}" />
+
                          <h:outputLabel for="Les_Villes"  value="Les Villes: #{modele_agent.villes}" />
 
                          
                          
                          
     </p:panelGrid>
-        
+   
 </div>
                                 </div>
-     <p:commandButton value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+    <p:commandButton value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
     <p:printer target="panel" />
 </p:commandButton>
-   
+
                         </div>
               </div></div>
         

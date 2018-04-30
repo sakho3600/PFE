@@ -6,7 +6,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <f:view contentType="text/html">
     <h:head>
-        <title>Agent</title>
+        <title>Administrator</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -40,7 +40,7 @@
 <link href="../../resources/adminresource/css/custom.css" rel="stylesheet"> </link>
 <!--//Metis Menu -->
     <style>
- 
+        
 
     </style>
     </h:head>
@@ -56,11 +56,17 @@
         <div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
-				         
+					
                                         <div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
 						<div class="form-title">
-							<h4>Liste de mes missions :</h4>
+							<h4>Les missions</h4>
 						</div>
+                                             <p:panelGrid rendered="#{!modele_Admin.gestmission}">
+						<div class="form-body">
+                                                    <p style="color:red"> vous n'avez pas le droit d'acceder a cette page </p>
+						</div>
+                                            </p:panelGrid>
+                                           
 						<div class="form-body">
                                                     <h:form> 
                                                         <p:messages id="messages" showDetail="true" closable="true">
@@ -69,45 +75,48 @@
                                                         
                                                   
                                                          <div class="form-group">
-               
-                                                             <p:dataTable  var="Missions" emptyMessage="Vous n'avez aucune Mission a valider" value="#{modele_agent.ListerMissionAValider()}" rows="9" paginator="true"  >
-                                                                 
-                                                                 
-                                                                 <p:column headerText="Matricule de l'agent" filterBy="#{Missions.agent.matricule}" filterMatchMode="exact"   >
-                                                                     <h:outputText value="#{Missions.agent.matricule}"  />
-                                                                  </p:column>
+                                                             <h:outputText value="#{modele_Admin.stat}"  />
+                                                            <p:panelGrid> 
+                                                                <p:dataTable  var="mission" value="#{modele_Admin.missionStat}" rows="9" paginator="true" >
                     
-                                                                 
-                                                                 <p:column headerText="Code Mission" filterBy="#{Missions.codeMission}" filterMatchMode="exact"   >
-                                                                     <h:outputText value="#{Missions.codeMission}"  />
+                                                                 <p:column headerText="Code Mission" filterBy="#{mission.codeMission}" filterMatchMode="exact"   >
+                                                                     <h:outputText value="#{mission.codeMission}"  />
                                                                   </p:column>
                         
-                                                                 <p:column headerText="intitule de la Mission" filterBy="#{Missions.intitule_Mission}" filterMatchMode="contains"   >
-                                                                     <h:outputText value="#{Missions.intitule_Mission}"  />
-                                                                  </p:column>   
-                                                                 <p:column headerText="Date aller" >
-                                                                     <h:outputText value="#{Missions.dateDeb}"  />
+                                                                 <p:column headerText="Matricule Agent" filterBy="#{mission.agent.matricule}" filterMatchMode="exact"   >
+                                                                     <h:outputText value="#{mission.agent.matricule}"  />
+                                                                  </p:column>
+                        
+                                                                <p:column headerText="Nom" >
+                                                                     <h:outputText value="#{mission.agent.nom}"  />
                                                               </p:column> 
-                                                        <p:column headerText="Date retour" >
-                                                            <h:outputText value="#{Missions.dateFin}" />
+                                                        <p:column headerText="Prenom" >
+                                                            <h:outputText value="#{mission.agent.pernom}" />
                                                           </p:column>  
-                                                         <p:column headerText="Objectif" >
-                                                             <h:outputText value="#{Missions.objectif}" />
+                                                        
+                                                        <p:column headerText="Objectif" >
+                                                            <h:outputText value="#{mission.objectif}" />
                                                           </p:column>  
-                                                         <p:column headerText="Afficher" style=' width: 200px;'>
-                                                             <p:commandButton value="Afficher" id="ajax"  actionListener="#{modele_agent.FormValid(Missions)}" class="btn btn-default" ajax="false"/>
+                                                        <p:column headerText="Imprimer" style=' width: 200px;' >
+                                                            <p:commandButton value="Imprimer" id="ajax"  actionListener="#{modele_Admin.imprimer(mission)}" class="btn btn-default" ajax="false"/>
                                                           </p:column>  
-                                                         
-                                                             </p:dataTable> 
+                                                     
+                                                        
+                                                                          
                                                                  
+                                                         </p:dataTable> 
+                                                             </p:panelGrid>  
+                                                         
                                                          </div> 
                                                         
                                                             
                                                              
                                              
-                                                          
+                                                         
+                                                         
                                                     </h:form> 
 						</div>
+                                               
 					</div>
                                         
                                         
@@ -164,5 +173,5 @@
    <script src="../../resources/adminresource/js/bootstrap.js"> </script>
 	<!-- //Bootstrap Core JavaScript -->
     </h:body>
-        </f:view> 
+        </f:view>
 </html>

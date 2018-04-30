@@ -58,7 +58,14 @@ public class dao_Admin {
      return ds ;   
         
     }
-     
+     public void AffecterRejet(Mission m){
+           openSession();
+       m.setStatus("Rejeter");
+       s.update(m);
+           
+           closeSession();
+
+     }
      
      public boolean ifAdminvalid(String username)
     {

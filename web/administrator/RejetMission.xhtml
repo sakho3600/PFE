@@ -47,7 +47,7 @@ and open the template in the editor.
     border: 1px solid #d5d5d5;
     background: #fff;
     color: #222;
-}</style>    </h:head>
+}</style></h:head>
     <h:body class="cbp-spmenu-push">
       
           <div class="main-content">
@@ -59,61 +59,64 @@ and open the template in the editor.
 			<div class="main-page">
 				<div class="forms">
 <div class="form-grids row widget-shadow" data-example-id="basic-forms">      
-    <p:panelGrid id = "panel" columns = "1"   columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid">
+    
+      <p:panelGrid id = "panel" columns = "1"   columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid">
           
     <f:facet name="header">
         <img src="../../resources/image/logo.png" alt="Le moteur" width="200" height="100" />
     </f:facet>
                      
-                         <h:outputLabel for="Matricule_Agent" value="Matricule de l'agent : #{modele_agent.agent.matricule}" />
+                         <h:outputLabel for="Matricule_Agent" value="Matricule de l'agent : #{modele_Admin.mission.agent.matricule}" />
                      
           
           
-                         <h:outputLabel for="Nom_Agent" value="Nom de l'agent :#{modele_agent.agent.nom}" />
+                         <h:outputLabel for="Nom_Agent" value="Nom de l'agent :#{modele_Admin.mission.agent.nom}" />
                         
+                         
           
-          
-                         <h:outputLabel for="Prenom_Agent" value="Prenom de l'agent : #{modele_agent.agent.pernom}" />
+                         <h:outputLabel for="Prenom_Agent" value="Prenom de l'agent : #{modele_Admin.mission.agent.pernom}" />
         
-                         <h:outputLabel for="Dep_Agent" value="Departement de l'agent : #{modele_agent.DepAgent()}" />
+                         <h:outputLabel for="Dep_Agent" value="Departement de l'agent : #{modele_Admin.nomDepartement}" />
 
           
           
           
                          
-                         <h:outputLabel for="Code_mission" value="Code de la Mission : #{modele_agent.mission.codeMission}" />
+                         <h:outputLabel for="Code_mission" value="Code de la Mission : #{modele_Admin.mission.codeMission}" />
 
                          
-                         <h:outputLabel for="Intitule_mission" value="Intitule de la mission : #{modele_agent.mission.intitule_Mission}" />
+                         <h:outputLabel for="Intitule_mission" value="Intitule de la mission : #{modele_Admin.mission.intitule_Mission}" />
                                                   
-                         <h:outputLabel for="Date_Deb"  value="Date Depart : #{modele_agent.mission.dateDeb}" />
+                         <h:outputLabel for="Date_Deb"  value="Date Depart : #{modele_Admin.mission.dateDeb}" />
 
                          
                      
-                         <h:outputLabel for="Date_Ret" value="Date Retour : #{modele_agent.mission.dateFin}" />
+                         <h:outputLabel for="Date_Ret" value="Date Retour : #{modele_Admin.mission.dateFin}" />
                          
-                         <h:outputLabel for="Valide" value="Valider Par le Chef : #{modele_agent.mission.etatToString()}" />
+                         <h:outputLabel for="Valide" value="Valider Par le Chef : #{modele_Admin.mission.etatToString()}" />
                          
-                         <h:outputLabel for="Kilometrage" value="Kilometrage : #{modele_agent.mission.kilometrage}" />
+                         <h:outputLabel for="Kilometrage" value="Kilometrage : #{modele_Admin.mission.kilometrage}" />
                          
-                         <h:outputLabel for="Nombre_jours" value="Nombre de jours : #{modele_agent.mission.nbrJours}" />
+                         <h:outputLabel for="Nombre_jours" value="Nombre de jours : #{modele_Admin.mission.nbrJours}" />
                          
-                         <h:outputLabel for="Objectif"  value="Objectif : #{modele_agent.mission.objectif}" />
+                         <h:outputLabel for="Objectif"  value="Objectif : #{modele_Admin.mission.objectif}" />
                       
-                         <h:outputLabel for="Les_Villes"  value="Les Villes: #{modele_agent.villes}" />
+                         <h:outputLabel for="Les_Villes"  value="Les Villes: #{modele_Admin.villes}" />
+
+       
 
                          
-                         
-                         
-    </p:panelGrid>
-        
+    </p:panelGrid>          
+       
 </div>
-                                </div>
-     <p:commandButton value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
-    <p:printer target="panel" />
-</p:commandButton>
-   
-                        </div>
+                                </div>                                                   
+             <h:form>             
+       <div class="form-group"> <p:outputLabel  value="Motif du rejet: "> </p:outputLabel></div> 
+       <div class="form-group">   <p:inputText class="form-control" value="#{modele_Admin.rejet}" placeholder="Motif" required="true" > </p:inputText> </div> 
+
+        <div class="form-group">   <p:commandButton value="Ajouter" id="ajax"  actionListener="#{modele_Admin.rejet()}" class="btn btn-default" ajax="false"/> </div> 
+    </h:form>
+         </div>
               </div></div>
         
         

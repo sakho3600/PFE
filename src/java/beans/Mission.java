@@ -100,6 +100,8 @@ public class Mission implements Serializable {
     private Float ftransport;
     @Column(name="total")
     private Float total;
+    @Column(name="rejet")
+    private String rejet;
     
  
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER )
@@ -143,6 +145,27 @@ public class Mission implements Serializable {
         this.Les_villes = Les_villes;
     }
 
+    public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, String type, int Etat, int ValidDirecturGeneral, Float voitureCosomation, Float fdiver, Float fhebergement, Float ftransport, Float total, String rejet, Set<ville> Les_villes) {
+        this.CodeMission = CodeMission;
+        this.agent = agent;
+        this.Intitule_Mission = Intitule_Mission;
+        this.Objectif = Objectif;
+        this.DateDeb = DateDeb;
+        this.DateFin = DateFin;
+        this.NbrJours = NbrJours;
+        this.Kilometrage = Kilometrage;
+        this.type = type;
+        this.Etat = Etat;
+        this.ValidDirecturGeneral = ValidDirecturGeneral;
+        this.voitureCosomation = voitureCosomation;
+        this.fdiver = fdiver;
+        this.fhebergement = fhebergement;
+        this.ftransport = ftransport;
+        this.total = total;
+        this.rejet = rejet;
+        this.Les_villes = Les_villes;
+    }
+
     
    
     public Mission() {
@@ -175,6 +198,14 @@ public class Mission implements Serializable {
 
     public Mission(int CodeMission) {
         this.CodeMission = CodeMission;
+    }
+
+    public String getRejet() {
+        return rejet;
+    }
+
+    public void setRejet(String rejet) {
+        this.rejet = rejet;
     }
     
 

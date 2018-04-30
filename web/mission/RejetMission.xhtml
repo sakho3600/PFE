@@ -47,7 +47,7 @@ and open the template in the editor.
     border: 1px solid #d5d5d5;
     background: #fff;
     color: #222;
-}</style>    </h:head>
+}</style></h:head>
     <h:body class="cbp-spmenu-push">
       
           <div class="main-content">
@@ -59,23 +59,24 @@ and open the template in the editor.
 			<div class="main-page">
 				<div class="forms">
 <div class="form-grids row widget-shadow" data-example-id="basic-forms">      
-    <p:panelGrid id = "panel" columns = "1"   columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid">
+    
+      <p:panelGrid id = "panel" columns = "1"   columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid">
           
     <f:facet name="header">
         <img src="../../resources/image/logo.png" alt="Le moteur" width="200" height="100" />
     </f:facet>
                      
-                         <h:outputLabel for="Matricule_Agent" value="Matricule de l'agent : #{modele_agent.agent.matricule}" />
+                         <h:outputLabel for="Matricule_Agent" value="Matricule de l'agent : #{modele_agent.mission.agent.matricule}" />
                      
           
           
-                         <h:outputLabel for="Nom_Agent" value="Nom de l'agent :#{modele_agent.agent.nom}" />
+                         <h:outputLabel for="Nom_Agent" value="Nom de l'agent :#{modele_agent.mission.agent.nom}" />
                         
+                         
           
-          
-                         <h:outputLabel for="Prenom_Agent" value="Prenom de l'agent : #{modele_agent.agent.pernom}" />
+                         <h:outputLabel for="Prenom_Agent" value="Prenom de l'agent : #{modele_agent.mission.agent.pernom}" />
         
-                         <h:outputLabel for="Dep_Agent" value="Departement de l'agent : #{modele_agent.DepAgent()}" />
+                         <h:outputLabel for="Dep_Agent" value="Departement de l'agent : #{modele_agent.departement}" />
 
           
           
@@ -102,18 +103,19 @@ and open the template in the editor.
                       
                          <h:outputLabel for="Les_Villes"  value="Les Villes: #{modele_agent.villes}" />
 
+       
+
                          
-                         
-                         
-    </p:panelGrid>
+    </p:panelGrid>    
         
 </div>
-                                </div>
-     <p:commandButton value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
-    <p:printer target="panel" />
-</p:commandButton>
-   
-                        </div>
+                                </div> 
+             <h:form>             
+       <div class="form-group"> <p:outputLabel  value="Motif du rejet: "> </p:outputLabel></div> 
+       <div class="form-group">   <p:inputText class="form-control" value="#{modele_agent.rejet}" placeholder="Motif" required="true" > </p:inputText> </div> 
+
+        <div class="form-group">   <p:commandButton value="Confirmer" id="ajax"  actionListener="#{modele_agent.rejet()}" class="btn btn-default" ajax="false"/> </div> 
+    </h:form>         </div>
               </div></div>
         
         

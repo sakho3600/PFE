@@ -5,8 +5,10 @@ import com.sun.istack.internal.NotNull;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,7 +43,7 @@ public class Departement implements Serializable {
      @Column (name="NomDep")
      private String NomDep;
      
-        @OneToMany(mappedBy = "Matricule")
+        @OneToMany(mappedBy = "Matricule", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
             private List<Agent> AgentAffecter;
 
       
