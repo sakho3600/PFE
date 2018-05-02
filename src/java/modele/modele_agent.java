@@ -9,6 +9,7 @@ import beans.Agent;
 import beans.Departement;
 import beans.Mission;
 import beans.prevision;
+import beans.vehicule;
 import beans.ville;
 import dao.dao_Admin;
 import dao.dao_Agent;
@@ -80,9 +81,11 @@ public class modele_agent {
      private Float prixEssance ;
      private Float ftotal;
      private String rejet;
+     private int vehiculeMatricule ;
      /** Tables **/ 
     private List<Agent> agents ;
     private List<Mission> notification ;
+    private List<vehicule> vehicule ;
     private int notif = 0 ;
    
     /** Objects **/
@@ -115,21 +118,11 @@ public class modele_agent {
       {  cities.add(str.toString());}
       
        insertprevision();
-       
+       vehicule = service.listevehicule() ;
    
     }
   
-      public String getRejet() {
-        return Rejet;
-    }
-
-    public void setRejet(String Rejet) {
-        this.Rejet = Rejet;
-    }
-
-    public dao_Departement getServiceDepartement() {
-        return serviceDepartement;
-    }
+  
 
     // <editor-fold desc="getters and setters" defaultstate="collapsed">
     public void setServiceDepartement(dao_Departement serviceDepartement) {
@@ -147,6 +140,34 @@ public class modele_agent {
         return selectedCities2;
     }
 
+        public String getRejet() {
+        return Rejet;
+    }
+
+    public void setRejet(String Rejet) {
+        this.Rejet = Rejet;
+    }
+
+    public dao_Departement getServiceDepartement() {
+        return serviceDepartement;
+    }
+
+    public int getVehiculeMatricule() {
+        return vehiculeMatricule;
+    }
+
+    public void setVehiculeMatricule(int vehiculeMatricule) {
+        this.vehiculeMatricule = vehiculeMatricule;
+    }
+
+    public List<vehicule> getVehicule() {
+        return vehicule;
+    }
+
+    public void setVehicule(List<vehicule> vehicule) {
+        this.vehicule = vehicule;
+    }
+    
     
 
     public List<Mission> getNotification() {
@@ -421,11 +442,27 @@ Departement d2 =this.agent.getAgentAffecter();
         this.date2 = (Date) event.getObject();
         calculMontant();
        }
-      public void onBlurkilometrage() { 
-        this.ftransport = (((this.mission.getVoitureCosomation() / 100)  * this.mission.getKilometrage())  * this.prixEssance) ; 
+       public void onBlurkilometrage() { 
+          
+        this.ftransport = (((fromVehiculeMatriculeToConsommation(this.vehiculeMatricule) / 100)  * this.mission.getKilometrage())  * this.prixEssance) ; 
                 
          this.ftotal = this.fdiver + this.fhebergement + this.ftransport ;
     }
+      public float fromVehiculeMatriculeToConsommation(int imMatricule) // getting the consommation from car matricule
+      {
+          float result = 0;
+          
+          for (int i = 0 ; i < this.vehicule.size() ; i++ )
+          {
+              if (this.vehicule.get(i).getId() == imMatricule) 
+              { 
+                  result = this.vehicule.get(i).getConsommation() ; 
+                  i = this.vehicule.size();
+              }
+          }
+          
+          return result ;
+      }
        
      //</editor-fold>
       
@@ -436,7 +473,7 @@ Departement d2 =this.agent.getAgentAffecter();
       {
       agent=service.ifExistsAgent(agent.getMatricule());
           this.SessionKey = this.sessionId.getRandomUUIDString() ; // affectation de valeur uuid 
-          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userkey", SessionKey); // Ajout de id de session
+          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userkey", SessionKey+"mission"); // Ajout de id de session
           FacesContext.getCurrentInstance().getExternalContext().redirect("mission/welcome.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
          
           

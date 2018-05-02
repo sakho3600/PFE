@@ -6,8 +6,11 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -25,21 +28,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Assurer extends Personnel implements Serializable{
      private static final long serialVersionUID = 13L; 
-     @OneToMany(fetch = FetchType.LAZY, mappedBy = "BulletinMensuel")
-     private Set<BulletinMensuel> BulletinMensuel = new HashSet<BulletinMensuel>(
-			0);
+     
+     @OneToMany(targetEntity=BulletinMensuel.class, cascade=CascadeType.ALL,mappedBy = "assurer")
+     private List<BulletinMensuel> BulletinMensuel ;
     public Assurer() {
     }
 
-    public Assurer(int Matricule, String Pernom, String Nom, String MotDePasse) {
-        super(Matricule, Pernom, Nom, MotDePasse);
+    public Assurer(int Matricule, String Pernom, String Nom, String MotDePasse , String Email) {
+        super(Matricule, Pernom, Nom, MotDePasse,Email);
     }
 
-    public Set<BulletinMensuel> getBulletinMensuel() {
+    public List<BulletinMensuel> getBulletinMensuel() {
         return BulletinMensuel;
     }
 
-    public void setBulletinMensuel(Set<BulletinMensuel> BulletinMensuel) {
+    public void setBulletinMensuel(List<BulletinMensuel> BulletinMensuel) {
         this.BulletinMensuel = BulletinMensuel;
     }
 

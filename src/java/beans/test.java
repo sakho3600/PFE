@@ -21,6 +21,7 @@ import dao.dao_Cloture;
 import dao.dao_Departement;
 
 import dao.dao_Mission;
+import dao.dao_assurer;
 import dao.dao_ville;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
@@ -45,28 +46,74 @@ public class test {
     
  
  public static void main (String []args) throws NoSuchAlgorithmException, ParseException{
-   dao_Departement d=new dao_Departement();
-    dao_Agent da=new dao_Agent();
-
-   List<Departement>ld=d.ListerLesDepartements();
-   for(Departement dd:ld){
-            System.out.println(dd.getNomDep()+" : ");
-       List<Agent>a= d.TousLesAgentDepartement(dd);
-       List<Mission>lm=da.ListerLesMissionClotureDesAgents(a);
-       String chr=da.LesFraixdesMissionCloture(lm);
-      System.out.println(chr);
-      System.out.println("-----------------------------------------------");
-      if(chr.length()>0){
-         
-String[] parts = chr.split(",");
-      System.out.println( parts[0]); // 004
-      System.out.println( parts[1]); // 004
-      System.out.println( parts[2]); // 004
-            
-      }
-                }
+   //dao_Departement d=new dao_Departement();
+    //dao_Agent da=new dao_Agent();
+    dao_assurer a= new dao_assurer();
+    
+   BulletinMensuel bm = new BulletinMensuel() ; 
+   bm.setDate_Remboursement(new Date());
+   bm.setMalade("tzoi");
+   bm.setMatricule(777);
+   bm.setMontant_prescrit(200F);
+   bm.setMontant_remboursement(150F);
+   bm.setNum_bulletin(2);
+   bm.setObservation("");
+   Assurer as = new Assurer() ;
+   as.setMatricule(777);
+   as.setNom("dddd");
+   bm.setAssurer(as);
+   Assurer asd = new Assurer() ;
+   asd.setMatricule(00524);
+   asd.setNom("ddd2");
+    BulletinMensuel bmv = new BulletinMensuel() ;
+    BulletinMensuel bmk = new BulletinMensuel() ;
+    
+   bmv.setDate_Remboursement(new Date());
+   bmv.setMalade("tzoi");
+   bmv.setMatricule(000);
+   bmv.setMontant_prescrit(0F);
+   bmv.setMontant_remboursement(0F);
+   bmv.setNum_bulletin(2);
+   bmv.setObservation("hhh");
+   bmv.setAssurer(asd);
    
-
+   List<BulletinMensuel> bmzz = new ArrayList<BulletinMensuel>() ;
+   bmzz.add(bm) ; 
+   bmzz.add(bmv) ;
+   bmk.setAssurer(asd);
+   bmk.setMatricule(636);
+   bmzz.add(bmk) ;
+   
+   List<Assurer> listass = new ArrayList<>() ;
+   
+   listass = a.ajouter(bmzz);
+   
+   for (int i=0;i<listass.size();i++)
+   {
+      System.out.println("Les Matricules Suivant sont refusée ils sont inéxistant = \n"+listass.get(i).getNom()+"\n") ;
+   }
+   /*
+   for (int i=0;i<2;i++){
+   try {
+       if (i==0){
+   a.Add(bmv);}
+   if (i==1){
+   a.Add(bm);}
+   }
+   catch(org.hibernate.TransientPropertyValueException exception)
+   {
+       System.out.print("gotcha!");
+   }
+   */
+   }
+   /*
+   Assurer asd = new Assurer() ; 
+   asd.setNom("ESKETIT");
+   asd.setPernom("G");
+   asd.setMotDePasse("a");
+   asd.setEmail("v@vh.com");
+   asd.setMatricule(777);
+   a.Add(asd);*/
      /*  dao_Agent d=new dao_Agent();
      List<Mission>lim=new ArrayList<>();
      Date d1=new Date(2018,04,11);
@@ -292,4 +339,4 @@ adm.setPernom("tt");
      */
 
 }
-}
+

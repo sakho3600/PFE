@@ -46,8 +46,19 @@ public class assuranceFilter implements Filter{
         HttpSession session = request.getSession(false);
         String loginURL = request.getContextPath() + "/faces/assurance/login.xhtml";
         
-        
-         boolean loggedIn = (session != null) && (session.getAttribute("userkey") != null);
+          
+         boolean secured = false;
+         
+         if (session.getAttribute("userkey") !=null)
+         {
+         String compare = (String) session.getAttribute("userkey") ;
+         if (compare.contains("assurance"))
+         {
+            secured = true;
+         }
+         }
+         
+         boolean loggedIn = (session != null) && (secured) ;
          boolean loginRequest = request.getRequestURI().equals(loginURL);
          boolean resourceRequest = request.getRequestURI().startsWith(request.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER + "/");
          boolean ajaxRequest = "partial/ajax".equals(request.getHeader("Faces-Request"));

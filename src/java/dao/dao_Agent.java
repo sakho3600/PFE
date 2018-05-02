@@ -12,6 +12,7 @@ import beans.Departement;
 import beans.Mission;
 import beans.Personnel;
 import beans.Personnel;
+import beans.vehicule;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -536,6 +537,22 @@ public void ValiderMission(Mission m,Agent a){
            closeSession();
 
      }
+     
+       public List<vehicule> listevehicule()
+    {
+         List<vehicule> vehicule= new ArrayList<>();
+       try { 
+    openSession() ;
+             String hql = "FROM vehicule";
+             Query query = s.createQuery(hql);
+             vehicule = query.list();
+    closeSession() ;
+    }catch(Exception e){
+	e.printStackTrace();
+       
+        }
+     return vehicule ;
+    }
      
 
 }

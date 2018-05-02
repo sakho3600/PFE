@@ -8,25 +8,39 @@ package beans;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 /**
  *
  * @author Mohammed Mehdi Sarray#
  */
+@Entity
+@Table(name = "BulletinMensuel")
 public class BulletinMensuel implements Serializable{
     
      private static final long serialVersionUID = 13225L;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "adherent_matricule", nullable = false)
-    private Integer matricule;   
+    
+    
+    @Id
+   @GeneratedValue (strategy=GenerationType.AUTO)
+   @Column(name ="id")
+    private int Id; 
+    
+    @Column(name="Matricule_Assurer")
+    private int Matricule ;   
+    
     @Column(name ="Numero_de_bulletin")
-    private Integer num_bulletin;
+    private int num_bulletin;
     @Column(name ="Montant_prescrit")
-    private Float Montant_prescrit;
+    private float Montant_prescrit;
     @Column(name ="Date_transmit")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date Date_transmit ;
@@ -36,19 +50,24 @@ public class BulletinMensuel implements Serializable{
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date Date_Remboursement;
     @Column(name ="Montant_remboursement")
-    private Float Montant_remboursement;
+    private float Montant_remboursement;
     @Column(name ="Observation")
     private String Observation;
+    
+    @ManyToOne
+    @JoinColumn(name="assurer", nullable=false)
+    private Assurer assurer;
 
-    public Integer getMatricule() {
-        return matricule;
+    public int getMatricule() {
+        return Matricule;
     }
 
-    public void setMatricule(Integer matricule) {
-        this.matricule = matricule;
+    public void setMatricule(int Matricule) {
+        this.Matricule = Matricule;
     }
 
-    public Integer getNum_bulletin() {
+
+    public int getNum_bulletin() {
         return num_bulletin;
     }
 
@@ -56,7 +75,7 @@ public class BulletinMensuel implements Serializable{
         this.num_bulletin = num_bulletin;
     }
 
-    public Float getMontant_prescrit() {
+    public float getMontant_prescrit() {
         return Montant_prescrit;
     }
 
@@ -88,7 +107,7 @@ public class BulletinMensuel implements Serializable{
         this.Date_Remboursement = Date_Remboursement;
     }
 
-    public Float getMontant_remboursement() {
+    public float getMontant_remboursement() {
         return Montant_remboursement;
     }
 
@@ -103,9 +122,25 @@ public class BulletinMensuel implements Serializable{
     public void setObservation(String Observation) {
         this.Observation = Observation;
     }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int Id) {
+        this.Id = Id;
+    }
+
+    public Assurer getAssurer() {
+        return assurer;
+    }
+
+    public void setAssurer(Assurer assurer) {
+        this.assurer = assurer;
+    }
             
 
-
+    
 
 
 

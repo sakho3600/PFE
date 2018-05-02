@@ -34,6 +34,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime ;
 import java.time.ZoneId;
 import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -90,8 +91,7 @@ public class Mission implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)    
     private Date DatedeCreation = new Date();
     
-    @Column (name="voitureCosomation" )
-    private Float voitureCosomation ;
+    
     @Column(name="fdiver")
     private Float fdiver;
     @Column(name="fhebergement")
@@ -107,6 +107,10 @@ public class Mission implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER )
 	@JoinTable(name = "LesVilleMission", joinColumns = { @JoinColumn(name = "CodeMission") }, inverseJoinColumns = { @JoinColumn(name = "Code_Postal")})
 	public Set<ville> Les_villes;
+    
+    @OneToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name="Vehicule",referencedColumnName="id" )
+    private vehicule vehicule;
 
    
     public int getValidDirecturGeneral() {
@@ -145,7 +149,7 @@ public class Mission implements Serializable {
         this.Les_villes = Les_villes;
     }
 
-    public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, String type, int Etat, int ValidDirecturGeneral, Float voitureCosomation, Float fdiver, Float fhebergement, Float ftransport, Float total, String rejet, Set<ville> Les_villes) {
+    public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, String type, int Etat, int ValidDirecturGeneral, Float fdiver, Float fhebergement, Float ftransport, Float total, String rejet, Set<ville> Les_villes) {
         this.CodeMission = CodeMission;
         this.agent = agent;
         this.Intitule_Mission = Intitule_Mission;
@@ -157,7 +161,7 @@ public class Mission implements Serializable {
         this.type = type;
         this.Etat = Etat;
         this.ValidDirecturGeneral = ValidDirecturGeneral;
-        this.voitureCosomation = voitureCosomation;
+        
         this.fdiver = fdiver;
         this.fhebergement = fhebergement;
         this.ftransport = ftransport;
@@ -347,19 +351,21 @@ public class Mission implements Serializable {
         this.total = total;
     }
 
-    public Float getVoitureCosomation() {
-        return voitureCosomation;
-    }
-
-    public void setVoitureCosomation(Float voitureCosommation) {
-        this.voitureCosomation = voitureCosommation;
-    }
+   
 
     public String etatToString(){
     if (Etat==1)
            return "OUI";
        else 
            return "NON";
+    }
+
+    public vehicule getVehicule() {
+        return vehicule;
+    }
+
+    public void setVehicule(vehicule vehicule) {
+        this.vehicule = vehicule;
     }
 
  

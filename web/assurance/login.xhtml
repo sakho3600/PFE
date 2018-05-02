@@ -96,13 +96,13 @@ and open the template in the editor.
                      <p:messages id="messages" showDetail="true" closable="true">
         <p:autoUpdate />
     </p:messages>
-                     <p:inputText  value="#{modele_Admin.admin.username}" required="true" styleClass="user" placeholder="Enter your username"/>
-                     <p:password value="#{modele_Admin.admin.motDePasse}" required="true"  styleClass="lock" placeholder="Enter your password"/>
+                                                <p:inputText  value="#{modele_assurer.userConnection.matricule}" required="true" styleClass="user" placeholder="Enter votre Matricule"/>
+                                                <p:password value="#{modele_assurer.userConnection.motDePasse}" required="true"  styleClass="lock" placeholder="Enter votre Mot de pass"/>
 							<div class="forgot-grid">
                                                           
 								<div class="clearfix"> </div>
 							</div>
-							<p:commandButton value="Login" action="#{modele_Admin.logmein()}"
+							<p:commandButton value="Login" action="#{modele_assurer.logmein()}"
                                                                  ajax="true"/>
 							
 						</h:form>

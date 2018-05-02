@@ -46,9 +46,18 @@ public class MissionFilter implements Filter{
         HttpServletResponse response = (HttpServletResponse) sr1;
         HttpSession session = request.getSession(false);
         String loginURL = request.getContextPath() + "/faces/index.xhtml";
+         boolean secured = false;
+         
+        if (session.getAttribute("userkey") !=null){
+           String compare = (String) session.getAttribute("userkey") ;
         
-        
-         boolean loggedIn = (session != null) && (session.getAttribute("userkey") != null);
+         
+         if (compare.contains("mission"))
+         {
+            secured = true;
+         }
+        }
+         boolean loggedIn = (session != null) && (secured) ;
          boolean loginRequest = request.getRequestURI().equals(loginURL);
          boolean resourceRequest = request.getRequestURI().startsWith(request.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER + "/");
          boolean ajaxRequest = "partial/ajax".equals(request.getHeader("Faces-Request"));

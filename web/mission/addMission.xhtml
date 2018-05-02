@@ -56,7 +56,7 @@
 						<div class="form-title">
 							<h4>Information effectives de la mission :</h4>
 						</div>
-                                            <h:form> 
+                                            <h:form id="form"> 
 						<div class="form-body">
                                                     <p:growl id="msgs" showDetail="true" />
                                                         <p:messages id="messages" showDetail="true" closable="true">
@@ -72,10 +72,48 @@
                                                                 <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="out1" />
                                                                 <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="ftotal"/>
                                                                                                                                              </p:inputText> </div> 
-                                                        <div class="form-group"> <p:outputLabel  value="Voiture consomation">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.mission.voitureCosomation}"  required="true" placeholder="Consomation">
+                                                        <div class="form-group"> <p:outputLabel  value="Matricule Vehicule :">  </p:outputLabel> <p:inputNumber  value="#{modele_agent.vehiculeMatricule}" id="carDetail" style="width: 20%" required="true"  placeholder="Matricule vehicule">
                                                                 <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="out1" />
                                                                 <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="ftotal"/>
-                                                                                                                                             </p:inputText> </div>
+                                                                
+                                                                                                                                             </p:inputNumber> 
+                                                            <p:carousel value="#{modele_agent.vehicule}" headerText="Vehicule" var="car" itemStyle="text-align:center" responsive="true" numVisible="1" easing="easeOutBounce" circular="true"  style="width:500px">
+        <h:panelGrid columns="2" style="width:100%" columnClasses="label,value" 
+    styleClass="ui-panelgrid-blank" >
+            
+             <f:facet name="header">
+               
+            </f:facet>
+            <h:outputText value="Id:" style="color: #ADADAD;text-transform: uppercase"/>
+            <h:outputText value="#{car.id}" />
+            
+            <h:outputText value="immatriculation" style="color: #ADADAD;text-transform: uppercase"/>
+            <h:outputText value="#{car.immatriculation}" />
+ 
+            <h:outputText value="Consommation" style="color: #ADADAD;text-transform: uppercase"/>
+            <h:outputText value="#{car.consommation}" />
+ 
+            <h:outputText value="Model" style="color: #ADADAD;text-transform: uppercase"/>
+            <h:outputText value="#{car.model}" />
+ 
+            <h:outputText value="numero carte grise" style="color: #ADADAD;text-transform: uppercase"/>
+            <h:outputText value="#{car.numcarte_grise}" />
+            
+            <h:outputText value="numero de chasis" style="color: #ADADAD;text-transform: uppercase"/>
+            <h:outputText value="#{car.numchasis}" />
+            
+            <h:outputText value="proprietaire" style="color: #ADADAD;text-transform: uppercase"/>
+            <h:outputText value="#{car.proprietaire}" />
+            
+            <h:outputText value="nom" style="color: #ADADAD;text-transform: uppercase"/>
+            <h:outputText value="#{car.nom}" />
+            
+              
+           
+        </h:panelGrid>
+    </p:carousel>        
+                                               
+       </div>
                                                        <div class="form-group"> 
                                                         <h:panelGrid columns="2" cellpadding="5">
        
@@ -142,6 +180,7 @@
                                                     
 						
                                         </div>
+             
                                             </h:form> 
                                         </div>
                                 </div>

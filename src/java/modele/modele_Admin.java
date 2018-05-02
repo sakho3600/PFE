@@ -517,7 +517,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
       {
           admin = service.ifAdmin(admin.getUsername()); // detail de  l'Administrateur  ~
           
-          this.userKey = this.sessionId.getRandomUUIDString() ; // affectation de valeur uuid 
+          this.userKey = this.sessionId.getRandomUUIDString()+"administrateur" ; // affectation de valeur uuid 
                     checkprivs() ; /** verification des privileges **/
 
           
