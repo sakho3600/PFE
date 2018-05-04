@@ -108,8 +108,8 @@ public class Mission implements Serializable {
 	@JoinTable(name = "LesVilleMission", joinColumns = { @JoinColumn(name = "CodeMission") }, inverseJoinColumns = { @JoinColumn(name = "Code_Postal")})
 	public Set<ville> Les_villes;
     
-    @OneToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name="Vehicule",referencedColumnName="id" )
+    @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name="Vehicule" )
     private vehicule vehicule;
 
    

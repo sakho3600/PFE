@@ -46,19 +46,9 @@ public class ApplicationFilter implements Filter{
         HttpServletResponse response = (HttpServletResponse) sr1;
         HttpSession session = request.getSession(false);
         String loginURL = request.getContextPath() + "/faces/administrator/login.xhtml";
-         boolean secured = false;
          
-        if (session.getAttribute("userkey") !=null){
-            
-         String compare = (String) session.getAttribute("userkey") ; 
         
-         
-         if (compare.contains("administrateur"))
-         {
-            secured = true;
-         }
-        }
-         boolean loggedIn = (session != null) && (secured) ;
+         boolean loggedIn = (session != null)  && ( session.getAttribute("userk") != null)  ;
          boolean loginRequest = request.getRequestURI().equals(loginURL);
          boolean resourceRequest = request.getRequestURI().startsWith(request.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER + "/");
          boolean ajaxRequest = "partial/ajax".equals(request.getHeader("Faces-Request"));
