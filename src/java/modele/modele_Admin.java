@@ -523,7 +523,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
           
           
           
-          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userkey", userKey); // Ajout de id de session
+          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userk", userKey); // Ajout de id de session
           FacesContext.getCurrentInstance().getExternalContext().redirect("welcome.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
          
           
