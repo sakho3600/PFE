@@ -101,7 +101,7 @@ public class modele_agent {
     cryptpasswords encryption = new cryptpasswords() ; // SHA256 ENCRYPTION
     String Villes=new String();
     prevision previsions = new prevision() ;
-    vehicule selectedvehicule = new vehicule() ; 
+    
     
     public modele_agent() {
     }
@@ -129,14 +129,6 @@ public class modele_agent {
         this.serviceDepartement = serviceDepartement;
     }
 
-    public vehicule getSelectedvehicule() {
-        return selectedvehicule;
-    }
-
-    public void setSelectedvehicule(vehicule selectedvehicule) {
-        this.selectedvehicule = selectedvehicule;
-    }
-    
     public String getVilles() {
         return Villes;
     }
@@ -464,8 +456,7 @@ Departement d2 =this.agent.getAgentAffecter();
           {
               if (this.vehicule.get(i).getId() == imMatricule) 
               { 
-                  result = this.vehicule.get(i).getConsommation() ;
-                  this.selectedvehicule = this.vehicule.get(i);
+                  result = this.vehicule.get(i).getConsommation() ; 
                   i = this.vehicule.size();
               }
           }
@@ -482,7 +473,7 @@ Departement d2 =this.agent.getAgentAffecter();
       {
       agent=service.ifExistsAgent(agent.getMatricule());
           this.SessionKey = this.sessionId.getRandomUUIDString() ; // affectation de valeur uuid 
-          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userke", SessionKey); // Ajout de id de session
+          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userkey", SessionKey+"mission"); // Ajout de id de session
           FacesContext.getCurrentInstance().getExternalContext().redirect("mission/welcome.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
          
           
@@ -557,7 +548,6 @@ Departement d2 =this.agent.getAgentAffecter();
         mission.setFhebergement(this.fhebergement);
         mission.setFtransport(this.ftransport);
         mission.setTotal(this.ftotal);
-        mission.setVehicule(selectedvehicule);
        if (this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin())){
           FacesContext f=FacesContext.getCurrentInstance();
          f.addMessage(null,new FacesMessage("Erreur date!!"+(this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin()))));
