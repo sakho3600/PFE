@@ -7,10 +7,13 @@ package dao;
 
 import beans.Assurer;
 import beans.BulletinMensuel;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import utilitaire.HibernateUtil;
+import utilitaire.cryptpasswords;
 
 /**
  *
@@ -21,6 +24,7 @@ public class dao_assurer {
     
     
      private Session s ; // Hibernate Session 
+     private cryptpasswords crp = new cryptpasswords() ;
   
     /* ouvrire une session Hibernate */
     private void openSession(){
@@ -110,5 +114,58 @@ public class dao_assurer {
        }
 
     }
+     
+     public Object verif(int mat, String pass ) throws NoSuchAlgorithmException
+     {
+               Object o = new Object();
+           try{           
+       openSession();
+                    Query query = s.createQuery("from Personnel where Matricule = :code and MotdePasse=:mdp ");
+                    query.setParameter("code", mat);
+                    query.setParameter("mdp", crp.cryptme(pass));
+                    if (!query.list().isEmpty())
+                    o  = query.list().get(0);
+                     
+                   
+                   
+    closeSession(); 
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }
+               return o ;
+     }
+     
+     public List<Assurer> ajouterAssurer(List<Assurer> assur)  {
+       List<Assurer> assurerInexistant = new ArrayList<>() ;
+       Assurer introuvable = new Assurer() ;
+         openSession();
+  
+      for (int i=0;i<assur.size();i++) {
+         try {
+          //save the object
+          
+          s.save(assur.get(i));
+          
+          if( i % 20 == 0 ) // Same as the JDBC batch size
+          { 
+           //flush a batch of inserts and release memory:
+           s.flush();
+           s.clear();
+          }
+          }
+        catch(org.hibernate.TransientPropertyValueException exception)
+         {
+       System.out.print("gotcha!\n");
+       introuvable = assur.get(i) ;
+       assurerInexistant.add(introuvable) ;
+       introuvable = new Assurer() ;
+         s.clear();
+         }
+      } 
+      closeSession();
+      
+      return assurerInexistant ;
+         }
     
 }

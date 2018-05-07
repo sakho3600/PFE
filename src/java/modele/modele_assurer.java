@@ -55,20 +55,29 @@ public class modele_assurer {
     private SessionKeyGen sessionId= new SessionKeyGen() ; // generateur d'id de session (UUID)
     private cryptpasswords encryption = new cryptpasswords() ; // SHA256 ENCRYPTION
     private List<Assurer> lesAssurerintrouvable = new ArrayList<>();
+    
+    
+    
   
-   public void handleFileUpload(FileUploadEvent event) {
+    // <editor-fold desc="Getting excel file event Method " defaultstate="collapsed"> 
+    public void handleFileUpload(FileUploadEvent event) {
    
         try {
             copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
             excel(event.getFile().getFileName()) ;
-             
+             if (!this.lesAssurerintrouvable.isEmpty()){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Les Matricules des assurers suivant sont inexistant  .\n"+this.results));
+               this.lesAssurerintrouvable = new ArrayList<>() ; }
+             else 
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ajouter!", " Les Bulletins de soins sont bien importer"));  
         } catch (IOException e) {
             e.printStackTrace();
         }
         
     }
-  
+    //</editor-fold>
+   
+    // <editor-fold desc="Copy the excel file" defaultstate="collapsed"> 
     public void copyFile(String fileName, InputStream in) {
            try {
               
@@ -92,7 +101,9 @@ public class modele_assurer {
                 System.out.println(e.getMessage());
                 }
     }
+      //</editor-fold>
     
+    // <editor-fold desc="Handling the Excel File " defaultstate="collapsed"> 
     public void excel(String fileName) throws FileNotFoundException, IOException
     {  
         SimpleDateFormat DtFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -168,6 +179,99 @@ public class modele_assurer {
            
              }
     }
+    //</editor-fold> 
+    
+    // <editor-fold desc="Getting excel file event Method add Assurés " defaultstate="collapsed"> 
+    public void handleFileUploadAdd(FileUploadEvent event) throws FileNotFoundException, NoSuchAlgorithmException {
+   
+        try {
+            this.destination ="C:\\Lesassurer\\" ;
+            copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            excelassurer(event.getFile().getFileName()) ;
+              if (!this.lesAssurerintrouvable.isEmpty()){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Les Matricules des assurers suivant sont Pas ajouter  .\n"+this.results));
+               this.lesAssurerintrouvable = new ArrayList<>() ; }
+             else 
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ajouter!", " Les Assurées sont bien Ajouter"));  
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.destination="C:\\x\\";
+    }
+    //</editor-fold>
+    
+    // <editor-fold desc="Handling the Excel File for addusers " defaultstate="collapsed"> 
+    public void excelassurer(String fileName) throws FileNotFoundException, IOException, NoSuchAlgorithmException
+    {  
+    
+        DataFormatter fmt = new DataFormatter();
+        Assurer assurer=new Assurer() ;
+    
+        List<Assurer> Lbm = new ArrayList<>() ;
+        
+        Assurer BM = new Assurer() ;
+      
+        FileInputStream input_document = new FileInputStream(new File("C:\\Lesassurer\\"+fileName));
+        /* Load workbook */
+                XSSFWorkbook my_xls_workbook = new XSSFWorkbook(input_document);
+               XSSFSheet my_worksheet = my_xls_workbook.getSheetAt(0);
+           //    Iterator<Row> rowIterator = my_worksheet.iterator();
+               Row row ;
+               for(int i = 1 ; i<=my_worksheet.getLastRowNum() ; i++)
+               {
+                   row = (Row) my_worksheet.getRow(i) ;
+                   if (row.getCell(0)!=null)
+                   {
+                     BM.setMatricule(Integer.parseInt(fmt.formatCellValue(row.getCell(0))));
+                   }
+
+                   
+                   if(row.getCell(1)!=null)
+                   {
+                    BM.setMotDePasse(encryption.cryptme(fmt.formatCellValue(row.getCell(1))));   
+                   } 
+                  
+                   if (row.getCell(2)!=null)
+                   {
+                    BM.setNom((fmt.formatCellValue(row.getCell(2))));  
+                   }
+                   
+                   if (row.getCell(3)!=null)
+                   {
+                       BM.setPernom(fmt.formatCellValue(row.getCell(3)));
+                       
+                   } 
+                   if (row.getCell(4)!=null)
+                   {
+                       BM.setEmail(fmt.formatCellValue(row.getCell(4)));
+                   }
+                   
+                  
+                   Lbm.add(BM) ;
+                   BM = new Assurer() ;
+                 
+               }
+              lesAssurerintrouvable = service.ajouterAssurer(Lbm);
+              
+             if (!lesAssurerintrouvable.isEmpty())
+             {
+              for(Assurer as : lesAssurerintrouvable)
+              {
+                  results = results+as.getMatricule()+"\n\t" ;
+              }
+              System.out.print("liste non ajouter:\n"+results);
+           
+             }
+    }
+    //</editor-fold> 
+    
+     // <editor-fold desc="inform users " defaultstate="collapsed"> 
+    
+    // </editor-fold> 
+    
+    
+    
+    
     
 // <editor-fold desc="getters and setters" defaultstate="collapsed">
     public dao_assurer getService() {
@@ -221,25 +325,27 @@ public class modele_assurer {
     
     
    // </editor-fold> 
-    
-// <editor-fold desc="Login Agent" defaultstate="collapsed">
+ 
+// <editor-fold desc="Login Assurer" defaultstate="collapsed">
     public void logmein() throws IOException, NoSuchAlgorithmException
   {
-      if (service.ifcanbelogged(userConnection.getMatricule(),encryption.cryptme(userConnection.getMotDePasse()))) // verification de l'authentification
-      {
-      userConnection=service.ifExistsAssurer(userConnection.getMatricule());
-      
-          this.SessionKey = this.sessionId.getRandomUUIDString() ; // affectation de valeur uuid 
-          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userkey", SessionKey+"assurance"); // Ajout de id de session
-          FacesContext.getCurrentInstance().getExternalContext().redirect("assurance/welcome.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
-         
-          
-      }else{ // retour a la page INDEX
-	FacesContext context=FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Matricule ou Mot de passe incorrect")); // Message d'erreur
-         }
-     
-      
+   
+      Object o = service.verif(userConnection.getMatricule(),userConnection.getMotDePasse())  ;
+   
+        if (o instanceof Assurer) {
+            this.userConnection = new Assurer() ;
+            this.userConnection = (Assurer) o ;
+            
+            this.SessionKey = this.sessionId.getRandomUUIDString() ; // affectation de valeur uuid 
+             
+          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userkey", SessionKey); // Ajout de id de session
+          FacesContext.getCurrentInstance().getExternalContext().redirect("/faces/assurance/welcome.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
+        }else {
+            FacesContext context=FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("les informations entrer ne sont pas valide")); // Message d'erreur
+        }
+   
+    
   
   }
     //</editor-fold>  
