@@ -473,7 +473,7 @@ Departement d2 =this.agent.getAgentAffecter();
       {
       agent=service.ifExistsAgent(agent.getMatricule());
           this.SessionKey = this.sessionId.getRandomUUIDString() ; // affectation de valeur uuid 
-          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userkey", SessionKey+"mission"); // Ajout de id de session
+          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userke", SessionKey); // Ajout de id de session
           FacesContext.getCurrentInstance().getExternalContext().redirect("mission/welcome.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
          
           
@@ -491,7 +491,7 @@ Departement d2 =this.agent.getAgentAffecter();
      public void logout() throws IOException // deconnexion
   {
       FacesContext context = FacesContext.getCurrentInstance(); 
-       context.getExternalContext().getSessionMap().remove("userkey") ;
+       context.getExternalContext().getSessionMap().remove("userke") ;
        FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
        
   }
@@ -583,6 +583,10 @@ Departement d2 =this.agent.getAgentAffecter();
           
       
        }  
+       public List<Mission> ListerlesMissionValiderParAgent(){
+     return this.service.ListerlesMissionValiderParAgent(this.agent.getMatricule());}
+      
+   
      //</editor-fold>
      
        // <editor-fold desc="Modifier Agent" defaultstate="collapsed">

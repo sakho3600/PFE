@@ -68,12 +68,11 @@ public class dao_Agent {
     }
     
     public boolean ifExistsDirection(String Direction,String Departement){
-    
-     
-       
        boolean resultat=false ;
+    
+     try{openSession();
+       
        if (!Direction.equals("Personnel")){
-    openSession();
      Query query = s.createQuery("from Personnel where Directeur= :code ");
     if (Direction.equals("Directeur Generale"))
                     query.setParameter("code", Direction);
@@ -84,8 +83,15 @@ public class dao_Agent {
             resultat =true;
                            
     
-    closeSession();}
-       return resultat;   
+
+       }
+
+closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }   
+     return resultat;   
     }
     
     public boolean ifExists(int matricule)
@@ -128,19 +134,26 @@ public class dao_Agent {
     }
     
     public void CreationMission(int Matricule,Mission m){
-               openSession();
+        try{      
+        openSession();
                Agent a=(Agent) s.get(Agent.class,Matricule);
                Set<Mission> l= new HashSet<>();
                l.add(m);
                a.setMissions(l);
                m.setAgent(a);
                s.save(m);
-               closeSession();               
-    }
+
+closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }       }
     
     public List<Mission> ListerlesMissionParAgent(int Matricule){
-                   openSession();
                    List<Mission> l= new ArrayList<>();
+
+        try{          
+        openSession();
                     Query query = s.createQuery("from Mission where Matricule = :code ");
                     query.setParameter("code", Matricule);
                      if(query.list().isEmpty()){
@@ -148,13 +161,19 @@ public class dao_Agent {
                      else{
                        l = query.list();
                    }
-    closeSession();
-    return l;}
+
+closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }       return l;}
     
 
     public List<Mission> ListerlesMissionRejeterParAgent(int Matricule){
-                   openSession();
-                   List<Mission> l= new ArrayList<>();
+                          List<Mission> l= new ArrayList<>();
+
+        try{           
+        openSession();
                     Query query = s.createQuery("from Mission where Matricule = :code and Status=:stat ");
                     query.setParameter("code", Matricule);
                     query.setParameter("stat", "Rejeter");
@@ -163,12 +182,16 @@ public class dao_Agent {
                      else{
                        l = query.list();
                    }
-    closeSession();
-    return l;}
+closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }     return l;}
     
     public List<Mission> ListerlesMissionClotureParAgent(int Matricule){
-                   openSession();
                    List<Mission> l= new ArrayList<>();
+try{
+        openSession();
                     Query query = s.createQuery("from Mission where Matricule = :code and Status='Colturé'");
                     query.setParameter("code", Matricule);
                      if(query.list().isEmpty()){
@@ -176,18 +199,14 @@ public class dao_Agent {
                      else{
                        l = query.list();
                    }
-     closeSession();
-    return l;}
+
+closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }      return l;}
     
     
-     public List<Mission> ListerlesMissionAValider(int Matricule){
-      openSession();
-                   List<Mission> l= new ArrayList<>();
-                   
-     
-       closeSession();
-    return l;}
-     
      
      
      
@@ -205,11 +224,18 @@ public class dao_Agent {
     }
     
      public void AjouterAgentDepartement(Agent a,Departement d){
-  a.setAgentAffecter(d);
-   openSession();
+   
+  try{
+      openSession();
+        a.setAgentAffecter(d);
+
         s.saveOrUpdate(a);
-          closeSession();
-  }
+
+closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }   }
 /*   public void AffectMatChef(Agent Employ){
      
          Personnel p=new Personnel();
@@ -285,15 +311,21 @@ public class dao_Agent {
     }
 //Close   
 public Departement chefoupas(Agent Matricule){
-    openSession();
-    Departement rep=new Departement();               
+    
+    Departement rep=new Departement();  
+    try { 
+    openSession();             
                     Query query = s.createQuery("from Departement where agentDirige= :code ");
                     query.setParameter("code", Matricule);
                      if(!query.list().isEmpty())
                       rep= (Departement)query.list().get(0);
                     
-                   closeSession();
-                
+         
+              closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }
         return rep;
 }
 
@@ -302,23 +334,29 @@ public Departement chefoupas(Agent Matricule){
 
         Departement d=new Departement();
 d=this.chefoupas(Matricule);  
-   openSession();
             List<Agent> l= new ArrayList<>();
+
+try{
+   openSession();
                     if (d!=null){
                     Query query = s.createQuery("from Agent where AgentAffecter= :code ");
                     query.setParameter("code", d);
                      if(!query.list().isEmpty()){
                        l = query.list();
-                          closeSession();
-                   }}else
-                        l=null;
-                  
+                                       }}
+                     closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }
     return l;}
     
     
     public List<Mission> ListerlesMissionsNonValiderParDirecteur(){
-    openSession();
                    List<Mission> l= new ArrayList<>();
+
+        try{
+        openSession();
                     Query query = s.createQuery("from Mission where ValidDirecturGeneral= 0 and Status= :stat ");
                     query.setParameter("stat", "En cours");
                     if(query.list().isEmpty()){
@@ -327,14 +365,38 @@ d=this.chefoupas(Matricule);
                        l = query.list();
                    }
                  
-    closeSession();
+    closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }
     return l;}
     
     
+      public List<Mission> ListerlesMissionValiderParAgent(int Matricule){
+                   List<Mission> l=new ArrayList<>();
+                   try{
+                       openSession();
+                    Query query = s.createQuery("from Mission where Matricule = :code and Etat= 1 and ValidationRH=1 and Status= :stat");
+                    query.setParameter("code", Matricule);
+                    query.setParameter("stat", "En cours");
+                    if(query.list().isEmpty()){
+                     l=new ArrayList<>();}
+                     else{
+                       l = query.list();
+                   }
+ closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }
+    return l;}
+    
     
     public List<Mission> ListerlesMissionNonValiderParAgent(int Matricule){
-                   openSession();
-                   List<Mission> l;
+                   List<Mission> l=new ArrayList<>();
+                   try{
+                       openSession();
                     Query query = s.createQuery("from Mission where Matricule = :code and Etat= 0 and Status= :stat");
                     query.setParameter("code", Matricule);
                     query.setParameter("stat", "En cours");
@@ -344,8 +406,12 @@ d=this.chefoupas(Matricule);
                        l = query.list();
                    }
                  
-    closeSession();
-    return l;}
+ closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }
+               return l;}
     
    
     
@@ -377,7 +443,8 @@ return  this.ListerMissionNonValiderDesAgents(this.ListerAgentParChef(agent));
 }
 
 public void ValiderMission(Mission m,Agent a){
-
+try{
+    openSession();
     if (this.chefoupas(a).getNomDep().equals("Direction General")){
         if (this.chefoupas(m.getAgent()).getNomDep()==null){
         m.setValidDirecturGeneral(1);
@@ -388,11 +455,14 @@ public void ValiderMission(Mission m,Agent a){
     
     }else
             m.setEtat(1);
-        openSession();
+    
                    
                           s.update(m);
-                   closeSession();
-
+ closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }
 }
 
 
@@ -400,27 +470,32 @@ public void ValiderMission(Mission m,Agent a){
     // <editor-fold desc="Stat" defaultstate="collapsed">
 
     public String LesFraixdesMissionClotureParAgent(List<Mission> LM){
-        if (!LM.isEmpty())        {
-        openSession();
-
-        String Chain=new String();
+         String Chain=new String();
         Chain="";
-            Cloture result ;   
-
-    float fd=0;
+        if (!LM.isEmpty())        {
+         float fd=0;
     float fh=0;
     float ft=0;
+            try{openSession();
+
+       
+            Cloture result ;   
+
+   
     for (Mission m:LM){
     result = (Cloture) s.get(Cloture.class,m.getCodeMission());
     fd=fd+result.getFdiver();
     fh=fh+result.getFhebergent();
     ft=ft+result.getFtransport();
-    }     closeSession();
+    }     closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }
 
-    Chain="Les Frais divers "+fd+" Les Frais D'hebergement "+fh+" Les Frais de Transport "+ft;
-    return Chain;}
-        else
-            return "";
+    Chain="Les Frais divers "+fd+" Les Frais D'hebergement "+fh+" Les Frais de Transport "+ft;}
+    return Chain;
+        
     }
 
     
@@ -475,8 +550,10 @@ public void ValiderMission(Mission m,Agent a){
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
    Date datedeb=dateFormat.parse(dateFormat.format(d1));
    Date dateFin=dateFormat.parse(dateFormat.format(d2));          
-        openSession();
-                   List<Mission> l= new ArrayList<>();
+                      List<Mission> l= new ArrayList<>();
+
+   try{     
+   openSession();
                     Query query = s.createQuery("from Mission where Matricule = :code and DateDeb >= :dd and DateFin <= :df and Status=:Stat");
                     query.setParameter("code", Matricule);
                     query.setParameter("dd", datedeb);
@@ -486,8 +563,11 @@ public void ValiderMission(Mission m,Agent a){
                     
                        l = query.list();
                    }
-     closeSession();
-    return l;}
+ closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }    return l;}
 
  public List<Mission> ListerLesMissionClotureDesAgentsParDate(List<Agent>LAgent,Date d1,Date d2) throws ParseException{
      if (LAgent==null){
@@ -514,8 +594,10 @@ public void ValiderMission(Mission m,Agent a){
  DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
    Date datedeb=dateFormat.parse(dateFormat.format(d1));
    Date dateFin=dateFormat.parse(dateFormat.format(d2));
-       openSession();
-                   List<Mission> l= new ArrayList<>();
+                     List<Mission> l= new ArrayList<>();
+
+   try{    
+   openSession();
                     Query query = s.createQuery("from Mission where DateDeb >= :dd and DateFin <= :df and Status=:Stat");
                     query.setParameter("dd", datedeb);
                     query.setParameter("df", dateFin);
@@ -524,18 +606,25 @@ public void ValiderMission(Mission m,Agent a){
                    
                        l = query.list();
                    }
-                     closeSession();
-    return l;
+ closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }    return l;
  }
 // </editor-fold> 
 
      public void AffecterRejet(Mission m){
-           openSession();
+         try{ 
+         openSession();
        m.setStatus("Rejeter");
        s.update(m);
            
-           closeSession();
-
+closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        } 
      }
      
        public List<vehicule> listevehicule()

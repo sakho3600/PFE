@@ -54,6 +54,8 @@ public class dao_Mission {
         s.beginTransaction();
         m.setEtat(0);
         m.setValidDirecturGeneral(0);
+          m.setRejet("");
+        m.setValidationRH(0);
         m.setNbrJours(this.CalculdJours(m));
               s.save(m);
    s.getTransaction().commit();

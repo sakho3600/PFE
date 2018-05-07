@@ -33,6 +33,8 @@ public class Agent extends Personnel implements Serializable{
     
    private static final long serialVersionUID = 1L; 
     
+   @Column(name="Fonction")
+   private String Fonction;
       @OneToMany(mappedBy = "NumDep")
             private Set<Departement> agentDirige;
 
@@ -94,12 +96,27 @@ public class Agent extends Personnel implements Serializable{
         this.Missions = Missions;
     }
 
+    public Agent(String Fonction, Set<Departement> agentDirige, Departement AgentAffecter, Set<Mission> Missions) {
+        this.Fonction = Fonction;
+        this.agentDirige = agentDirige;
+        this.AgentAffecter = AgentAffecter;
+        this.Missions = Missions;
+    }
+
     public Set<Mission> getMissions() {
         return Missions;
     }
 
     public void setMissions(Set<Mission> Missions) {
         this.Missions = Missions;
+    }
+
+    public String getFonction() {
+        return Fonction;
+    }
+
+    public void setFonction(String Fonction) {
+        this.Fonction = Fonction;
     }
    
 }

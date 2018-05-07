@@ -523,7 +523,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
           
           
           
-          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userkey", userKey); // Ajout de id de session
+          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userk", userKey); // Ajout de id de session
           FacesContext.getCurrentInstance().getExternalContext().redirect("welcome.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
          
           
@@ -541,7 +541,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
   public void logout() throws IOException // deconnexion
   {
       FacesContext context = FacesContext.getCurrentInstance(); 
-       context.getExternalContext().getSessionMap().remove("userkey") ;
+       context.getExternalContext().getSessionMap().remove("userk") ;
        FacesContext.getCurrentInstance().getExternalContext().invalidateSession(); /*destroying the session context */
        FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
        
@@ -881,6 +881,17 @@ FacesContext.getCurrentInstance().getExternalContext().redirect("operationmissio
 this.mission=new Mission();
 
 }
+public List<Mission> ListerlesMissionsAValiderRH(){
+ return this.service.ListerlesMissionsNonValiderRH();}
+ 
+ public void ValiderMission(){
+ this.service.ValiderMissionRH(mission);}
+ 
+ public void FormValid(Mission m) throws IOException{
+        this.mission=m;
+             FacesContext.getCurrentInstance().getExternalContext().redirect("FormValid.xhtml");
+    }
+ 
 
  
     public List<String> ListerDep(){

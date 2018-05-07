@@ -11,7 +11,7 @@
     <filter>
         <description>Login Must be made</description>
         <filter-name>assurance</filter-name>
-        <filter-class>utilitaire.ApplicationFilter</filter-class>
+        <filter-class>utilitaire.assuranceFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>Mission</filter-name>
@@ -53,7 +53,7 @@
         <url-pattern>/administrator/*</url-pattern>
     </filter-mapping>
     <error-page>
-    <error-code>404</error-code>
-    <location>/faces/index.xhtml</location>
+        <error-code>404</error-code>
+        <location>/faces/index.xhtml</location>
     </error-page>
 </web-app>

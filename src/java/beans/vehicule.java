@@ -7,7 +7,6 @@ package beans;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -59,22 +57,6 @@ public class vehicule implements Serializable{
    
    @Column(name = "Nom")
    private String Nom ;
-   
-   @OneToMany(mappedBy="CodeMission")
-   private List<Mission> msn ;
-
-    public vehicule(int id, String immatriculation, String Model, Float consommation, String numchasis, String numcarte_grise, Date Date_de_mise_en_circulation, String proprietaire, String Nom, List<Mission> msn) {
-        this.id = id;
-        this.immatriculation = immatriculation;
-        this.Model = Model;
-        this.consommation = consommation;
-        this.numchasis = numchasis;
-        this.numcarte_grise = numcarte_grise;
-        this.Date_de_mise_en_circulation = Date_de_mise_en_circulation;
-        this.proprietaire = proprietaire;
-        this.Nom = Nom;
-        this.msn = msn;
-    }
    
    
 
@@ -151,14 +133,6 @@ public class vehicule implements Serializable{
 
     public void setNom(String Nom) {
         this.Nom = Nom;
-    }
-
-    public List<Mission> getMsn() {
-        return msn;
-    }
-
-    public void setMsn(List<Mission> msn) {
-        this.msn = msn;
     }
 
     

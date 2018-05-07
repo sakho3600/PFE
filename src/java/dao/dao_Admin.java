@@ -309,5 +309,32 @@ public class dao_Admin {
     }
            return result ;
        }
+              
+    public List<Mission> ListerlesMissionsNonValiderRH(){
+    openSession();
+                   List<Mission> l= new ArrayList<>();
+                    Query query = s.createQuery("from Mission where ValidationRH= 0 and Status= :stat ");
+                    query.setParameter("stat", "En cours");
+                    if(query.list().isEmpty()){
+                     l=null;}
+                     else{
+                       l = query.list();
+                   }
+                 
+    closeSession();
+    return l;}
+    
+  
+public void ValiderMissionRH(Mission m){
+
+    
+            m.setValidationRH(1);
+        openSession();
+                   
+                          s.update(m);
+                   closeSession();
+
+}
       
 }
+

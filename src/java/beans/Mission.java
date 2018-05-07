@@ -102,14 +102,16 @@ public class Mission implements Serializable {
     private Float total;
     @Column(name="rejet")
     private String rejet;
+     @Column(name="ValidationRH")
+    private int ValidationRH;
     
  
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER )
 	@JoinTable(name = "LesVilleMission", joinColumns = { @JoinColumn(name = "CodeMission") }, inverseJoinColumns = { @JoinColumn(name = "Code_Postal")})
 	public Set<ville> Les_villes;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name="Vehicule" )
+    @OneToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name="Vehicule",referencedColumnName="id" )
     private vehicule vehicule;
 
    
@@ -200,6 +202,28 @@ public class Mission implements Serializable {
         this.Les_villes = Les_villes;
     }
 
+    public Mission(int CodeMission, Agent agent, String Intitule_Mission, String Objectif, Date DateDeb, Date DateFin, int NbrJours, float Kilometrage, String type, int Etat, int ValidDirecturGeneral, Float fdiver, Float fhebergement, Float ftransport, Float total, String rejet, int ValidationRH, Set<ville> Les_villes, vehicule vehicule) {
+        this.CodeMission = CodeMission;
+        this.agent = agent;
+        this.Intitule_Mission = Intitule_Mission;
+        this.Objectif = Objectif;
+        this.DateDeb = DateDeb;
+        this.DateFin = DateFin;
+        this.NbrJours = NbrJours;
+        this.Kilometrage = Kilometrage;
+        this.type = type;
+        this.Etat = Etat;
+        this.ValidDirecturGeneral = ValidDirecturGeneral;
+        this.fdiver = fdiver;
+        this.fhebergement = fhebergement;
+        this.ftransport = ftransport;
+        this.total = total;
+        this.rejet = rejet;
+        this.ValidationRH = ValidationRH;
+        this.Les_villes = Les_villes;
+        this.vehicule = vehicule;
+    }
+
     public Mission(int CodeMission) {
         this.CodeMission = CodeMission;
     }
@@ -210,6 +234,14 @@ public class Mission implements Serializable {
 
     public void setRejet(String rejet) {
         this.rejet = rejet;
+    }
+
+    public int getValidationRH() {
+        return ValidationRH;
+    }
+
+    public void setValidationRH(int ValidationRH) {
+        this.ValidationRH = ValidationRH;
     }
     
 
