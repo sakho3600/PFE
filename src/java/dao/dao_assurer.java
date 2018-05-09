@@ -10,6 +10,7 @@ import beans.BulletinMensuel;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import utilitaire.HibernateUtil;
@@ -120,7 +121,7 @@ public class dao_assurer {
                Object o = new Object();
            try{           
        openSession();
-                    Query query = s.createQuery("from Personnel where Matricule = :code and MotdePasse=:mdp ");
+                    Query query = s.createQuery("from Assurer where Matricule = :code and MotdePasse=:mdp ");
                     query.setParameter("code", mat);
                     query.setParameter("mdp", crp.cryptme(pass));
                     if (!query.list().isEmpty())
@@ -154,13 +155,15 @@ public class dao_assurer {
            s.clear();
           }
           }
-        catch(org.hibernate.TransientPropertyValueException exception)
+        catch(HibernateException exception)
          {
-       System.out.print("gotcha!\n");
+       System.out.print("gotchaaaaaaaaaaaaaaaaaaaaa!\n");
        introuvable = assur.get(i) ;
        assurerInexistant.add(introuvable) ;
        introuvable = new Assurer() ;
-         s.clear();
+         //i=assur.size();
+          s.clear();
+        
          }
       } 
       closeSession();
