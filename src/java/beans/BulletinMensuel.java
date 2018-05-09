@@ -53,7 +53,10 @@ public class BulletinMensuel implements Serializable{
     private float Montant_remboursement;
     @Column(name ="Observation")
     private String Observation;
-    
+    @Column (name="DateDeCreation" )
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)    
+    private Date DatedeCreation = new Date();
+     
     @ManyToOne
     @JoinColumn(name="assurer", nullable=false)
     private Assurer assurer;

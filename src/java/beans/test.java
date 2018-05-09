@@ -46,7 +46,16 @@ public class test {
     
  
  public static void main (String []args) throws NoSuchAlgorithmException, ParseException{
-   //dao_Departement d=new dao_Departement();
+ 
+     dao_assurer a= new dao_assurer();   
+    Assurer aa=new Assurer();
+aa=(Assurer) a.verif(202,"a");
+     
+List<BulletinMensuel> l=new ArrayList<>();
+l=a.ListerNouveauBulletin(aa);
+for (BulletinMensuel ll:l)
+    System.out.println(ll.getId());
+     /* //dao_Departement d=new dao_Departement();
     //dao_Agent da=new dao_Agent();
     
     cryptpasswords d = new cryptpasswords();

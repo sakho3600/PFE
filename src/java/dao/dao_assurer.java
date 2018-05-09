@@ -170,5 +170,36 @@ public class dao_assurer {
       
       return assurerInexistant ;
          }
+     
+       public List<BulletinMensuel> ListerHistorique(Assurer assurer) {
+  
+        List<BulletinMensuel>l=new ArrayList<>();
+        openSession();     
+             Query query = s.createQuery("from BulletinMensuel where Matricule= :matricule");
+                   query.setParameter("matricule",assurer.getMatricule());
+                     if(query.list().isEmpty()){
+                     l=null;}
+                     else{
+                       l = query.list();
+                   }
+                     closeSession();
+                
+return l;    }
+      
+              public List<BulletinMensuel> ListerNouveauBulletin(Assurer assurer) {
+  
+        List<BulletinMensuel>l=new ArrayList<>();
+        openSession();     
+             Query query = s.createQuery("from BulletinMensuel where Matricule= :matricule and DATEDIFF( sysdate(),DateDeCreation )<=7");
+                   query.setParameter("matricule",assurer.getMatricule());
+                     if(query.list().isEmpty()){
+                     l=null;}
+                     else{
+                       l = query.list();
+                   }
+                     closeSession();
+                
+return l;    }
+       
     
 }

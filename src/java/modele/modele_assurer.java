@@ -321,6 +321,22 @@ public class modele_assurer {
     public void setEncryption(cryptpasswords encryption) {
         this.encryption = encryption;
     }
+
+    public String getResults() {
+        return results;
+    }
+
+    public void setResults(String results) {
+        this.results = results;
+    }
+
+    public List<Assurer> getLesAssurerintrouvable() {
+        return lesAssurerintrouvable;
+    }
+
+    public void setLesAssurerintrouvable(List<Assurer> lesAssurerintrouvable) {
+        this.lesAssurerintrouvable = lesAssurerintrouvable;
+    }
     
     
     
@@ -335,11 +351,17 @@ public class modele_assurer {
         if (o instanceof Assurer) {
             this.userConnection = new Assurer() ;
             this.userConnection = (Assurer) o ;
-            
+            System.out.println("***************************");
+            System.out.println(userConnection.getNom());
+            System.out.println(userConnection.getPernom());
+            System.out.println(userConnection.getEmail());
+            System.out.println(userConnection.getMatricule());
+
+            System.out.println("***************************");
             this.SessionKey = this.sessionId.getRandomUUIDString() ; // affectation de valeur uuid 
              
           FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userkey", SessionKey); // Ajout de id de session
-          FacesContext.getCurrentInstance().getExternalContext().redirect("/faces/assurance/welcome.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
+          FacesContext.getCurrentInstance().getExternalContext().redirect("../assurance/welcome.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
         }else {
             FacesContext context=FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("les informations entrer ne sont pas valide")); // Message d'erreur
@@ -360,5 +382,11 @@ public class modele_assurer {
   }
      //</editor-fold>
     
+    public List<BulletinMensuel> ListerHistoriqueBulletin(){
+    return this.service.ListerHistorique(userConnection);
+    }
+    public List<BulletinMensuel> ListernouveauBulletin(){
+    return this.service.ListerNouveauBulletin(userConnection);
+    }
     
 }
