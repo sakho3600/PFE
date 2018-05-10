@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.List;
  
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -44,7 +45,7 @@ import utilitaire.cryptpasswords;
  * @author Mohammed Mehdi Sarray#
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class modele_assurer {
   
     private String destination="C:\\x\\";
