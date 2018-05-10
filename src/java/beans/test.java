@@ -49,12 +49,25 @@ public class test {
  
      dao_assurer a= new dao_assurer();   
     Assurer aa=new Assurer();
-aa=(Assurer) a.verif(202,"a");
-     
-List<BulletinMensuel> l=new ArrayList<>();
-l=a.ListerNouveauBulletin(aa);
-for (BulletinMensuel ll:l)
-    System.out.println(ll.getId());
+    Assurer lp= new Assurer();
+    
+    List<Assurer> ll = new ArrayList<Assurer>() ;
+    aa.setMatricule(22211);
+    ll.add(aa) ; 
+    lp.setMatricule(14);
+    ll.add(lp) ; 
+    
+    
+    
+    List<Assurer> results = new ArrayList<>();
+    results = a.getMails(ll) ;
+    
+    for(int i =0 ;i<results.size() ; i++)
+    {
+        System.out.println(results.get(i).getEmail()+"\n") ; 
+    }
+    
+    
      /* //dao_Departement d=new dao_Departement();
     //dao_Agent da=new dao_Agent();
     

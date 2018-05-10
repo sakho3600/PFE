@@ -141,6 +141,14 @@ public class BulletinMensuel implements Serializable{
     public void setAssurer(Assurer assurer) {
         this.assurer = assurer;
     }
+
+    public Date getDatedeCreation() {
+        return DatedeCreation;
+    }
+
+    public void setDatedeCreation(Date DatedeCreation) {
+        this.DatedeCreation = DatedeCreation;
+    }
             
 
     

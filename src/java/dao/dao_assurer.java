@@ -115,8 +115,7 @@ public class dao_assurer {
        }
 
     }
-     
-     public Object verif(int mat, String pass ) throws NoSuchAlgorithmException
+    public Object verif(int mat, String pass ) throws NoSuchAlgorithmException
      {
                Object o = new Object();
            try{           
@@ -137,16 +136,15 @@ public class dao_assurer {
                return o ;
      }
      
-     public List<Assurer> ajouterAssurer(List<Assurer> assur)  {
-       List<Assurer> assurerInexistant = new ArrayList<>() ;
-       Assurer introuvable = new Assurer() ;
+     public void ajouterAssurer(List<Assurer> assur)  {
+      
          openSession();
   
       for (int i=0;i<assur.size();i++) {
-         try {
+        
           //save the object
           
-          s.save(assur.get(i));
+          s.saveOrUpdate(assur.get(i));
           
           if( i % 20 == 0 ) // Same as the JDBC batch size
           { 
@@ -155,20 +153,10 @@ public class dao_assurer {
            s.clear();
           }
           }
-        catch(HibernateException exception)
-         {
-       System.out.print("gotchaaaaaaaaaaaaaaaaaaaaa!\n");
-       introuvable = assur.get(i) ;
-       assurerInexistant.add(introuvable) ;
-       introuvable = new Assurer() ;
-         //i=assur.size();
-          s.clear();
-        
-         }
-      } 
+      
+       
       closeSession();
       
-      return assurerInexistant ;
          }
      
        public List<BulletinMensuel> ListerHistorique(Assurer assurer) {
@@ -200,6 +188,30 @@ return l;    }
                      closeSession();
                 
 return l;    }
-       
+              
+              
+         public List<Assurer> getMails(List<Assurer> list)
+         {
+             
+             Assurer result = new Assurer();
+             List<Assurer> lists = new ArrayList<Assurer>() ;
+               
+        try{
+        openSession();
+        for(int i = 0 ; i < list.size() ; i++) {
+         result = (Assurer) s.get(Assurer.class,list.get(i).getMatricule()) ;
+         if (result != null){
+         lists.add(result) ;
+         result = new Assurer() ;}
+        }
+         closeSession();
+         
+           }catch(Exception e){
+	e.printStackTrace();
+        }
+        
+         return lists ;
+             
+         }
     
 }

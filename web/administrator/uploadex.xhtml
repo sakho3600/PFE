@@ -91,6 +91,31 @@ and open the template in the editor.
                                         
                                         
 					</div>
+                                        <div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
+						<div class="form-title">
+							<h4>Informer les adhérents</h4>
+						</div>
+                                                <h:form  enctype="multipart/form-data" dir="rtl">
+						<div class="form-body">
+                                               
+                                                              <p:messages id="messageem" showDetail="true" closable="true">
+                                                        
+                                                          </p:messages>
+                                                     
+                                                    <p:commandButton value="Envoyer les Emails" id="mails"  actionListener="#{modele_assurer.sendit()}" class="btn btn-default" ajax="true" update="messageem"/>
+    
+                                                                      
+                                                    </div>
+                                               </h:form>
+					
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+					</div>
                             </div>
             </div>
         </div>
