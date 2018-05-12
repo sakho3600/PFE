@@ -21,6 +21,7 @@ import dao.dao_Cloture;
 import dao.dao_Departement;
 
 import dao.dao_Mission;
+import dao.dao_Vehicule;
 import dao.dao_assurer;
 import dao.dao_ville;
 import java.security.NoSuchAlgorithmException;
@@ -46,8 +47,11 @@ public class test {
     
  
  public static void main (String []args) throws NoSuchAlgorithmException, ParseException{
- 
-     dao_assurer a= new dao_assurer();   
+ dao_Vehicule d=new dao_Vehicule();
+     Date d1=new Date(2018,04,11);
+ vehicule v=new vehicule("iiui","bmx",7f,"jj","huhuhu",d1,"jkj","jihih");
+d.AjoutVehicule(v);
+   /*  dao_assurer a= new dao_assurer();   
     Assurer aa=new Assurer();
     Assurer lp= new Assurer();
     

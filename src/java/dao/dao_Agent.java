@@ -627,21 +627,6 @@ closeSession();
         } 
      }
      
-       public List<vehicule> listevehicule()
-    {
-         List<vehicule> vehicule= new ArrayList<>();
-       try { 
-    openSession() ;
-             String hql = "FROM vehicule";
-             Query query = s.createQuery(hql);
-             vehicule = query.list();
-    closeSession() ;
-    }catch(Exception e){
-	e.printStackTrace();
-       
-        }
-     return vehicule ;
-    }
      
 
 }

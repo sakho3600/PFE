@@ -1,9 +1,11 @@
+package beans;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package beans;
+
 
 import java.io.Serializable;
 import java.util.Date;
@@ -52,13 +54,11 @@ public class vehicule implements Serializable{
     @Temporal(javax.persistence.TemporalType.DATE)
    private Date Date_de_mise_en_circulation ;
    
-   @Column(name = "proprietaire")
-   private String proprietaire ;
-   
    @Column(name = "Nom")
    private String Nom ;
    
-   
+   @Column(name="Carburant")
+   private String Carburant;
 
     public vehicule() {
     }
@@ -119,20 +119,43 @@ public class vehicule implements Serializable{
         this.Date_de_mise_en_circulation = Date_de_mise_en_circulation;
     }
 
-    public String getProprietaire() {
-        return proprietaire;
-    }
-
-    public void setProprietaire(String proprietaire) {
-        this.proprietaire = proprietaire;
-    }
-
     public String getNom() {
         return Nom;
     }
 
     public void setNom(String Nom) {
         this.Nom = Nom;
+    }
+
+    public String getCarburant() {
+        return Carburant;
+    }
+
+    public void setCarburant(String Carburant) {
+        this.Carburant = Carburant;
+    }
+
+    public vehicule(String immatriculation, String Model, Float consommation, String numchasis, String numcarte_grise, Date Date_de_mise_en_circulation, String Nom, String Carburant) {
+        this.immatriculation = immatriculation;
+        this.Model = Model;
+        this.consommation = consommation;
+        this.numchasis = numchasis;
+        this.numcarte_grise = numcarte_grise;
+        this.Date_de_mise_en_circulation = Date_de_mise_en_circulation;
+        this.Nom = Nom;
+        this.Carburant = Carburant;
+    }
+
+    public vehicule(int id, String immatriculation, String Model, Float consommation, String numchasis, String numcarte_grise, Date Date_de_mise_en_circulation, String Nom, String Carburant) {
+        this.id = id;
+        this.immatriculation = immatriculation;
+        this.Model = Model;
+        this.consommation = consommation;
+        this.numchasis = numchasis;
+        this.numcarte_grise = numcarte_grise;
+        this.Date_de_mise_en_circulation = Date_de_mise_en_circulation;
+        this.Nom = Nom;
+        this.Carburant = Carburant;
     }
 
     

@@ -15,6 +15,7 @@ import dao.dao_Admin;
 import dao.dao_Agent;
 import dao.dao_Departement;
 import dao.dao_Mission;
+import dao.dao_Vehicule;
 import dao.dao_ville;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -89,6 +90,7 @@ public class modele_agent {
     private int notif = 0 ;
    
     /** Objects **/
+    dao_Vehicule serviceVehicule=new dao_Vehicule();
     dao_Departement serviceDepartement=new dao_Departement();
     dao_Admin serviceadmin = new dao_Admin() ;
     dao_Agent service = new dao_Agent();
@@ -118,7 +120,7 @@ public class modele_agent {
       {  cities.add(str.toString());}
       
        insertprevision();
-       vehicule = service.listevehicule() ;
+       vehicule = serviceVehicule.listevehicule() ;
    
     }
   

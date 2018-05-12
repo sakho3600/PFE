@@ -12,11 +12,13 @@ import beans.Departement;
 import beans.Mission;
 import beans.prevision;
 import beans.privileges;
+import beans.vehicule;
 import dao.dao_Admin;
 import dao.dao_Agent;
 import dao.dao_Cloture;
 import dao.dao_Departement;
 import dao.dao_Mission;
+import dao.dao_Vehicule;
 import utilitaire.SessionKeyGen;
 import java.io.IOException;
 import javax.faces.application.FacesMessage;
@@ -31,6 +33,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedProperty;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import utilitaire.cryptpasswords;
 
@@ -57,6 +62,7 @@ public class modele_Admin  {
         private String Departements;
         private String TypeRejet;
         private String Rejet;
+        private vehicule vehicule=new vehicule();
          //Les dates
     private Date date1;
     private Date date2;
@@ -99,7 +105,11 @@ public class modele_Admin  {
     Cloture cloture=new Cloture();
      Mission modifMission = new Mission();
      cryptpasswords encryption = new cryptpasswords() ; // SHA256 ENCRYPTION
-     
+         private List<vehicule> cars2;
+         
+    @ManagedProperty("#{carService}")
+    dao_Vehicule serviceVehicule=new dao_Vehicule();
+
     public modele_Admin() {  
     }
     
@@ -125,11 +135,51 @@ public class modele_Admin  {
     
         
        this.updateprev = service.getprevision() ;
-   
+           cars2 = serviceVehicule.listevehicule();
+
     }
 
+    public List<vehicule> getCars2() {
+        return cars2;
+    }     
+    public void setService(dao_Vehicule serviceVehicule) {
+        this.serviceVehicule = serviceVehicule;
+    }
+     
+    public void onRowEdit(RowEditEvent event) {
+        Date d=new Date();
+        d=((vehicule) event.getObject()).getDate_de_mise_en_circulation();
+vehicule v=new vehicule(((vehicule) event.getObject()).getId(),((vehicule) event.getObject()).getImmatriculation(),((vehicule) event.getObject()).getModel(),((vehicule) event.getObject()).getConsommation(),((vehicule) event.getObject()).getNumchasis(),((vehicule) event.getObject()).getNumcarte_grise(),d,((vehicule) event.getObject()).getNom(),((vehicule) event.getObject()).getCarburant());
+               this.serviceVehicule.MajVehicule(v);
+        FacesMessage msg = new FacesMessage("Car Edited", ((vehicule) event.getObject()).getImmatriculation());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+     
+    public void onRowCancel(RowEditEvent event) {
+        String s= ((vehicule) event.getObject()).getCarburant()+ ((vehicule) event.getObject()).getImmatriculation();
+        FacesMessage msg = new FacesMessage("Edit Cancelled", s);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+     
+    public void onCellEdit(CellEditEvent event) {
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+         
+        if(newValue != null && !newValue.equals(oldValue)) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+    }
     public String getDepartements() {
         return Departements;
+    }
+
+    public dao_Vehicule getServiceVehicule() {
+        return serviceVehicule;
+    }
+
+    public void setServiceVehicule(dao_Vehicule serviceVehicule) {
+        this.serviceVehicule = serviceVehicule;
     }
 
     public void setDepartements(String Departements) {
@@ -180,10 +230,19 @@ public class modele_Admin  {
         this.date2 = (Date) event.getObject();
        }
   
+   
+         public vehicule getVehicule() {
+        return vehicule;
+    }
+
     // <editor-fold desc="getters and setters" defaultstate="collapsed">
     /** start of getters and setters **/
+    public void setVehicule(vehicule vehicule) {
+        this.vehicule = vehicule;
+    } 
+
     public void setDate2(Date date2) {
-        this.date2 = date2; 
+        this.date2 = date2;
     }
 
     public void setServiceagent(dao_Agent serviceagent) {
@@ -768,7 +827,10 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
         this.serviceCloture.ajoutCloture(cloture);
         this.serviceMission.terminerMission(mission);
     } 
-    
+     public void AjoutVehicule(){
+     this.serviceVehicule.AjoutVehicule(this.vehicule);
+   FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Terminer!", "Vehicule Ajouter."));
+}
     
     //</editor-fold>
     
