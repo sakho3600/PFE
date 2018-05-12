@@ -829,6 +829,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
     } 
      public void AjoutVehicule(){
      this.serviceVehicule.AjoutVehicule(this.vehicule);
+     this.cars2=this.serviceVehicule.listevehicule();
    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Terminer!", "Vehicule Ajouter."));
 }
     
