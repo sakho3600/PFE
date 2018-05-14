@@ -98,8 +98,7 @@ public class Mission implements Serializable {
     private Float fhebergement;
     @Column(name="ftransport")
     private Float ftransport;
-    @Column(name="total")
-    private Float total;
+    
     @Column(name="rejet")
     private String rejet;
      @Column(name="ValidationRH")
@@ -167,7 +166,7 @@ public class Mission implements Serializable {
         this.fdiver = fdiver;
         this.fhebergement = fhebergement;
         this.ftransport = ftransport;
-        this.total = total;
+
         this.rejet = rejet;
         this.Les_villes = Les_villes;
     }
@@ -217,7 +216,7 @@ public class Mission implements Serializable {
         this.fdiver = fdiver;
         this.fhebergement = fhebergement;
         this.ftransport = ftransport;
-        this.total = total;
+
         this.rejet = rejet;
         this.ValidationRH = ValidationRH;
         this.Les_villes = Les_villes;
@@ -375,13 +374,7 @@ public class Mission implements Serializable {
         this.ftransport = ftransport;
     }
 
-    public Float getTotal() {
-        return total;
-    }
-
-    public void setTotal(Float total) {
-        this.total = total;
-    }
+ 
 
    
 

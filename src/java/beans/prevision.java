@@ -39,11 +39,19 @@ public class prevision implements Serializable{
     private Date Heure_ = new Date();
     @Column(name="prixEssence")
     private Float prixEssence;
-    @Column(name="total")
-    private Float total;
+    @Column(name="prixGasoil")
+    private Float prixGasoil;
+
+   
     
     
-    
+    public Float getPrixGasoil() {
+        return prixGasoil;
+    }
+
+    public void setPrixGasoil(Float prixGasoil) {
+        this.prixGasoil = prixGasoil;
+    }
     
     
     
@@ -87,13 +95,6 @@ public class prevision implements Serializable{
         this.Heure_ = Heure_;
     }
 
-    public Float getTotal() {
-        return total;
-    }
-
-    public void setTotal(Float total) {
-        this.total = total;
-    }
 
     public Float getPrixEssence() {
         return prixEssence;

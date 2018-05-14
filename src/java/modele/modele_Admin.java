@@ -766,9 +766,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
     public void ajouterprevision()
     {
         prevision p=new prevision();
-            p.setTotal(this.updateprev.getFdiver()
-                                   +this.updateprev.getFtransport()
-                                  +this.updateprev.getFhebergement());
+           
             p.setFdiver(this.updateprev.getFdiver());
             p.setFhebergement(this.updateprev.getFhebergement());
            p.setFtransport(this.updateprev.getFtransport());
@@ -796,9 +794,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
        
            // calcul total 
            
-              this.updateprev.setTotal(this.updateprev.getFdiver()
-                                   +this.updateprev.getFtransport()
-                                  +this.updateprev.getFhebergement());
+             
               service.updateprevision(this.updateprev); 
           
          FacesContext f=FacesContext.getCurrentInstance();

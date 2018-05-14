@@ -81,8 +81,10 @@ public class modele_agent {
      private Float ftransport;
      private Float prixEssance ;
      private Float ftotal;
+     private Float prixGasoil;
      private String rejet;
      private int vehiculeMatricule ;
+     
      /** Tables **/ 
     private List<Agent> agents ;
     private List<Mission> notification ;
@@ -169,9 +171,25 @@ public class modele_agent {
     public void setVehicule(List<vehicule> vehicule) {
         this.vehicule = vehicule;
     }
-    
-    
 
+    public Float getPrixGasoil() {
+        return prixGasoil;
+    }
+
+    public void setPrixGasoil(Float prixGasoil) {
+        this.prixGasoil = prixGasoil;
+    }
+
+    public dao_Vehicule getServiceVehicule() {
+        return serviceVehicule;
+    }
+
+    public void setServiceVehicule(dao_Vehicule serviceVehicule) {
+        this.serviceVehicule = serviceVehicule;
+    }
+    
+    
+    
     public List<Mission> getNotification() {
         return notification;
     }
@@ -446,19 +464,28 @@ Departement d2 =this.agent.getAgentAffecter();
        }
        public void onBlurkilometrage() { 
           
-        this.ftransport = (((fromVehiculeMatriculeToConsommation(this.vehiculeMatricule) / 100)  * this.mission.getKilometrage())  * this.prixEssance) ; 
+           vehicule vh = fromVehiculeMatriculeToConsommation(this.vehiculeMatricule) ;
+           if (vh.getCarburant().equals("Essence")) {
+        this.ftransport = (((vh.getConsommation() / 100)  * this.mission.getKilometrage())  * this.prixEssance) ; 
                 
          this.ftotal = this.fdiver + this.fhebergement + this.ftransport ;
+           }
+           else {
+               this.ftransport = (((vh.getConsommation() / 100)  * this.mission.getKilometrage())  * this.prixGasoil) ; 
+                
+         this.ftotal = this.fdiver + this.fhebergement + this.ftransport ;
+           }
     }
-      public float fromVehiculeMatriculeToConsommation(int imMatricule) // getting the consommation from car matricule
+       
+      public vehicule fromVehiculeMatriculeToConsommation(int imMatricule) // getting the consommation from car matricule
       {
-          float result = 0;
+          vehicule result = new vehicule();
           
           for (int i = 0 ; i < this.vehicule.size() ; i++ )
           {
               if (this.vehicule.get(i).getId() == imMatricule) 
               { 
-                  result = this.vehicule.get(i).getConsommation() ; 
+                  result = this.vehicule.get(i) ; 
                   i = this.vehicule.size();
               }
           }
@@ -549,7 +576,6 @@ Departement d2 =this.agent.getAgentAffecter();
         mission.setFdiver(this.fdiver);
         mission.setFhebergement(this.fhebergement);
         mission.setFtransport(this.ftransport);
-        mission.setTotal(this.ftotal);
        if (this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin())){
           FacesContext f=FacesContext.getCurrentInstance();
          f.addMessage(null,new FacesMessage("Erreur date!!"+(this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin()))));
@@ -696,8 +722,7 @@ Departement d2 =this.agent.getAgentAffecter();
        this.fhebergement = previsions.getFhebergement();
        this.ftransport = previsions.getFtransport();
        this.prixEssance = previsions.getPrixEssence() ;
-       this.ftotal = previsions.getTotal() ;
-       
+       this.prixGasoil = previsions.getPrixGasoil();
     }
     /*public void notifica()
         {
@@ -793,7 +818,6 @@ else
         mission.setFdiver(this.fdiver);
         mission.setFhebergement(this.fhebergement);
         mission.setFtransport(this.ftransport);
-        mission.setTotal(this.ftotal);
        if (this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin())){
           FacesContext f=FacesContext.getCurrentInstance();
          f.addMessage(null,new FacesMessage("Erreur date!!"+(this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin()))));
