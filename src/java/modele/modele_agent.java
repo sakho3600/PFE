@@ -105,6 +105,7 @@ public class modele_agent {
     cryptpasswords encryption = new cryptpasswords() ; // SHA256 ENCRYPTION
     String Villes=new String();
     prevision previsions = new prevision() ;
+    vehicule  vh = new vehicule();
     
     
     public modele_agent() {
@@ -133,6 +134,15 @@ public class modele_agent {
         this.serviceDepartement = serviceDepartement;
     }
 
+    public vehicule getVh() {
+        return vh;
+    }
+
+    public void setVh(vehicule vh) {
+        this.vh = vh;
+    }
+    
+    
     public String getVilles() {
         return Villes;
     }
@@ -464,7 +474,7 @@ Departement d2 =this.agent.getAgentAffecter();
        }
        public void onBlurkilometrage() { 
           
-           vehicule vh = fromVehiculeMatriculeToConsommation(this.vehiculeMatricule) ;
+           this.vh = fromVehiculeMatriculeToConsommation(this.vehiculeMatricule) ;
            if (vh.getCarburant().equals("Essence")) {
         this.ftransport = (((vh.getConsommation() / 100)  * this.mission.getKilometrage())  * this.prixEssance) ; 
                 
@@ -576,6 +586,8 @@ Departement d2 =this.agent.getAgentAffecter();
         mission.setFdiver(this.fdiver);
         mission.setFhebergement(this.fhebergement);
         mission.setFtransport(this.ftransport);
+        mission.setVehicule(this.vh);
+        
        if (this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin())){
           FacesContext f=FacesContext.getCurrentInstance();
          f.addMessage(null,new FacesMessage("Erreur date!!"+(this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin()))));
