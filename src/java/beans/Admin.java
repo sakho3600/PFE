@@ -9,7 +9,7 @@ package beans;
  *
  * @author Mohammed Mehdi Sarray#
  */
-import com.sun.istack.internal.NotNull;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +29,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -45,8 +46,8 @@ public class Admin extends Personnel implements Serializable{
    
    
    
-   @Column(name = "username", unique = true) //unique dans la BD
-   @NotNull
+   @Column(name = "username", unique = true , nullable = false) //unique dans la BD
+   
     private String username ; //login
 
    

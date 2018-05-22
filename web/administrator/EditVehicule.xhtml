@@ -68,10 +68,10 @@
         <div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
-					<h2 class="title1">Ajouter un Agent </h2>
+					<h2 class="title1">Modification des vehicules </h2>
 					<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
 						<div class="form-title">
-							<h4>Creation d'un Agent :</h4>
+							<h4>Modifier un vehicule :</h4>
 						</div>
                                            
 						<div class="form-body">
@@ -82,7 +82,7 @@
 
     <p:dataTable id="cars1" var="car" value="#{modele_Admin.cars2}" editable="true" style="margin-bottom:20px">
        <f:facet name="header">
-           Row Editing
+           Liste véhicules
        </f:facet>
  
        <p:ajax event="rowEdit" listener="#{modele_Admin.onRowEdit}" update=":form:msgs" />

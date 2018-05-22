@@ -139,25 +139,20 @@ public class modele_Admin  {
 
     }
 
-    public List<vehicule> getCars2() {
-        return cars2;
-    }     
-    public void setService(dao_Vehicule serviceVehicule) {
-        this.serviceVehicule = serviceVehicule;
-    }
-     
+    
+   //<editor-fold desc="Modification d'un vehicule" defaultstate="collapsed" >
     public void onRowEdit(RowEditEvent event) {
         Date d=new Date();
         d=((vehicule) event.getObject()).getDate_de_mise_en_circulation();
 vehicule v=new vehicule(((vehicule) event.getObject()).getId(),((vehicule) event.getObject()).getImmatriculation(),((vehicule) event.getObject()).getModel(),((vehicule) event.getObject()).getConsommation(),((vehicule) event.getObject()).getNumchasis(),((vehicule) event.getObject()).getNumcarte_grise(),d,((vehicule) event.getObject()).getNom(),((vehicule) event.getObject()).getCarburant());
                this.serviceVehicule.MajVehicule(v);
-        FacesMessage msg = new FacesMessage("Car Edited", ((vehicule) event.getObject()).getImmatriculation());
+        FacesMessage msg = new FacesMessage("véhicule Modifier", ((vehicule) event.getObject()).getImmatriculation());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
      
     public void onRowCancel(RowEditEvent event) {
         String s= ((vehicule) event.getObject()).getCarburant()+ ((vehicule) event.getObject()).getImmatriculation();
-        FacesMessage msg = new FacesMessage("Edit Cancelled", s);
+        FacesMessage msg = new FacesMessage("Modification Annuler", s);
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
      
@@ -166,10 +161,22 @@ vehicule v=new vehicule(((vehicule) event.getObject()).getId(),((vehicule) event
         Object newValue = event.getNewValue();
          
         if(newValue != null && !newValue.equals(oldValue)) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "colonne changé", "ancienne valeur: " + oldValue + ", nouvelle valeur:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
+ 
+    //</editor-fold>
+    
+    // <editor-fold desc="getters and setters" defaultstate="collapsed">
+    /** start of getters and setters **/
+    public List<vehicule> getCars2() {
+        return cars2;
+    }     
+    public void setService(dao_Vehicule serviceVehicule) {
+        this.serviceVehicule = serviceVehicule;
+    }  
+    
     public String getDepartements() {
         return Departements;
     }
@@ -234,9 +241,7 @@ vehicule v=new vehicule(((vehicule) event.getObject()).getId(),((vehicule) event
          public vehicule getVehicule() {
         return vehicule;
     }
-
-    // <editor-fold desc="getters and setters" defaultstate="collapsed">
-    /** start of getters and setters **/
+    
     public void setVehicule(vehicule vehicule) {
         this.vehicule = vehicule;
     } 
@@ -596,6 +601,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
   
   }
   // </editor-fold>
+  
     // <editor-fold desc="Logout Method"  defaultstate="collapsed" >
   public void logout() throws IOException // deconnexion
   {
@@ -798,7 +804,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
               service.updateprevision(this.updateprev); 
           
          FacesContext f=FacesContext.getCurrentInstance();
-        f.addMessage(null,new FacesMessage("Ajout effectuer"));
+        f.addMessage(null,new FacesMessage("prévision modifier!"));
                
        }
           
@@ -919,7 +925,9 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
   }
  public List<Mission> ListerMission(){
  return this.serviceMission.listerLesMission();}
- 
+  public List<String> ListerDep(){
+    return this.serviceDepartement.ListerLesDepartement();
+    }
  
  public void imprimer(Mission mission) throws IOException{
  this.mission=mission;
@@ -931,6 +939,9 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
  }
 
 // </editor-fold> 
+ 
+ 
+    // <editor-fold desc="Crud-Mission" defaultstate="collapsed">
  
 public void AnnulerMission() throws IOException{
     this.mission=this.serviceMission.RetourMission(matriculeMission);
@@ -950,21 +961,25 @@ public List<Mission> ListerlesMissionsAValiderRH(){
         this.mission=m;
              FacesContext.getCurrentInstance().getExternalContext().redirect("FormValid.xhtml");
     }
- 
 
- 
-    public List<String> ListerDep(){
-    return this.serviceDepartement.ListerLesDepartement();
-    }
+public void rejet(){
+this.mission.setRejet(this.Rejet);
+this.service.AffecterRejet(mission);
+    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Terminer!", "prevision Ajouter."));
 
+}
+
+//</editor-fold>
+
+    // <editor-fold desc="Stats" defaultstate="collapsed">
 public void StatDate() throws IOException, ParseException{
-          FacesContext.getCurrentInstance().getExternalContext().redirect("MissionStat.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
+          FacesContext.getCurrentInstance().getExternalContext().redirect("MissionStat.xhtml"); 
 this.MissionStat=this.serviceagent.ListerLesMissionClotureParDate(this.date1,this.date2);
 this.Stat=this.serviceagent.LesFraixdesMissionClotureParAgent(this.MissionStat);
 
 }
 public void StatAgent() throws IOException, ParseException{
-FacesContext.getCurrentInstance().getExternalContext().redirect("MissionStat.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
+FacesContext.getCurrentInstance().getExternalContext().redirect("MissionStat.xhtml"); 
 if (this.date1==null || this.date2==null){
 this.MissionStat=this.serviceagent.ListerlesMissionClotureParAgent(this.matricule);
 this.Stat=this.serviceagent.LesFraixdesMissionClotureParAgent(this.MissionStat);
@@ -977,7 +992,7 @@ this.Stat=this.serviceagent.LesFraixdesMissionClotureParAgent(this.MissionStat);
 
 public void StatDepartement() throws IOException, ParseException{
     
-FacesContext.getCurrentInstance().getExternalContext().redirect("MissionStat.xhtml"); // redirection vers la page d'acceuil apré une verification de l'utilisateur
+FacesContext.getCurrentInstance().getExternalContext().redirect("MissionStat.xhtml"); 
 if (this.date1==null || this.date2==null){
 this.MissionStat=this.serviceagent.ListerLesMissionClotureDesAgents(this.serviceDepartement.TousLesAgentDepartement(this.serviceDepartement.RechercheDepParNom(this.Departements)));
 this.Stat=this.serviceagent.LesFraixdesMissionClotureParAgent(this.MissionStat);}
@@ -986,15 +1001,6 @@ this.MissionStat=this.serviceagent.ListerLesMissionClotureDesAgentsParDate(this.
 this.Stat=this.serviceagent.LesFraixdesMissionClotureParAgent(this.MissionStat);
         }
 }
-
-
-
-public void rejet(){
-this.mission.setRejet(this.Rejet);
-this.service.AffecterRejet(mission);
-    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Terminer!", "prevision Ajouter."));
-
-}
-
+// </editor-fold> 
 
 }

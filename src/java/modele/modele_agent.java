@@ -552,7 +552,7 @@ Departement d2 =this.agent.getAgentAffecter();
          
                 this.nouvelleagent = new Agent();
              FacesContext f=FacesContext.getCurrentInstance();
-             f.addMessage(null,new FacesMessage("Ajout effectuer"));
+             f.addMessage(null,new FacesMessage("ajout effectué"));
              
          }else{
               FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Matricule Existant Ou Directeurs Existant."));
@@ -621,7 +621,7 @@ Departement d2 =this.agent.getAgentAffecter();
      public void updateagent() throws IOException, NoSuchAlgorithmException
       {
           
-          this.Message = "Operation effectuer , Agent modifier" ;
+          this.Message = "opération effectuée  , Agent modifier" ;
           this.nouvelleagent.setMotDePasse(encryption.cryptme(this.nouvelleagent.getMotDePasse()))  ;
           
          // this.service.update(this.nouvelleagent);
@@ -633,7 +633,7 @@ Departement d2 =this.agent.getAgentAffecter();
        // <editor-fold desc="suppression agent" defaultstate="collapsed">
      public void deleteAgent() throws IOException
      {
-         this.Message = "Operation effectuer , Agent supprimer" ;
+         this.Message = "opération effectuée  , Agent supprimer" ;
          this.service.delete(this.nouvelleagent);
           this.nouvelleagent = new Agent();
            FacesContext.getCurrentInstance().getExternalContext().redirect("users.xhtml");
