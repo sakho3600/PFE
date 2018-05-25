@@ -72,11 +72,36 @@
                                                                 <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="out1" />
                                                                 <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="ftotal"/>
                                                                                                                                              </p:inputText> </div> 
-                                                        <div class="form-group"> <p:outputLabel  value="Voiture consomation">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.mission.voitureCosomation}"  required="true" placeholder="Consomation">
+                                                           <div class="form-group"> <p:outputLabel  value="Matricule Vehicule :">  </p:outputLabel> 
+                                                               <p:inputText  value="#{modele_agent.vehiculeMatricule}" id="carDetail" style="width: 20%" required="true"  placeholder="Matricule vehicule">
                                                                 <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="out1" />
                                                                 <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="ftotal"/>
-                                                                                                                                             </p:inputText> </div>
-                                                       <div class="form-group"> 
+
+                                                            
+                                                            </p:inputText> 
+                                                            <p:dataTable  var="car" emptyMessage="Vous n'avez aucune mission." value="#{modele_agent.vehicule}" rows="9" paginator="true"  >
+                    
+                                                                 <p:column headerText="Id:" filterBy="#{car.id}" filterMatchMode="contains"   >
+                                                                     <h:outputText value="#{car.id}"  />
+                                                                  </p:column>
+                                                                <p:column headerText="immatriculation:" filterBy="#{car.immatriculation}" filterMatchMode="contains"   >
+                                                                     <h:outputText value="#{car.immatriculation}"  />
+                                                                  </p:column>
+                                                                <p:column headerText="Model " filterBy="#{car.model}" filterMatchMode="contains"   >
+                                                                     <h:outputText value="#{car.model}"  />
+                                                                  </p:column>
+                                                                <p:column headerText="Consommation ">
+                                                                     <h:outputText value="#{car.consommation}"  />
+                                                                  </p:column>
+                                                                <p:column headerText="numero carte grise " >
+                                                                     <h:outputText value="#{car.numcarte_grise}"  />
+                                                                  </p:column>
+                                                                <p:column headerText="numero de chasis "    >
+                                                                     <h:outputText value="#{car.numchasis}"  />
+                                                                  </p:column>
+                                                                    
+                                                            </p:dataTable>
+       </div>   <div class="form-group"> 
                                                         <h:panelGrid columns="2" cellpadding="5">
        
         <p:outputLabel for="multiple" value="Les Villes:" />

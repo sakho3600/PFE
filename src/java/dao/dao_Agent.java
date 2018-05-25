@@ -453,12 +453,19 @@ try{
             m.setEtat(1);
         }
     
-    }else
+    }else{
             m.setEtat(1);
-    
-                   
-                          s.update(m);
- closeSession();  
+    }
+ 
+        openSession();
+
+    s.saveOrUpdate(m);
+    System.out.println("**************************");
+    System.out.println(m.getEtat());
+    System.out.println(m.getValidDirecturGeneral());
+    System.out.println("**************************");
+
+    closeSession();  
                }catch(Exception e){
 	e.printStackTrace();
        

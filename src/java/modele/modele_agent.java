@@ -803,7 +803,8 @@ else if (this.mission.getAgent().getMatricule()!=agent.getMatricule()){
 else 
 
 {
-   this.Message=null;
+    this.Message=null;
+this.vehiculeMatricule=this.mission.getVehicule().getId();
 
     this.LesVillesString();
         FacesContext.getCurrentInstance().getExternalContext().redirect("ModifierMission.xhtml");
@@ -830,12 +831,21 @@ else
         mission.setFdiver(this.fdiver);
         mission.setFhebergement(this.fhebergement);
         mission.setFtransport(this.ftransport);
-       if (this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin())){
+      vehicule v;
+      v=this.serviceVehicule.recherchevehicule(this.vehiculeMatricule);
+        if (this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin())){
           FacesContext f=FacesContext.getCurrentInstance();
-         f.addMessage(null,new FacesMessage("Erreur date!!"+(this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin()))));
+         f.addMessage(null,new FacesMessage("Erreur date!!"));
      
-        }else{
-        
+        }
+        else if (v==null){
+           FacesContext f=FacesContext.getCurrentInstance();
+         f.addMessage(null,new FacesMessage("Erreur vehicule inexistant!!"));
+     
+        }
+        else{
+                mission.setVehicule(this.serviceVehicule.recherchevehicule(this.vehiculeMatricule));
+
         
         this.Message=serviceMission.ModifierMission(mission);
         
@@ -843,6 +853,7 @@ else
          insertprevision() ;
          this.date1 = new Date();
          this.date2 = new Date() ;
+         this.vehiculeMatricule=0;
          
     FacesContext.getCurrentInstance().getExternalContext().redirect("AnnulerMission.xhtml");
  }}

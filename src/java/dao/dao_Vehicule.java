@@ -54,6 +54,19 @@ public class dao_Vehicule {
     closeSession();
     }
     
+    public vehicule recherchevehicule(int m){
+   vehicule v=new vehicule();
+        try{ 
+            openSession() ;
+
+        v=(vehicule) s.get(vehicule.class,m) ;   
+        closeSession() ;
+    }catch(Exception e){
+	e.printStackTrace();
+       
+        }
+        return v;
+    }
     
        public List<vehicule> listevehicule()
     {
