@@ -123,7 +123,7 @@ public class modele_agent {
       {  cities.add(str.toString());}
       
        insertprevision();
-       vehicule = serviceVehicule.listevehicule() ;
+       vehicule = serviceVehicule.listevehiculeDisponible() ;
    
     }
   
@@ -586,7 +586,11 @@ Departement d2 =this.agent.getAgentAffecter();
         mission.setFdiver(this.fdiver);
         mission.setFhebergement(this.fhebergement);
         mission.setFtransport(this.ftransport);
+        this.vh.setDisponibiliter("0");
         mission.setVehicule(this.vh);
+        serviceVehicule.Updatevehicule(this.vh);
+        
+        vehicule = serviceVehicule.listevehiculeDisponible() ;
         
        if (this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin())){
           FacesContext f=FacesContext.getCurrentInstance();
@@ -604,7 +608,7 @@ Departement d2 =this.agent.getAgentAffecter();
          
          
          FacesContext f=FacesContext.getCurrentInstance();
-         f.addMessage(null,new FacesMessage("Ajout effectuer"));
+         f.addMessage(null,new FacesMessage("Ajout effectuée"));
         }}
         // </editor-fold>
      
@@ -721,6 +725,10 @@ Departement d2 =this.agent.getAgentAffecter();
   
     public void ClotureMission() throws IOException{
     this.Message=this.serviceMission.ClotureMission(mission, agent);
+    vehicule vehi = mission.getVehicule() ; 
+    vehi.setDisponibiliter("1");
+  serviceVehicule.Updatevehicule(this.vh);
+  vehicule = serviceVehicule.listevehiculeDisponible() ;
     FacesContext.getCurrentInstance().getExternalContext().redirect("LesMissions.xhtml");}
 
     
@@ -779,6 +787,10 @@ Departement d2 =this.agent.getAgentAffecter();
   public void AnnulerMission() throws IOException{
   
   this.Message=this.serviceMission.AnnulerMission(mission, agent);
+  vehicule vehi = mission.getVehicule() ; 
+  vehi.setDisponibiliter("1");
+  serviceVehicule.Updatevehicule(this.vh);
+  vehicule = serviceVehicule.listevehiculeDisponible() ;
     FacesContext.getCurrentInstance().getExternalContext().redirect("AnnulerMission.xhtml");}
 
   
@@ -865,6 +877,10 @@ this.vehiculeMatricule=this.mission.getVehicule().getId();
 public void rejet() throws IOException{
 this.mission.setRejet(this.Rejet);
 this.service.AffecterRejet(mission);
+vehicule vehi = mission.getVehicule() ; 
+  vehi.setDisponibiliter("1");
+  serviceVehicule.Updatevehicule(this.vh);
+  vehicule = serviceVehicule.listevehiculeDisponible() ;
 FacesContext.getCurrentInstance().getExternalContext().redirect("ValidationMission.xhtml");
 
 }   

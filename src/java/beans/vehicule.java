@@ -59,7 +59,10 @@ public class vehicule implements Serializable{
    
    @Column(name="Carburant")
    private String Carburant;
-
+   
+   @Column(name="Disponibiliter")
+   private String Disponibiliter="1" ;
+   
     public vehicule() {
     }
 
@@ -156,6 +159,14 @@ public class vehicule implements Serializable{
         this.Date_de_mise_en_circulation = Date_de_mise_en_circulation;
         this.Nom = Nom;
         this.Carburant = Carburant;
+    }
+
+    public String getDisponibiliter() {
+        return Disponibiliter;
+    }
+
+    public void setDisponibiliter(String Disponibiliter) {
+        this.Disponibiliter = Disponibiliter;
     }
 
     

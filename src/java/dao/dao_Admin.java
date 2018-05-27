@@ -10,6 +10,7 @@ import beans.Mission;
 import beans.Personnel;
 import beans.prevision;
 import beans.privileges;
+import beans.vehicule;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -62,6 +63,15 @@ public class dao_Admin {
            openSession();
        m.setStatus("Rejeter");
        s.update(m);
+           
+           closeSession();
+
+     }
+     
+     public void Updatevehicule(vehicule vehicule){
+           openSession();
+       
+       s.update(vehicule);
            
            closeSession();
 

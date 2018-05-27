@@ -83,4 +83,27 @@ public class dao_Vehicule {
         }
      return vehicule ;
     }
+       public List<vehicule> listevehiculeDisponible()
+    {
+         List<vehicule> vehicule= new ArrayList<>();
+       try { 
+    openSession() ;
+             String hql = "FROM vehicule where Disponibiliter=1";
+             Query query = s.createQuery(hql);
+             vehicule = query.list();
+    closeSession() ;
+    }catch(Exception e){
+	e.printStackTrace();
+       
+        }
+     return vehicule ;
+    }
+       public void Updatevehicule(vehicule vehicule){
+           openSession();
+       
+       s.update(vehicule);
+           
+           closeSession();
+
+     }
 }
