@@ -291,7 +291,7 @@ private boolean debug = true;
               {
                   sendmail(cleanmails.get(i).getEmail()) ;
               }
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Emails Envoyer!", " Les Adherents conserner ont été informé")); 
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Emails Envoyer!", " Les Adherents consernés ont été informé")); 
               
               }else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Emails Non Envoyer!", " Vous n'avez pas importer des Bulletins de soins")); 
