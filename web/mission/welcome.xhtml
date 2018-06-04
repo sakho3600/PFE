@@ -1,18 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <f:view contentType="text/html">
-    <h:head>
-        <title>Agent</title>
+     <h:head>
+        <title>Administrator</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -46,17 +40,45 @@ and open the template in the editor.
 <link href="../../resources/adminresource/css/custom.css" rel="stylesheet"> </link>
 <!--//Metis Menu -->
     </h:head>
-    <h:body>
-     
-            <section>
+    <h:body class="cbp-spmenu-push">
+      
+          <div class="main-content">
+          
                  <ui:include src="topbar.xhtml" />
-            </section>
-        
-            <section>
+            
+           
                  <ui:include src="leftbar.xhtml" />
-            </section>
+            
+        <div id="page-wrapper">
+			<div class="main-page">
+				<div class="forms">
+					<h2 class="title1">Nouveauté </h2>
+					<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
+						<div class="form-title">
+							<h4>Sport</h4>
+						</div>
+                                           
+						<div class="form-body">
+                                                   
+                                                        
+                                                        <div class="form-group" >
+    <p:feedReader value="http://www.jawharafm.net/fr/rss/showRss/88/1/6" var="feed">
+    <h:outputText value="#{feed.title}" style="font-weight: bold;display:block"/>
+    <h:outputText value="#{feed.description.value}" escape="false"/>
+    <p:separator />
+    </p:feedReader>  </div>
+                                                        
+						</div>
+                                        
+					</div>
+					</div>
+                            </div>
+            </div>
+        </div>
         
-        
+            
+            
+    
         
         <!-- side nav js -->
 	<script src='../../resources/adminresource/js/SidebarNav.min.js' type='text/javascript'></script>
@@ -71,7 +93,8 @@ and open the template in the editor.
 			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 				showLeftPush = document.getElementById( 'showLeftPush' ),
 				body = document.body;
-				
+                        
+                        
 			showLeftPush.onclick = function() {
 				classie.toggle( this, 'active' );
 				classie.toggle( body, 'cbp-spmenu-push-toright' );
