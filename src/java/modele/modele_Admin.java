@@ -62,6 +62,8 @@ public class modele_Admin  {
         private String Departements;
         private String TypeRejet;
         private String Rejet;
+                 private String LesFaisreel;
+
         private vehicule vehicule=new vehicule();
          //Les dates
     private Date date1;
@@ -106,7 +108,6 @@ public class modele_Admin  {
      Mission modifMission = new Mission();
      cryptpasswords encryption = new cryptpasswords() ; // SHA256 ENCRYPTION
          private List<vehicule> cars2;
-         
     @ManagedProperty("#{carService}")
     dao_Vehicule serviceVehicule=new dao_Vehicule();
 
@@ -207,6 +208,14 @@ vehicule v=new vehicule(((vehicule) event.getObject()).getId(),((vehicule) event
 
     public void setStat(String Stat) {
         this.Stat = Stat;
+    }
+
+    public String getLesFaisreel() {
+        return LesFaisreel;
+    }
+
+    public void setLesFaisreel(String LesFaisreel) {
+        this.LesFaisreel = LesFaisreel;
     }
 
     public String getTypeRejet() {
@@ -932,6 +941,7 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
  public void imprimer(Mission mission) throws IOException{
  this.mission=mission;
          this.villes= this.serviceMission.StringVille(this.mission);
+        this.LesFaisreel=this.serviceagent.LesFraixduneMissionCloture(mission);
 
  FacesContext.getCurrentInstance().getExternalContext().redirect("FormPrint.xhtml");             
 
@@ -973,22 +983,43 @@ this.service.AffecterRejet(mission);
 
     // <editor-fold desc="Stats" defaultstate="collapsed">
 public void StatDate() throws IOException, ParseException{
+    if (this.date1==null || this.date2==null){
+         FacesContext.getCurrentInstance().getExternalContext().redirect("MissionStat.xhtml"); 
+this.MissionStat=this.serviceagent.ListertoutesMissionsCloture();
+this.Stat=this.serviceagent.LesFraixdesMissionClotureParAgent(this.MissionStat);
+
+     }else if (this.serviceMission.CompareDateBefore(this.date1, this.date2)){
+          FacesContext f=FacesContext.getCurrentInstance();
+         f.addMessage(null,new FacesMessage("Erreur date!!"+(this.serviceMission.compareDate(this.date1,this.date2))));
+}else{
           FacesContext.getCurrentInstance().getExternalContext().redirect("MissionStat.xhtml"); 
 this.MissionStat=this.serviceagent.ListerLesMissionClotureParDate(this.date1,this.date2);
 this.Stat=this.serviceagent.LesFraixdesMissionClotureParAgent(this.MissionStat);
-
+    }
 }
 public void StatAgent() throws IOException, ParseException{
-FacesContext.getCurrentInstance().getExternalContext().redirect("MissionStat.xhtml"); 
-if (this.date1==null || this.date2==null){
+   if ((this.serviceagent.ifExists(this.matricule))==false){
+          FacesMessage msg = new FacesMessage("Matricule erroné");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    
+     } else if (this.date1==null || this.date2==null){
+         FacesContext.getCurrentInstance().getExternalContext().redirect("MissionStat.xhtml"); 
 this.MissionStat=this.serviceagent.ListerlesMissionClotureParAgent(this.matricule);
 this.Stat=this.serviceagent.LesFraixdesMissionClotureParAgent(this.MissionStat);
-}else{
+
+     } 
+             
+   else  if (this.serviceMission.CompareDateBefore(this.date1, this.date2)){
+          FacesContext f=FacesContext.getCurrentInstance();
+         f.addMessage(null,new FacesMessage("Erreur date!!"+(this.serviceMission.compareDate(this.date1,this.date2))));
+}
+   else{
+FacesContext.getCurrentInstance().getExternalContext().redirect("MissionStat.xhtml"); 
 this.MissionStat=this.serviceagent.ListerlesMissionClotureParAgentParDate(this.matricule, this.date1, this.date2);
 this.Stat=this.serviceagent.LesFraixdesMissionClotureParAgent(this.MissionStat);
 
-}
-}
+}}
+
 
 public void StatDepartement() throws IOException, ParseException{
     
@@ -996,7 +1027,13 @@ FacesContext.getCurrentInstance().getExternalContext().redirect("MissionStat.xht
 if (this.date1==null || this.date2==null){
 this.MissionStat=this.serviceagent.ListerLesMissionClotureDesAgents(this.serviceDepartement.TousLesAgentDepartement(this.serviceDepartement.RechercheDepParNom(this.Departements)));
 this.Stat=this.serviceagent.LesFraixdesMissionClotureParAgent(this.MissionStat);}
+ else  if (this.serviceMission.CompareDateBefore(this.date1, this.date2)){
+          FacesContext f=FacesContext.getCurrentInstance();
+         f.addMessage(null,new FacesMessage("Erreur date!!"+(this.serviceMission.compareDate(this.date1,this.date2))));
+}
 else{
+     FacesContext.getCurrentInstance().getExternalContext().redirect("MissionStat.xhtml"); 
+
 this.MissionStat=this.serviceagent.ListerLesMissionClotureDesAgentsParDate(this.serviceDepartement.TousLesAgentDepartement(this.serviceDepartement.RechercheDepParNom(this.Departements)),this.date1,this.date2);
 this.Stat=this.serviceagent.LesFraixdesMissionClotureParAgent(this.MissionStat);
         }

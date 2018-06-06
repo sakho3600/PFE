@@ -56,7 +56,10 @@
 						<div class="form-title">
 							<h4>Information effectives de la mission :</h4>
 						</div>
-<div class="form-body">
+<div class="form-body"> <p:growl id="msgs" showDetail="true" />
+                                                        <p:messages id="messages" showDetail="true" closable="true">
+                                                        
+                                                          </p:messages>
                                        <h:form> 
                                                         
                                                                   <div class="form-group">     
@@ -71,7 +74,7 @@
                                                    </h:panelGrid></div>
                                                            
                                                  
-             <p:commandButton value="Ajouter" id="ajax"  actionListener="#{modele_Admin.StatDate()}" class="btn btn-default" ajax="false"/>
+             <p:commandButton value="Chercher" id="ajax"  actionListener="#{modele_Admin.StatDate()}" class="btn btn-default" ajax="false"/>
                                                         
 
                                                     

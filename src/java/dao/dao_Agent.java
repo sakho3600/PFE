@@ -194,9 +194,7 @@ try{
         openSession();
                     Query query = s.createQuery("from Mission where Matricule = :code and Status='Colturé'");
                     query.setParameter("code", Matricule);
-                     if(query.list().isEmpty()){
-                     l=null;}
-                     else{
+                     if(!query.list().isEmpty()){
                        l = query.list();
                    }
 
@@ -506,6 +504,36 @@ try{
         
     }
 
+    public String LesFraixduneMissionCloture(Mission mission){
+        String Chain=new String();
+        Chain="Mission non Cloturé";
+            Cloture result=new Cloture() ;   
+
+    
+    float fd=0;
+    float fh=0;
+    float ft=0;
+    try{openSession();
+
+    result = (Cloture) s.get(Cloture.class,mission.getCodeMission());
+    
+ closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+               }
+    
+    if (result !=null){
+        fd=fd+result.getFdiver();
+    fh=fh+result.getFhebergent();
+    ft=ft+result.getFtransport();
+        Chain="Les Frais divers "+fd+" Les Frais D'hebergement "+fh+" Les Frais de Transport "+ft;}
+
+    return Chain;
+    
+    }
+    
+
+
     
     public String LesFraixdesMissionCloture(List<Mission> LM){
         if (!LM.isEmpty())        {
@@ -596,8 +624,23 @@ try{
      }
       
     }
- 
- 
+ public List<Mission> ListertoutesMissionsCloture() throws ParseException{
+              List<Mission> l= new ArrayList<>();
+
+   try{    
+   openSession();
+                    Query query = s.createQuery("from Mission where Status=:Stat");
+                    query.setParameter("Stat","Colturé");
+                    if(!query.list().isEmpty()){
+                   
+                       l = query.list();
+                   }
+ closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }    return l;
+ }
  public List<Mission> ListerLesMissionClotureParDate(Date d1,Date d2) throws ParseException{
  DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
    Date datedeb=dateFormat.parse(dateFormat.format(d1));

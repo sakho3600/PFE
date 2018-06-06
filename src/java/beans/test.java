@@ -47,6 +47,14 @@ public class test {
     
  
  public static void main (String []args) throws NoSuchAlgorithmException, ParseException{
+  dao_Mission m=new dao_Mission();
+  Mission mi=new Mission();
+  mi=m.RetourMission(9);
+         System.out.println();
+
+     /*   dao_Agent d=new dao_Agent();
+       System.out.println(d.ifExists(700));
+     /*
  dao_Vehicule d=new dao_Vehicule();
  dao_Mission m =new dao_Mission();  
  Mission M=m.RetourMission(26);

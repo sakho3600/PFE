@@ -208,7 +208,15 @@ else if (m.getStatus().equals("Annuler"))
 return Message;
     }
     
+    public boolean CompareDateBefore(Date d,Date d1)throws ParseException{
     
+   DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+   Date datedeb=dateFormat.parse(dateFormat.format(d));
+   Date dateFin=dateFormat.parse(dateFormat.format(d1));
+   
+    return( datedeb.after(dateFin) );
+
+    }
     public boolean compareDate(Date d,Date d1) throws ParseException{
  
       

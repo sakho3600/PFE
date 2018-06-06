@@ -84,6 +84,7 @@ public class modele_agent {
      private Float prixGasoil;
      private String rejet;
      private int vehiculeMatricule ;
+     private String LesFaisreel;
      
      /** Tables **/ 
     private List<Agent> agents ;
@@ -300,6 +301,14 @@ public class modele_agent {
 
     public void setMatriculeMission(int matriculeMission) {
         this.matriculeMission = matriculeMission;
+    }
+
+    public String getLesFaisreel() {
+        return LesFaisreel;
+    }
+
+    public void setLesFaisreel(String LesFaisreel) {
+        this.LesFaisreel = LesFaisreel;
     }
 
     
@@ -698,6 +707,7 @@ Departement d2 =this.agent.getAgentAffecter();
         
         this.mission=m;
          this.LesVillesString();
+         this.LesFaisreel=this.service.LesFraixduneMissionCloture(mission);
         FacesContext.getCurrentInstance().getExternalContext().redirect("FormPrint.xhtml");
     }
       public void FormPrintRejet(Mission m) throws IOException{

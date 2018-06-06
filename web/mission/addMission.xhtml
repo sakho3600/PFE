@@ -54,7 +54,7 @@
 					<h2 class="title1">Ajouter une Mission </h2>
 					<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
 						<div class="form-title">
-							<h4>Information effectives de la mission :</h4>
+							<h4>Les Informations effectives de la mission :</h4>
 						</div>
                                             <h:form id="form"> 
 						<div class="form-body">
@@ -66,20 +66,20 @@
                                                         <div class="form-group"> <p:outputLabel  value="Matricule  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.agent.matricule}"  required="true" readonly='true'> </p:inputText> </div>
                                                         <div class="form-group"> <p:outputLabel  value="Nom  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.agent.nom}"  required="true" readonly='true'> </p:inputText> </div>
                                                         <div class="form-group"> <p:outputLabel  value="Prenom :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.agent.pernom}" required="true" readonly='true'></p:inputText> </div> 
-                                                        <div class="form-group"> <p:outputLabel  value="Intitule de la mission :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.mission.intitule_Mission}" required="true" placeholder="Intitule de la mission"></p:inputText> </div> 
+                                                        <div class="form-group"> <p:outputLabel  value="Intitulé de la mission :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.mission.intitule_Mission}" required="true" placeholder="Intitule de la mission"></p:inputText> </div> 
                                                         <div class="form-group"> <p:outputLabel  value="Objectif :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.mission.objectif}" required="true" placeholder="Objectif"></p:inputText> </div> 
-                                                        <div class="form-group"> <p:outputLabel  value="Kilometrage:">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.mission.kilometrage}"  required="true" placeholder="Kilometrage">
+                                                        <div class="form-group"> <p:outputLabel  value="Kilométrage:">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.mission.kilometrage}"  required="true" placeholder="Kilometrage">
                                                                 <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="out1" />
                                                                 <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="ftotal"/>
                                                                                                                                              </p:inputText> </div> 
-                                                        <div class="form-group"> <p:outputLabel  value="Matricule Vehicule :">  </p:outputLabel> 
+                                                        <div class="form-group"> <p:outputLabel  value="Matricule du vehicule :">  </p:outputLabel> 
                                                             <p:inputText  value="#{modele_agent.vehiculeMatricule}" id="carDetail" style="width: 20%" required="true"  placeholder="Matricule vehicule">
                                                                 <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="out1" />
                                                                 <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="ftotal"/>
 
                                                             
                                                             </p:inputText> 
-                                                            <p:dataTable  var="car" emptyMessage="Vous n'avez aucune mission." value="#{modele_agent.vehicule}" rows="9" paginator="true"  >
+                                                            <p:dataTable  var="car" emptyMessage="Aucun vehicule n'est disponnible." value="#{modele_agent.vehicule}" rows="9" paginator="true"  >
                     
                                                                  <p:column headerText="Id:" filterBy="#{car.id}" filterMatchMode="contains"   >
                                                                      <h:outputText value="#{car.id}"  />
@@ -87,7 +87,7 @@
                                                                 <p:column headerText="immatriculation:" filterBy="#{car.immatriculation}" filterMatchMode="contains"   >
                                                                      <h:outputText value="#{car.immatriculation}"  />
                                                                   </p:column>
-                                                                <p:column headerText="Model " filterBy="#{car.model}" filterMatchMode="contains"   >
+                                                                <p:column headerText="Modéle " filterBy="#{car.model}" filterMatchMode="contains"   >
                                                                      <h:outputText value="#{car.model}"  />
                                                                   </p:column>
                                                                 <p:column headerText="Consommation ">
@@ -121,10 +121,6 @@
                                                    <p:selectOneListbox id="basic" value="#{modele_agent.type}" style="width:100px;">
             <f:selectItem itemLabel="Reparation vehicule" itemValue="Reparation vehicule"  />
             <f:selectItem itemLabel="Conferance" itemValue="Conferance" />
-            <f:selectItem itemLabel="a" itemValue="3" />
-            <f:selectItem itemLabel="a" itemValue="4" />
-            <f:selectItem itemLabel="a" itemValue="5" />
-            <f:selectItem itemLabel="a" itemValue="6" />
         </p:selectOneListbox>
                                                </h:panelGrid>     </div>
                                                         
