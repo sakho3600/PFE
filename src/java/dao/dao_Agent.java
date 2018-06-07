@@ -677,8 +677,52 @@ closeSession();
        
         } 
      }
+
+    public List<Mission> ListerLesMissionClotureDesAgentsParTrimestre(List<Agent>LAgent) {
+     if (LAgent==null){
+           return null;
+       }else{
+        
+        List<Mission>ListMiss=new ArrayList<>();       
+        
+        for (Agent ag:LAgent){
+            List<Mission>l=ListerlesMissionClotureParAgentParTrimestre(ag.getMatricule());
+            if(l!=null)
+            ListMiss.addAll(l);
+                }
+   if (ListMiss!=null)
+            return ListMiss;
+        else 
+            return null;
+     }
+      
+    }    
+
+
+    public List<Mission> ListerlesMissionClotureParAgentParTrimestre(int Matricule) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        
+                      List<Mission> l= new ArrayList<>();
+
+   try{     
+   openSession();
+                    Query query = s.createQuery("from Mission where Matricule = :code and  DATEDIFF( sysdate(),DateDeh )<=2 and Status=:Stat");
+                    query.setParameter("code", Matricule);
+               
+                    query.setParameter("Stat","Colturé");
+                     if(!query.list().isEmpty()){
+                    
+                       l = query.list();
+                   }
+ closeSession();  
+               }catch(Exception e){
+	e.printStackTrace();
+       
+        }    return l;}
+
+}
      
      
 
-}
+
 

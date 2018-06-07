@@ -40,7 +40,7 @@ public class ChartView implements Serializable {
    List<Departement>ld=d.ListerLesDepartements();
    for(Departement dd:ld){
        List<Agent>a= d.TousLesAgentDepartement(dd);
-       List<Mission>lm=da.ListerLesMissionClotureDesAgents(a);
+       List<Mission>lm=da.ListerLesMissionClotureDesAgentsParTrimestre(a);
         String chr=da.LesFraixdesMissionCloture(lm);
        if(chr.length()>0){
          
