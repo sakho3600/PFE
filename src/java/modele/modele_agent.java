@@ -42,6 +42,7 @@ import javax.faces.context.FacesContext;
  
 
 import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 
 
 import utilitaire.cryptpasswords ;
@@ -481,9 +482,33 @@ Departement d2 =this.agent.getAgentAffecter();
         this.date2 = (Date) event.getObject();
         calculMontant();
        }
+     
+     public void onRowSelectutilisateur(SelectEvent event) {
+         Agent id = (Agent) event.getObject() ;
+         this.matricule = id.getMatricule() ;
+        FacesMessage msg = new FacesMessage("Utilisateur choisit" );
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        
+        
+        
+    }
+     
+     public void onRowSelect(SelectEvent event) {
+         vehicule id = (vehicule) event.getObject() ;
+        this.vh = fromVehiculeMatriculeToConsommation(id.getId()) ;
+        FacesMessage msg = new FacesMessage("Vehicule choisit" );
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        
+        if (this.mission.getKilometrage() != 0.0f) // verifier si un float est null
+        {
+            onBlurkilometrage() ;
+        }
+        
+    }
        public void onBlurkilometrage() { 
           
-           this.vh = fromVehiculeMatriculeToConsommation(this.vehiculeMatricule) ;
+         //  this.vh = fromVehiculeMatriculeToConsommation(this.vehiculeMatricule) ;
+          if (this.vh != null) {
            if (vh.getCarburant().equals("Essence")) {
         this.ftransport = (((vh.getConsommation() / 100)  * this.mission.getKilometrage())  * this.prixEssance) ; 
                 
@@ -494,6 +519,7 @@ Departement d2 =this.agent.getAgentAffecter();
                 
          this.ftotal = this.fdiver + this.fhebergement + this.ftransport ;
            }
+          }
     }
        
       public vehicule fromVehiculeMatriculeToConsommation(int imMatricule) // getting the consommation from car matricule

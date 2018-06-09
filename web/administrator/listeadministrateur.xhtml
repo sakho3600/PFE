@@ -63,14 +63,14 @@
                                             
                                             
 						<div class="form-body">
-                                                    <h:form> 
+                                                    <h:form id="listadmin"> 
                                                         <p:messages id="messages" showDetail="true" closable="true">
                                                         
                                                           </p:messages>
                                                         
                                                   
                                                          <div class="form-group">
-                                                             <p:inputText value="#{modele_Admin.matricule}"  required="true"  validatorMessage="La Matricule doit étre un nombre" style="width:20%"> </p:inputText> </div> 
+                                                             <p:outputLabel value="#{modele_Admin.matricule}" id="out1" style="width:20%"/> </div> 
                                                           
                                                              
                                              
@@ -87,15 +87,15 @@
 							<h4>Liste des Admins :</h4>
 						</div>
 						<div class="form-body">
-                                                    <h:form> 
+                                                    <h:form id="form"> 
                                                        
                                                         
                                                   
                                                          <div class="form-group">
                                                              
                                                          
-                                                             <p:dataTable  var="Admin" value="#{modele_Admin.tableAdmin()}" rows="9" paginator="true" >
-                    
+                                                             <p:dataTable  var="Admin" value="#{modele_Admin.tableAdmin()}" selectionMode="single" selection="#{modele_Admin.adminmofid}" rowKey="#{Admin.matricule}" rows="9" paginator="true" >
+                                                                 <p:ajax event="rowSelect" listener="#{modele_Admin.onRowSelectutilisateur}"  update="listadmin:out1"/>
                                                                  <p:column headerText="Matricule Agent" filterBy="#{Admin.matricule}" filterMatchMode="exact"   >
                                                                      <h:outputText value="#{Admin.matricule}"  />
                                                                   </p:column>

@@ -63,14 +63,15 @@
                                             
                                             
 						<div class="form-body">
-                                                    <h:form> 
+                                                    <h:form id="list"> 
                                                         <p:messages id="messages" showDetail="true" closable="true">
                                                         
                                                           </p:messages>
                                                         
                                                   
                                                          <div class="form-group">
-                                                         <p:inputText value="#{modele_agent.matricule}"  required="true"  validatorMessage="La Matricule doit étre un nombre" style="width:20%"> </p:inputText> </div> 
+                                                             <p:outputLabel value="#{modele_agent.matricule}" id="out1" style="width:20%"/>
+                                                        </div> 
                                                           
                                                              
                                              
@@ -87,7 +88,7 @@
 							<h4>Liste des Agents :</h4>
 						</div>
 						<div class="form-body">
-                                                    <h:form> 
+                                                    <h:form id="form"> 
                                                         <p:messages id="messages" showDetail="true" closable="true">
                                                         
                                                           </p:messages>
@@ -96,8 +97,11 @@
                                                          <div class="form-group">
                                                              
                                                          
-                                                             <p:dataTable  var="agent" value="#{modele_agent.tableAgent()}" rows="9" paginator="true" >
-                    
+                                                             <p:dataTable  var="agent" value="#{modele_agent.tableAgent()}" selectionMode="single" selection="#{modele_Admin.agentmodif}" rowKey="#{agent.matricule}" rows="9" paginator="true" >
+                                                                        <f:facet name="header">
+                                                                Utilisateur Agent
+                                                                               </f:facet>
+                                                                <p:ajax event="rowSelect" listener="#{modele_agent.onRowSelectutilisateur}"  update="list:out1"/>
                                                                  <p:column headerText="Matricule Agent" filterBy="#{agent.matricule}" filterMatchMode="exact"   >
                                                                      <h:outputText value="#{agent.matricule}"  />
                                                                   </p:column>

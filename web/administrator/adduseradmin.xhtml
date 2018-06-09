@@ -63,7 +63,7 @@
                                                         
                                                           </p:messages>
                                                         
-                                                        <div class="form-group"> <p:outputLabel  value="Matricule  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.matricule}" placeholder="Matricule" required="true" validatorMessage="La Matricule doit étre un nombre"> </p:inputText> </div>
+                                                        <div class="form-group"> <p:outputLabel  value="Matricule  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.matricule}" placeholder="Matricule" required="true" validatorMessage="La Matricule doit étre un nombre de 8 chiffre"> <f:validateLength minimum="8" maximum="8" /> <p:clientValidator /> </p:inputText> </div>
                                                         <div class="form-group"> <p:outputLabel  value="Nom  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.nom}" placeholder="Nom" required="true" > </p:inputText> </div>
                                                         <div class="form-group"> <p:outputLabel  value="Prenom :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.pernom}" placeholder="Prenom" required="true"></p:inputText> </div> 
                                                         <div class="form-group"> <p:outputLabel  value="Pseudo :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_Admin.nouvelleadmin.username}" placeholder="Pseudo" required="true"></p:inputText> </div> 

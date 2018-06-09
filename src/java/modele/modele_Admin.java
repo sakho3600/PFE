@@ -105,6 +105,8 @@ public class modele_Admin  {
     prevision previs=new prevision();
     prevision updateprev = new prevision();
     Cloture cloture=new Cloture();
+    Agent agentmodif=new Agent() ;
+    Admin adminmofid=new Admin() ;
      Mission modifMission = new Mission();
      cryptpasswords encryption = new cryptpasswords() ; // SHA256 ENCRYPTION
          private List<vehicule> cars2;
@@ -140,6 +142,19 @@ public class modele_Admin  {
 
     }
 
+    
+    //<editor-fold desc="Modification users" defaultstate="collapsed" >
+      public void onRowSelectutilisateur(SelectEvent event) {
+         Admin id = (Admin) event.getObject() ;
+         this.matricule = id.getMatricule() ;
+        FacesMessage msg = new FacesMessage("Admin choisit" );
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        
+        
+        
+    }
+    
+    //</editor-fold>
     
    //<editor-fold desc="Modification d'un vehicule" defaultstate="collapsed" >
     public void onRowEdit(RowEditEvent event) {
@@ -177,6 +192,24 @@ vehicule v=new vehicule(((vehicule) event.getObject()).getId(),((vehicule) event
     public void setService(dao_Vehicule serviceVehicule) {
         this.serviceVehicule = serviceVehicule;
     }  
+
+    public Agent getAgentmodif() {
+        return agentmodif;
+    }
+
+    public void setAgentmodif(Agent agentmodif) {
+        this.agentmodif = agentmodif;
+    }
+
+    public Admin getAdminmofid() {
+        return adminmofid;
+    }
+
+    public void setAdminmofid(Admin adminmofid) {
+        this.adminmofid = adminmofid;
+    }
+    
+    
     
     public String getDepartements() {
         return Departements;
