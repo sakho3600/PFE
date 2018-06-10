@@ -39,8 +39,9 @@ public class dao_Agent {
     }
     /* fermer une session Hibernate */
     private void closeSession(){
-        s.getTransaction().commit();
-        s.close();
+       if (!s.getTransaction().wasCommitted())
+       { s.getTransaction().commit();
+        s.close();}
     }
     
        private String grade; 

@@ -498,11 +498,14 @@ Departement d2 =this.agent.getAgentAffecter();
         this.vh = fromVehiculeMatriculeToConsommation(id.getId()) ;
         FacesMessage msg = new FacesMessage("Vehicule choisit" );
         FacesContext.getCurrentInstance().addMessage(null, msg);
+       
+        onBlurkilometrage() ;
         
+       /*
         if (this.mission.getKilometrage() != 0.0f) // verifier si un float est null
         {
             onBlurkilometrage() ;
-        }
+        }*/
         
     }
        public void onBlurkilometrage() { 
@@ -624,8 +627,8 @@ Departement d2 =this.agent.getAgentAffecter();
         this.vh.setDisponibiliter("0");
         mission.setVehicule(this.vh);
         serviceVehicule.Updatevehicule(this.vh);
-        
-        vehicule = serviceVehicule.listevehiculeDisponible() ;
+        this.vehicule = new ArrayList<vehicule>() ;
+        this.vehicule = serviceVehicule.listevehiculeDisponible() ;
         
        if (this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin())){
           FacesContext f=FacesContext.getCurrentInstance();
@@ -644,7 +647,8 @@ Departement d2 =this.agent.getAgentAffecter();
          
          FacesContext f=FacesContext.getCurrentInstance();
          f.addMessage(null,new FacesMessage("Ajout effectuée"));
-        }}
+        }
+     this.mission=new Mission();}
         // </editor-fold>
      
        // <editor-fold desc="redirect user detail" defaultstate="collapsed">
