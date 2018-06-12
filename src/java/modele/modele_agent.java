@@ -641,9 +641,10 @@ Departement d2 =this.agent.getAgentAffecter();
         
          this.mission=new Mission();
          insertprevision() ;
-         this.date1 = new Date();
-         this.date2 = new Date() ;
-         
+         this.date1 = null;
+         this.date2 = null;
+         this.type=null;
+         this.selectedCities2=null;
          
          FacesContext f=FacesContext.getCurrentInstance();
          f.addMessage(null,new FacesMessage("Ajout effectuée"));
@@ -767,7 +768,7 @@ Departement d2 =this.agent.getAgentAffecter();
     this.Message=this.serviceMission.ClotureMission(mission, agent);
     vehicule vehi = mission.getVehicule() ; 
     vehi.setDisponibiliter("1");
-  serviceVehicule.Updatevehicule(this.vh);
+  serviceVehicule.Updatevehicule(vehi);
   vehicule = serviceVehicule.listevehiculeDisponible() ;
     FacesContext.getCurrentInstance().getExternalContext().redirect("LesMissions.xhtml");}
 
@@ -919,7 +920,7 @@ this.mission.setRejet(this.Rejet);
 this.service.AffecterRejet(mission);
 vehicule vehi = mission.getVehicule() ; 
   vehi.setDisponibiliter("1");
-  serviceVehicule.Updatevehicule(this.vh);
+  serviceVehicule.Updatevehicule(vehi);
   vehicule = serviceVehicule.listevehiculeDisponible() ;
 FacesContext.getCurrentInstance().getExternalContext().redirect("ValidationMission.xhtml");
 

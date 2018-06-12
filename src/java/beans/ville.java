@@ -27,7 +27,7 @@ import javax.persistence.Table;
 @Table(name = "ville")
 public class ville implements Serializable {
 @Id     
- @Column(name ="Code_Postal" , unique = true) // valeur unique dans la BD 
+ @Column(name ="Code_Postal" ) // valeur unique dans la BD 
     private int Code_Postal;
     @Column(name ="Nom")
    private String Nom;

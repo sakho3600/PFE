@@ -1007,6 +1007,9 @@ public List<Mission> ListerlesMissionsAValiderRH(){
 
 public void rejet(){
 this.mission.setRejet(this.Rejet);
+vehicule vehi = this.mission.getVehicule() ; 
+  vehi.setDisponibiliter("1");
+  this.serviceVehicule.Updatevehicule(vehi);
 this.service.AffecterRejet(mission);
     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Terminer!", "prevision Ajouter."));
 

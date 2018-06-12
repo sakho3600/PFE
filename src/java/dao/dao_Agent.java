@@ -359,10 +359,8 @@ try{
         openSession();
                     Query query = s.createQuery("from Mission where ValidDirecturGeneral= 0 and Status= :stat ");
                     query.setParameter("stat", "En cours");
-                    if(query.list().isEmpty()){
-                     l=null;}
-                     else{
-                       l = query.list();
+                    if(!query.list().isEmpty()){
+                                            l = query.list();
                    }
                  
     closeSession();  
