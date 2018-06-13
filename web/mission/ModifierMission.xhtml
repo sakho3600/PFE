@@ -51,12 +51,12 @@
         <div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
-					<h2 class="title1">Ajouter une Mission </h2>
+					<h2 class="title1">Modification d'une Mission </h2>
 					<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
 						<div class="form-title">
-							<h4>Information effectives de la mission :</h4>
+							<h4>Les Informations  de la mission :</h4>
 						</div>
-                                            <h:form> 
+                                            <h:form id="form"> 
 						<div class="form-body">
                                                     <p:growl id="msgs" showDetail="true" />
                                                         <p:messages id="messages" showDetail="true" closable="true">
@@ -66,28 +66,24 @@
                                                         <div class="form-group"> <p:outputLabel  value="Matricule  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.agent.matricule}"  required="true" readonly='true'> </p:inputText> </div>
                                                         <div class="form-group"> <p:outputLabel  value="Nom  :"> </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.agent.nom}"  required="true" readonly='true'> </p:inputText> </div>
                                                         <div class="form-group"> <p:outputLabel  value="Prenom :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.agent.pernom}" required="true" readonly='true'></p:inputText> </div> 
-                                                        <div class="form-group"> <p:outputLabel  value="Intitule de la mission :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.mission.intitule_Mission}" required="true" placeholder="Intitule de la mission"></p:inputText> </div> 
+                                                        <div class="form-group"> <p:outputLabel  value="Intitulé de la mission :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.mission.intitule_Mission}" required="true" placeholder="Intitule de la mission"></p:inputText> </div> 
                                                         <div class="form-group"> <p:outputLabel  value="Objectif :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.mission.objectif}" required="true" placeholder="Objectif"></p:inputText> </div> 
-                                                        <div class="form-group"> <p:outputLabel  value="Kilometrage:">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.mission.kilometrage}"  required="true" placeholder="Kilometrage">
-                                                                <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="out1" />
-                                                                <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="ftotal"/>
-                                                                                                                                             </p:inputText> </div> 
-                                                           <div class="form-group"> <p:outputLabel  value="Matricule Vehicule :">  </p:outputLabel> 
-                                                               <p:inputText  value="#{modele_agent.vehiculeMatricule}" id="carDetail" style="width: 20%" required="true"  placeholder="Matricule vehicule">
-                                                                <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="out1" />
-                                                                <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="ftotal"/>
-
-                                                            
-                                                            </p:inputText> 
-                                                            <p:dataTable  var="car" emptyMessage="Vous n'avez aucune mission." value="#{modele_agent.vehicule}" rows="9" paginator="true"  >
-                    
+                                                         
+                                                    
+                                                            <p:growl id="msgvehicule" showDetail="true" /> 
+                                                            <p:dataTable  id="carevent" var="car" emptyMessage="Aucun vehicule n'est disponnible." value="#{modele_agent.vehicule}" selectionMode="single" selection="#{modele_agent.vh}" rowKey="#{car.id}"  >
+                                                                        <f:facet name="header">
+                                                                Sélectionner une vehicule
+                                                                               </f:facet>
+                                                                <p:ajax event="rowSelect" listener="#{modele_agent.onRowSelect}"  update="form:msgvehicule form:out1 form:ftotal"/>
+                                                                
                                                                  <p:column headerText="Id:" filterBy="#{car.id}" filterMatchMode="contains"   >
                                                                      <h:outputText value="#{car.id}"  />
                                                                   </p:column>
                                                                 <p:column headerText="immatriculation:" filterBy="#{car.immatriculation}" filterMatchMode="contains"   >
                                                                      <h:outputText value="#{car.immatriculation}"  />
                                                                   </p:column>
-                                                                <p:column headerText="Model " filterBy="#{car.model}" filterMatchMode="contains"   >
+                                                                <p:column headerText="Modéle " filterBy="#{car.model}" filterMatchMode="contains"   >
                                                                      <h:outputText value="#{car.model}"  />
                                                                   </p:column>
                                                                 <p:column headerText="Consommation ">
@@ -101,7 +97,11 @@
                                                                   </p:column>
                                                                     
                                                             </p:dataTable>
-       </div>   <div class="form-group"> 
+      <!-- </div>     -->                   <div class="form-group"> <p:outputLabel  value="Kilometrage:">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.mission.kilometrage}"  required="true" placeholder="Kilometrage">
+                                                                <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="out1" />
+                                                                <p:ajax event="blur" listener="#{modele_agent.onBlurkilometrage}" update="ftotal"/>
+                                                                                                                                             </p:inputText> </div>
+                                                       <div class="form-group"> 
                                                         <h:panelGrid columns="2" cellpadding="5">
        
         <p:outputLabel for="multiple" value="Les Villes:" />
@@ -120,7 +120,9 @@
                                                    <p:selectOneListbox id="basic" value="#{modele_agent.type}" style="width:100px;">
             <f:selectItem itemLabel="Reparation vehicule" itemValue="Reparation vehicule"  />
             <f:selectItem itemLabel="Conferance" itemValue="Conferance" />
-
+            <f:selectItem itemLabel="Séminaire" itemValue="Séminaire" />
+            <f:selectItem itemLabel="Réunion" itemValue="Réunion" />
+            
         </p:selectOneListbox>
                                                </h:panelGrid>     </div>
                                                         
@@ -158,20 +160,21 @@
         <div class="form-group"> <p:outputLabel  value="Frais Total  :"> </p:outputLabel> 
             <p:inputText class="form-control" value="#{modele_agent.ftotal}"  id="ftotal" readonly='true'> </p:inputText> </div>                                                
        
-            <p:commandButton value="Modifier" id="ajax"  actionListener="#{modele_agent.ModifierLaMission()}" class="btn btn-default" ajax="false"/>
+              <p:commandButton value="Modifier" id="xajax"  actionListener="#{modele_agent.ModifierLaMission()}" class="btn btn-default" ajax="false">  <p:confirm header="Confirmation" message="Vous étes sur de vouloir continuer?" icon="ui-icon-alert" /> </p:commandButton>
             <p:commandButton value="Annuler La misson"   actionListener="#{modele_agent.AnnulerMission()}" class="btn btn-default">
-                                                        <p:confirm header="Confirmation" message="Vous étes sur?" icon="ui-icon-alert" />
+                                                        <p:confirm header="Confirmation" message="Vous étes sur de vouloir continuer?" icon="ui-icon-alert" />
                                                         </p:commandButton>
-                                                   
+                                                        
                                                           <p:confirmDialog global="true" >
                                                         <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                                                         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                                                         </p:confirmDialog>
-                                                                               
+                                                        
 
                                                     
 						
                                         </div>
+             
                                             </h:form> 
                                         </div>
                                 </div>
@@ -224,3 +227,4 @@
     </h:body>
         </f:view>
 </html>
+    
