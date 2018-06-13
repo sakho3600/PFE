@@ -63,6 +63,8 @@ public class modele_Admin  {
         private String TypeRejet;
         private String Rejet;
                  private String LesFaisreel;
+                 private String immatriculation;
+                 private String modele;
 
         private vehicule vehicule=new vehicule();
          //Les dates
@@ -192,6 +194,22 @@ vehicule v=new vehicule(((vehicule) event.getObject()).getId(),((vehicule) event
     public void setService(dao_Vehicule serviceVehicule) {
         this.serviceVehicule = serviceVehicule;
     }  
+
+    public String getImmatriculation() {
+        return immatriculation;
+    }
+
+    public void setImmatriculation(String immatriculation) {
+        this.immatriculation = immatriculation;
+    }
+
+    public String getModele() {
+        return modele;
+    }
+
+    public void setModele(String modele) {
+        this.modele = modele;
+    }
 
     public Agent getAgentmodif() {
         return agentmodif;
@@ -973,6 +991,9 @@ Departement d2 =this.mission.getAgent().getAgentAffecter();
  
  public void imprimer(Mission mission) throws IOException{
  this.mission=mission;
+ 
+         this.immatriculation=this.mission.getVehicule().getImmatriculation();
+         this.modele=this.mission.getVehicule().getNom();
          this.villes= this.serviceMission.StringVille(this.mission);
         this.LesFaisreel=this.serviceagent.LesFraixduneMissionCloture(mission);
 
@@ -1002,6 +1023,12 @@ public List<Mission> ListerlesMissionsAValiderRH(){
  
  public void FormValid(Mission m) throws IOException{
         this.mission=m;
+        
+         this.immatriculation=this.mission.getVehicule().getImmatriculation();
+         this.modele=this.mission.getVehicule().getNom();
+               this.villes= this.serviceMission.StringVille(this.mission);
+        this.LesFaisreel=this.serviceagent.LesFraixduneMissionCloture(mission);
+
              FacesContext.getCurrentInstance().getExternalContext().redirect("FormValid.xhtml");
     }
 

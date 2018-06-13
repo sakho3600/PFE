@@ -102,10 +102,14 @@ and open the template in the editor.
                          
                          <h:outputLabel for="Objectif"  value="Objectif : #{modele_agent.mission.objectif}" />
                       
+                         <h:outputLabel for="Immatriculation"  value="Immatriculation du vehicule : #{modele_agent.immatriculation}" />
+                         <h:outputLabel for="modele"  value="Le modele du vehicule : #{modele_agent.modele}" />
+                      
                                   <h:outputLabel for="Les_Villes"  value="Les Villes: #{modele_agent.villes}" />
                                   
                                   <h:outputLabel for="DateCrea"  value="Date Creation de la mission : #{modele_agent.mission.datedeCreation}" />
-                                  
+                                            <h:outputLabel for="fraiseffectif"  value="Les frais effectifs: Les Frais divers #{modele_agent.mission.fdiver} Les Frais D'hebergement #{modele_agent.mission.fhebergement} Les Frais de Transport #{modele_agent.mission.ftransport}"/>
+
                          
     </p:panelGrid>
             

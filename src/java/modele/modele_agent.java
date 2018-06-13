@@ -756,6 +756,9 @@ Departement d2 =this.agent.getAgentAffecter();
         
         this.mission=m;
          this.LesVillesString();
+         
+         this.immatriculation=this.mission.getVehicule().getImmatriculation();
+         this.modele=this.mission.getVehicule().getNom();
          this.LesFaisreel=this.service.LesFraixduneMissionCloture(mission);
         FacesContext.getCurrentInstance().getExternalContext().redirect("FormPrint.xhtml");
     }
@@ -763,10 +766,16 @@ Departement d2 =this.agent.getAgentAffecter();
         
         this.mission=m;
          this.LesVillesString();
+         this.immatriculation=this.mission.getVehicule().getImmatriculation();
+         this.modele=this.mission.getVehicule().getNom();
         FacesContext.getCurrentInstance().getExternalContext().redirect("FormPrintRejet.xhtml");
     }
        public void FormValid(Mission m) throws IOException{
         this.mission=m;
+                 this.LesVillesString();
+
+         this.immatriculation=this.mission.getVehicule().getImmatriculation();
+         this.modele=this.mission.getVehicule().getNom();
              FacesContext.getCurrentInstance().getExternalContext().redirect("FormValid.xhtml");
     }
       //</editor-fold> 
