@@ -7,6 +7,7 @@ package dao;
 
 import beans.Agent;
 import beans.Mission;
+import beans.vehicule;
 import beans.ville;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -193,6 +194,10 @@ Message="Mission Deja Valider vous devez Contacter l'administration";
 else if (m.getAgent().getMatricule()==agent.getMatricule() && (m.getStatus().equals("En cours"))){
 openSession();
     m.setStatus("Annuler");
+     vehicule vehi = mission.getVehicule() ;
+     dao_Vehicule serviceVehicule= new dao_Vehicule();
+  vehi.setDisponibiliter("1");
+  serviceVehicule.Updatevehicule(vehi);
 s.update(m);
 closeSession();
 Message="Mission Annuler";}

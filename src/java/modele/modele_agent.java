@@ -828,10 +828,7 @@ Departement d2 =this.agent.getAgentAffecter();
   public void AnnulerMission() throws IOException{
   
   this.Message=this.serviceMission.AnnulerMission(mission, agent);
-  vehicule vehi = mission.getVehicule() ; 
-  vehi.setDisponibiliter("1");
-  serviceVehicule.Updatevehicule(this.vh);
-  vehicule = serviceVehicule.listevehiculeDisponible() ;
+ //  vehicule = serviceVehicule.listevehiculeDisponible() ;
     FacesContext.getCurrentInstance().getExternalContext().redirect("AnnulerMission.xhtml");}
 
   

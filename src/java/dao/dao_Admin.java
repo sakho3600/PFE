@@ -224,7 +224,12 @@ public class dao_Admin {
       }
    public void AnnulerMission(Mission m,Admin a){
    openSession();
-   m.setStatus("Mission Annuler Par Administrateur "+a.getUsername());
+   if (m.getStatus().equals("En cours")){
+   vehicule vehi = m.getVehicule() ;
+     dao_Vehicule serviceVehicule= new dao_Vehicule();
+  vehi.setDisponibiliter("1");
+  serviceVehicule.Updatevehicule(vehi);}
+      m.setStatus("Mission Annuler Par Administrateur "+a.getUsername());
    s.update(m);
    closeSession();
    }
