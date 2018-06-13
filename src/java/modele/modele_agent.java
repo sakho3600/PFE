@@ -847,7 +847,16 @@ Departement d2 =this.agent.getAgentAffecter();
   
   this.Message=this.serviceMission.AnnulerMission(mission, agent);
   this.mission=new Mission();
- //  vehicule = serviceVehicule.listevehiculeDisponible() ;
+         this.vh=new vehicule();
+         this.date1 = null;
+         this.date2 = null;
+         this.type=null;
+         this.selectedCities2=null;
+            vehicule = serviceVehicule.listevehiculeDisponible() ;
+
+         
+         
+   vehicule = serviceVehicule.listevehiculeDisponible() ;
     FacesContext.getCurrentInstance().getExternalContext().redirect("AnnulerMission.xhtml");}
 
   
@@ -924,8 +933,12 @@ this.modele=this.mission.getVehicule().getNom();
          this.mission=new Mission();
          this.vh=new vehicule();
          insertprevision() ;
-         this.date1 = new Date();
-         this.date2 = new Date() ;
+         this.date1 = null;
+         this.date2 = null;
+         this.type=null;
+         this.selectedCities2=null;
+            vehicule = serviceVehicule.listevehiculeDisponible() ;
+
          
     FacesContext.getCurrentInstance().getExternalContext().redirect("AnnulerMission.xhtml");
  }}
