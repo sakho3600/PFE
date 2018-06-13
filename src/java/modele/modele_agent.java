@@ -86,6 +86,8 @@ public class modele_agent {
      private String rejet;
      private int vehiculeMatricule ;
      private String LesFaisreel;
+     private String modele;
+     private String immatriculation;
      
      /** Tables **/ 
     private List<Agent> agents ;
@@ -108,7 +110,7 @@ public class modele_agent {
     String Villes=new String();
     prevision previsions = new prevision() ;
     vehicule  vh = new vehicule();
-    
+      vehicule ancientvehicule =new vehicule();
     
     public modele_agent() {
     }
@@ -142,6 +144,22 @@ public class modele_agent {
 
     public void setVh(vehicule vh) {
         this.vh = vh;
+    }
+
+    public String getModele() {
+        return modele;
+    }
+
+    public void setModele(String modele) {
+        this.modele = modele;
+    }
+
+    public String getImmatriculation() {
+        return immatriculation;
+    }
+
+    public void setImmatriculation(String immatriculation) {
+        this.immatriculation = immatriculation;
     }
     
     
@@ -828,6 +846,7 @@ Departement d2 =this.agent.getAgentAffecter();
   public void AnnulerMission() throws IOException{
   
   this.Message=this.serviceMission.AnnulerMission(mission, agent);
+  this.mission=new Mission();
  //  vehicule = serviceVehicule.listevehiculeDisponible() ;
     FacesContext.getCurrentInstance().getExternalContext().redirect("AnnulerMission.xhtml");}
 
@@ -854,7 +873,8 @@ else
 
 {
     this.Message=null;
-this.vehiculeMatricule=this.mission.getVehicule().getId();
+this.immatriculation=this.mission.getVehicule().getImmatriculation();
+this.modele=this.mission.getVehicule().getNom();
 
     this.LesVillesString();
         FacesContext.getCurrentInstance().getExternalContext().redirect("ModifierMission.xhtml");
@@ -869,6 +889,7 @@ this.vehiculeMatricule=this.mission.getVehicule().getId();
         this.date1=this.mission.getDateDeb();
                 this.date2=this.mission.getDateFin();
                 this.type=this.mission.getType();
+                
 
     }}
 
@@ -881,32 +902,34 @@ this.vehiculeMatricule=this.mission.getVehicule().getId();
         mission.setFdiver(this.fdiver);
         mission.setFhebergement(this.fhebergement);
         mission.setFtransport(this.ftransport);
-      vehicule v;
-      v=this.serviceVehicule.recherchevehicule(this.vehiculeMatricule);
+       
+       
         if (this.serviceMission.compareDate(this.mission.getDateDeb(), this.mission.getDateFin())){
           FacesContext f=FacesContext.getCurrentInstance();
          f.addMessage(null,new FacesMessage("Erreur date!!"));
      
         }
-        else if (v==null){
-           FacesContext f=FacesContext.getCurrentInstance();
-         f.addMessage(null,new FacesMessage("Erreur vehicule inexistant!!"));
-     
-        }
         else{
-                mission.setVehicule(this.serviceVehicule.recherchevehicule(this.vehiculeMatricule));
+            if (this.vh!=null){
+          ancientvehicule =mission.getVehicule();
+          ancientvehicule.setDisponibiliter("1");
+           mission.setVehicule(this.vh);
+            this.vh.setDisponibiliter("0");
+           this.serviceVehicule.Updatevehicule(this.vh);
+          this.serviceVehicule.Updatevehicule(ancientvehicule);
 
-        
+        }
         this.Message=serviceMission.ModifierMission(mission);
-        
+       
          this.mission=new Mission();
+         this.vh=new vehicule();
          insertprevision() ;
          this.date1 = new Date();
          this.date2 = new Date() ;
-         this.vehiculeMatricule=0;
          
     FacesContext.getCurrentInstance().getExternalContext().redirect("AnnulerMission.xhtml");
  }}
+     
    
   //</editor-fold>
 

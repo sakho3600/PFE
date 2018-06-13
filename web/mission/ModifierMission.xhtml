@@ -68,7 +68,7 @@
                                                         <div class="form-group"> <p:outputLabel  value="Prenom :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.agent.pernom}" required="true" readonly='true'></p:inputText> </div> 
                                                         <div class="form-group"> <p:outputLabel  value="Intitulé de la mission :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.mission.intitule_Mission}" required="true" placeholder="Intitule de la mission"></p:inputText> </div> 
                                                         <div class="form-group"> <p:outputLabel  value="Objectif :">  </p:outputLabel> <p:inputText class="form-control" value="#{modele_agent.mission.objectif}" required="true" placeholder="Objectif"></p:inputText> </div> 
-                                                         
+                                                        <div class="form-group"> <p:outputLabel  value="Modele et immatriculation :">  </p:outputLabel>  <h4>#{modele_agent.modele} / #{modele_agent.immatriculation}</h4> </div>
                                                     
                                                             <p:growl id="msgvehicule" showDetail="true" /> 
                                                             <p:dataTable  id="carevent" var="car" emptyMessage="Aucun vehicule n'est disponnible." value="#{modele_agent.vehicule}" selectionMode="single" selection="#{modele_agent.vh}" rowKey="#{car.id}"  >
@@ -160,7 +160,7 @@
         <div class="form-group"> <p:outputLabel  value="Frais Total  :"> </p:outputLabel> 
             <p:inputText class="form-control" value="#{modele_agent.ftotal}"  id="ftotal" readonly='true'> </p:inputText> </div>                                                
        
-              <p:commandButton value="Modifier" id="xajax"  actionListener="#{modele_agent.ModifierLaMission()}" class="btn btn-default" ajax="false">  <p:confirm header="Confirmation" message="Vous étes sur de vouloir continuer?" icon="ui-icon-alert" /> </p:commandButton>
+              <p:commandButton value="Modifier" id="xajax"  actionListener="#{modele_agent.ModifierLaMission()}" class="btn btn-default" ajax="false">   </p:commandButton>
             <p:commandButton value="Annuler La misson"   actionListener="#{modele_agent.AnnulerMission()}" class="btn btn-default">
                                                         <p:confirm header="Confirmation" message="Vous étes sur de vouloir continuer?" icon="ui-icon-alert" />
                                                         </p:commandButton>

@@ -204,9 +204,9 @@ Message="Mission Annuler";}
 else if (m.getAgent().getMatricule()!=agent.getMatricule())
     Message="Vous n'avez pas les droit sur cette mission";
 else if(m.getStatus().equals("Colturé"))
-    Message ="Mission cloturée";
+    Message ="Mission Deja cloturée";
 else if (m.getStatus().equals("Fin de Mission"))
-    Message="Mission terminée";
+    Message="Mission Deja terminée";
 else if (m.getStatus().equals("Annuler"))
     Message="Mission Deja Annuler";
 
